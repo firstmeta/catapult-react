@@ -3,23 +3,72 @@ body {
 
 }
 
+a {
+    color: ##337ab7;
+    text-decoration: none;
+}
+a:focus, a:hover {
+    color: ##337ab7 !important;
+    cursor: pointer;
+}
+
+.btn {
+    padding: 8px 20px;
+    border: 0 none;
+    border-radius: 6px;
+}
+ 
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+ 
+.btn-primary {
+    background: #26C572;
+    color: #ffffff;
+}
+ 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #11A458 !important;
+}
+ 
+.btn-primary:active, .btn-primary.active {
+    background: #178A4F !important;
+    box-shadow: none;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 15px !important;
+}
+
+/* Login */
+.login-name {
+    cursor: pointer;
+}
+.login-modal {
+    margin-top: 70px !important;
+    width: 300px !important;
+}
 
 .header-nav {
   margin-bottom: 100px !important;
 }
 
 .index img {
-  margin: 40px auto;
-  border-radius: 4px;
-  background: #fff;
-  display: block;
+    margin: 40px auto;
+    border-radius: 4px;
+    background: #fff;
+    display: block;
 }
 
 .index .notice {
-  margin: 20px auto;
-  padding: 15px 0;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 1px 0;
-  background: #666;
+    margin: 20px auto;
+    padding: 15px 0;
+    text-align: center;
+    border: 1px solid #000;
+    border-width: 1px 0;
+    background: #666;
 }
