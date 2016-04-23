@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Login from './login';
 
 export default class HeaderNav extends Component {
 	render() {
@@ -43,27 +44,13 @@ export default class HeaderNav extends Component {
                         <button type="submit" className="btn btn-default">Submit</button>
                       </form>
                       <ul className="nav navbar-nav navbar-right">
-                        <li className="dropdown">
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Balance: 1 Ether <span className="caret"></span>
+												<li>
+                            <a>
+                                <Login />
                             </a>
-                          <ul className="dropdown-menu">
-                            <li><a href="#">FMX: 2300</a></li>
-                            <li><a href="#">BLC: 4000</a></li>
-                          </ul>
                         </li>
-                        
-                        <li className="dropdown">
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span className="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                            </a>
-                          <ul className="dropdown-menu">
-                            <li><a href="#">Account</a></li>
-                            <li><a href="#">Security</a></li>
-                            <li role="separator" className="divider"></li>
-                            <li><a href="#">Logout</a></li>
-                          </ul>
-                        </li>
+                       
+                      	
                       </ul>
                     </div>
                   </div>
