@@ -8,6 +8,6 @@ import AccountSetting from './components/account_setting'
 export default (
 	<Route path="/" component={App}>
 		<IndexRoute component={Landing} />
-		<Route path="/accountsetting" component={AccountSetting} />
+		<Route path="api/accountsetting" component={AccountSetting} />
 	</Route>
 )
