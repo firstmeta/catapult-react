@@ -1,8 +1,13 @@
 /* Base Application Styles */
+html {
+    height: 100%;
+}
 body {
-
+    background-color: #F8F8F8;
+    height: 100%;
 }
 
+/* Elements styles: button, a, custom width*/
 a {
     color: ##337ab7;
     text-decoration: none;
@@ -39,22 +44,159 @@ a:focus, a:hover {
 .full-width {
     width: 100%;
 }
-
 .input-group {
     margin-bottom: 15px !important;
 }
+.vertical-align {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 
+/* Page structure */
+.wrap { min-height: 100%; }
+.main {
+    overflow: auto;
+    padding-bottom: 100px; /* must be same height as the footer */
+}
+.footer {
+    position: relative;
+    margin-top: -100px; /* negative value of footer height */
+    height: 100px;
+    clear:both;
+    background: #353B47;
+}
+.footer p {
+  text-align: center;
+  color: #ffffff;
+  margin-top: 10px;
+  line-height: 60px;
+}
+
+/*Opera Fix*/
+body:before {
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+    margin-top:-32767px;
+}
+/* End of page structure */
+
+/* Header Navigation */
+.header-nav .navbar-default {
+    background-color: #FFFFFF;
+    border: none;
+}
+.header-nav img {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.header-nav .navbar-brand {
+    padding: 5px 5px !important;
+    margin-left: 15px !important;
+}
+.header-nav .navbar-nav>li>a {
+    padding-top: 18px !important;
+    padding-bottom: 12px !important;
+}
+
+/* Landing */
+.landing {
+    color: #999;
+    font-family: 'Raleway', sans-serif;
+}
+.landing .btn {
+  font-size: 16px;
+  font-family: 'Raleway', sans-serif;
+  padding: 15px 30px;
+  border: none;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.landing .btn-common {
+  color: #ffffff;
+  font-weight: 400;
+  background: rgba(231,76,60,0.5);
+}
+.landing .jumbotron {
+    background: url(../images/landing_bg.jpg);
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+    height: 700px;
+    margin-bottom: 0px;
+}
+.landing .jumbotron .row {
+    padding-top: 45px;
+}
+.landing .jumbotron .intro-section {
+    color: #ffffff;
+    text-align: center;
+    padding-top: 90px;
+}
+.landing .jumbotron .intro {
+    font-size: 50px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+.landing .jumbotron .sub-heading { margin-bottom: 25px; }
+.landing .main-features {
+    background-color: #ECF0F1;
+    padding-top: 35px;
+}
+.landing .main-features .title {
+    text-align: center;
+}
+.landing .main-features .content {
+    margin-top: 35px;
+    padding-bottom: 65px;
+    background-color: #ECF0F1;
+}
+.landing h2{
+    color: #E74C3C;
+    font-weight: 800;
+    font-size: 50px;
+}
+.landing .fa-slideshare, .fa-line-chart, .fa-folder-open-o{
+    font-size: 80px;
+    color: rgba(231,76,60,1);
+}
+.landing .tech-features {
+    background-color: #FFF;
+    padding-bottom: 65px;
+}
+.landing .tech-features img {
+    padding-top: 75px;
+}
+.landing .tech-features .small-title {
+    font-size: 30px;
+    color: #E74C3C;
+    font-weight: 800;
+    padding-top: 65px;
+    padding-bottom: 5px;
+    line-height: 40px;
+}
+.landing .summary {
+    text-align: center;
+    padding-top: 65px;
+    padding-bottom: 65px;
+}
+.landing .summary .call-to-action {
+    color: #000;
+}
 /* Login */
 .login-name {
     cursor: pointer;
+    margin-right: 20px;
 }
 .login-modal {
     margin-top: 70px !important;
     width: 300px !important;
-}
-
-.header-nav {
-  margin-bottom: 100px !important;
 }
 
 .index img {
@@ -72,3 +214,4 @@ a:focus, a:hover {
     border-width: 1px 0;
     background: #666;
 }
+
