@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Input, Modal, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
+import { loginUser } from '../actions/login_action'
+import { 
+	Button, Modal, OverlayTrigger, Popover, Tooltip 
+} from 'react-bootstrap';
 
 class Login extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { showModal: false };
+		this.state = { showModal: false, email: '', password:''};
 
 		this.open = this.open.bind(this);
 		this.close = this.close.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 	close() {
@@ -21,45 +25,70 @@ class Login extends Component {
 		this.setState({ showModal: true });
 	}
 
+	handleLogin() {
+		this.props.loginUser({email: this.refs.email.value, password: this.refs.password.value});
+	}
+
 	render() {
+		const { isLogined, isFetching } = this.props
 		return (
 			<div className="login">
 				<span onClick={this.open} className="login-name">
 					Login
 				</span>
-				<Modal show={this.state.showModal} onHide={this.close} dialogClassName="login-modal">
+				<Modal show={this.state.showModal && !isLogined} onHide={this.close} dialogClassName="login-modal">
 					<Modal.Header closeButton>
                         <Modal.Title>Login</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>    
-                        <Input
-                            type="text"
-                            placeholder="Email*"
-                            ref="email"
-                            groupClassName="group-class"
-                            labelClassName="label-class" />
+                    <Modal.Body>
 
-                       <div className="input-group">
-	                        <input
-	                            type="password"
-	                            placeholder="Password*"
-	                            ref="password"
-	                            className="form-control" />
+                    	{isFetching && !isLogined &&
+	                    	<div className="alert alert-danger" role="alert">
+							  <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  <span className="sr-only">Error:</span>
+							  &nbsp; The email address and password you entered do not match!
+							</div>
+						}
 
-	                         <a className="login-forgot-password">Forgot your password?</a>
-                        </div>
+						<div className="form-group">
+							<input 
+								type="text" 
+								className="form-control" 
+								placeholder="Email*"
+								ref="email"/>
+						</div>
+						<div className="form-group">
+							<input 
+								type="password" 
+								className="form-control" 
+								placeholder="Password*"
+								ref="password"/>
+							 <a className="login-forgot-password">Forgot your password?</a>
+						</div> 
 
                         <Button onClick={this.handleLogin} className="btn btn-primary full-width">Log me in!</Button>
 
-                        </Modal.Body>
-                        <Modal.Footer>
-                            
-                            
-                        </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        
+                        
+                    </Modal.Footer>
 				</Modal>
 			</div>
 		)
 	}
 }
 
-export default Login;
+function mapStateToProps(state) {
+	return {
+		isLogined: state.LoginState.isLogined,
+		isFetching: state.LoginState.isFetching
+	}
+}
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ loginUser: loginUser}, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+
+
