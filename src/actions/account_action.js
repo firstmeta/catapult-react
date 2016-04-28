@@ -21,7 +21,7 @@ function uploadFailure(message) {
 
 export function uploadDocuments(files) {
 
-	var req = request.post(`${ROOT_URL}/uploadkyc`).withCredentials();
+	var req = request.post(`${ROOT_URL}/api/account/uploadkyc`).withCredentials();
 	var filenamesJson = {};
 	var filenames = [];
 
