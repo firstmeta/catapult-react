@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginUser } from '../actions/login_action'
+import { loginUser } from '../actions/auth_action'
 import { 
 	Button, Modal, OverlayTrigger, Popover, Tooltip 
 } from 'react-bootstrap';
@@ -10,7 +10,7 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { showModal: false, email: '', password:''};
+		this.state = { showModal: false};
 
 		this.open = this.open.bind(this);
 		this.close = this.close.bind(this);
@@ -81,8 +81,8 @@ class Login extends Component {
 
 function mapStateToProps(state) {
 	return {
-		isLogined: state.LoginState.isLogined,
-		isFetching: state.LoginState.isFetching
+		isLogined: state.AuthState.isLogined,
+		isFetching: state.AuthState.isFetching
 	}
 }
 function mapDispatchToProps(dispatch) {

@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Login from './login';
+import Logout from './Logout';
+import Signup from './signup';
 import CatapultLogo from '../images/catapult_logo.png';
 
-export default class HeaderNav extends Component {
+class HeaderNav extends Component {
 	render() {
+
+    const { isLogined } = this.props;
+
 		return (
 				<div className="header-nav">
           <nav className="navbar navbar-default navbar-fixed-top ">     
@@ -40,7 +46,13 @@ export default class HeaderNav extends Component {
               <ul className="nav navbar-nav navbar-right">
                 <li>
                   <a>
-                      <Login />
+                    {!isLogined && <Login />}
+                    {isLogined && <Logout />}
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    {!isLogined && <Signup />}
                   </a>
                 </li>
               </ul>
@@ -51,3 +63,10 @@ export default class HeaderNav extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+  return {
+    isLogined: state.AuthState.isLogined
+  }
+}
+export default connect(mapStateToProps)(HeaderNav);
