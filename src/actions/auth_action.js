@@ -1,10 +1,12 @@
 import request from 'superagent';
-import { ROOT_URL } from './index'
+import { ROOT_URL } from './index';
 
 export const AUTH_TOKEN = 'AUTH_TOKEN';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 function loginSuccess() {
 	return {
@@ -22,10 +24,14 @@ function loginFailure() {
 	}
 }
 
+function logoutSuccess() {
+	return {
+		type: LOGOUT_SUCCESS,
+		isLogined: false
+	}
+}
+
 export function loginUser(creds) {
-
-	console.log(ROOT_URL);
-
 	var req = request
 				.post(`${ROOT_URL}/api/login`)
 				.withCredentials()
@@ -45,3 +51,13 @@ export function loginUser(creds) {
 		});
 	}
 }
+
+export function logoutUser() {
+	return dispatch => {
+		localStorage.removeItem(AUTH_TOKEN);
+		dispatch(logoutSuccess());
+	}
+}
+
+
+
