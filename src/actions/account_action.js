@@ -1,9 +1,34 @@
 import request from 'superagent';
+import { ROOT_URL } from './index';
+
+export const ACCOUNT_SIGNUP_SUCCESS = 'ACCOUNT_SIGNUP_SUCCESS';
+export const ACCOUNT_SIGNUP_FAILURE = 'ACCOUNT_SIGNUP_FAILURE';
 
 export const ACCOUNT_DOCUMENTS_UPLOAD_SUCCESS = 'ACCOUNT_DOCUMENTS_UPLOAD_SUCCESS';
 export const ACCOUNT_DOCUMENTS_UPLOAD_FAILURE = 'ACCOUNT_DOCUMENTS_UPLOAD_FAILURE';
 
-const ROOT_URL = 'http://localhost:8080';
+function signupSuccess() {
+	return {
+		type: ACCOUNT_SIGNUP_SUCCESS
+	}
+}
+function signupFailure() {
+	return {
+		type: ACCOUNT_SIGNUP_FAILURE
+	}
+}
+export function signupAccount(creds) {
+	var req = request
+				.post(`${ROOT_URL}/api/signup`)
+				.set('Content-Type', 'application/json')
+				.accept('application/json')
+				.send(creds);
+	return dispatch => {
+		
+	}
+
+}
+
 
 function uploadSuccess(message) {
 	return {
@@ -11,14 +36,12 @@ function uploadSuccess(message) {
 		message
 	}
 }
-
 function uploadFailure(message) {
 	return {
 		type: ACCOUNT_DOCUMENTS_UPLOAD_FAILURE,
 		message
 	}
 }
-
 export function uploadDocuments(files) {
 
 	var req = request.post(`${ROOT_URL}/api/account/uploadkyc`).withCredentials();
