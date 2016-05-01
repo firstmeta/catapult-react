@@ -101,6 +101,18 @@ body:before {
     padding-top: 18px !important;
     padding-bottom: 12px !important;
 }
+.header-nav .navbar-right {
+    margin-right: 25px;
+}
+
+/* Login */
+.login-name {
+    cursor: pointer;
+}
+.login-modal {
+    margin-top: 70px !important;
+    width: 300px !important;
+}
 
 /* Landing */
 .landing {
@@ -182,21 +194,13 @@ body:before {
     line-height: 40px;
 }
 .landing .summary {
+    background-color: #ECF0F1;
     text-align: center;
     padding-top: 65px;
     padding-bottom: 65px;
 }
 .landing .summary .call-to-action {
     color: #000;
-}
-/* Login */
-.login-name {
-    cursor: pointer;
-    margin-right: 20px;
-}
-.login-modal {
-    margin-top: 70px !important;
-    width: 300px !important;
 }
 
 .index img {
