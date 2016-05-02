@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { 
-	Button, Modal, OverlayTrigger, Popover, Tooltip 
+import {
+	Button, Modal, OverlayTrigger, Popover, Tooltip
 } from 'react-bootstrap';
 
 class Signup extends Component {
@@ -28,6 +28,7 @@ class Signup extends Component {
 	}
 
 	render() {
+		const { isLogined, isFetching } = this.props;
 		return (
 			<div className="signup">
 				<span onClick={this.open} className="register-name">
@@ -35,12 +36,13 @@ class Signup extends Component {
 				</span>
 				<Modal show={this.state.showModal && !isLogined} onHide={this.close} dialogClassName="login-modal">
 					<Modal.Header closeButton>
-                        <Modal.Title>Sign up</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+              <Modal.Title>Sign up</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
 
-                    	{isFetching && !isLogined &&
-	                    	<div className="alert alert-danger" role="alert">
+          	{
+							isFetching && !isLogined &&
+							<div className="alert alert-danger" role="alert">
 							  <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  <span className="sr-only">Error:</span>
 							  &nbsp; The email address and password you entered do not match!
@@ -48,34 +50,34 @@ class Signup extends Component {
 						}
 
 						<div className="form-group">
-							<input 
-								type="text" 
-								className="form-control" 
+							<input
+								type="text"
+								className="form-control"
 								placeholder="Email*"
 								ref="email"/>
 						</div>
 						<div className="form-group">
-							<input 
-								type="password" 
-								className="form-control" 
+							<input
+								type="password"
+								className="form-control"
 								placeholder="Password*"
 								ref="password"/>
 						</div>
 						<div className="form-group">
-							<input 
-								type="password" 
-								className="form-control" 
+							<input
+								type="password"
+								className="form-control"
 								placeholder="Re-enter password*"
 								ref="repassword"/>
 						</div>
 
-                        <Button onClick={this.handleRegister} className="btn btn-primary full-width">Sign me up!</Button>
+          	<Button onClick={this.handleRegister} className="btn btn-primary full-width">Sign me up!</Button>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        
-                        
-                    </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+
+
+          </Modal.Footer>
 				</Modal>
 			</div>
 		)
@@ -84,7 +86,8 @@ class Signup extends Component {
 
 function mapStateToProps(state) {
 	return {
-		isLogined: state.AuthState.isLogined
+		isLogined: state.AuthState.isLogined,
+		isFetching: state.AccountState.isFetching
 	}
 }
 
