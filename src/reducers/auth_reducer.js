@@ -1,6 +1,6 @@
 import {
 	AUTH_TOKEN, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
-} from '../actions/auth_action'
+} from '../actions/auth_action';
 
 export default function(state = {
 		isFetching: false,
@@ -8,7 +8,7 @@ export default function(state = {
 	}, action) {
 
 	switch (action.type) {
-		case LOGIN_SUCCESS: 
+		case LOGIN_SUCCESS:
 			return Object.assign({}, state, {
 				isLogined: true,
 				isFetching: false
@@ -18,12 +18,12 @@ export default function(state = {
 				isLogined: false,
 				isFetching: true
 			});
-		case LOGOUT_SUCCESS: 
+		case LOGOUT_SUCCESS:
 			return Object.assign({}, state, {
 				isLogined: false,
 				isFetching: false
 			});
-		default: 
+		default:
 			return state
 	}
 }
