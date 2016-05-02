@@ -8,7 +8,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
-function loginSuccess() {
+export function loginSuccess() {
 	return {
 		type: LOGIN_SUCCESS,
 		isFetching: false,
@@ -58,6 +58,3 @@ export function logoutUser() {
 		dispatch(logoutSuccess());
 	}
 }
-
-
-
