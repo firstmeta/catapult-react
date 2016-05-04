@@ -4,43 +4,57 @@ html {
 }
 body {
     background-color: #F8F8F8;
+    font-family: 'Raleway', sans-serif;
     height: 100%;
 }
 
 /* Elements styles: button, a, custom width*/
 a {
-    color: ##337ab7;
+    color: #777;
     text-decoration: none;
 }
 a:focus, a:hover {
-    color: ##337ab7 !important;
     cursor: pointer;
 }
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
 
-.btn {
+.btn-green {
     padding: 8px 20px;
     border: 0 none;
     border-radius: 6px;
 }
- 
-.btn:focus, .btn:active:focus, .btn.active:focus {
+
+.btn-green:focus, .btn-green:active:focus, .btn-green.active:focus {
     outline: 0 none;
 }
- 
-.btn-primary {
+
+.btn-green-primary {
     background: #26C572;
     color: #ffffff;
 }
- 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+
+.btn-green-primary:hover, .btn-green-primary:focus, .btn-green-primary:active, .btn-green-primary.active, .open > .dropdown-toggle.btn-green-primary {
     background: #11A458 !important;
 }
- 
-.btn-primary:active, .btn-primary.active {
+
+.btn-green-primary:active, .btn-green-primary.active {
     background: #178A4F !important;
     box-shadow: none;
 }
-
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
 .full-width {
     width: 100%;
 }
@@ -202,7 +216,22 @@ body:before {
 .landing .summary .call-to-action {
     color: #000;
 }
-
+.company-create {
+  margin-top: 80px;
+}
+.company-create h1 {
+  font-size: 35px;
+}
+.company-create .btn-toolbar .btn-group {
+  margin-left: 10px;
+}
+.company-create .btn-toolbar .btn {
+  min-height: 50px;
+  padding: 10px 25px;
+}
+.company-create .btn a:hover {
+  color: #777 !important;
+}
 .index img {
     margin: 40px auto;
     border-radius: 4px;
@@ -218,4 +247,3 @@ body:before {
     border-width: 1px 0;
     background: #666;
 }
-
