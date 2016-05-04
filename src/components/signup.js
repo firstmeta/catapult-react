@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { signupAccount } from '../actions/account_action';
 import {
 	Button, Modal, OverlayTrigger, Popover, Tooltip
 } from 'react-bootstrap';
@@ -9,10 +10,11 @@ class Signup extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { showModal: false };
+		this.state = { showModal: false, errMsg: ''};
 
 		this.open = this.open.bind(this);
 		this.close = this.close.bind(this);
+		this.handleRegister = this.handleRegister.bind(this);
 	}
 
 	close() {
@@ -24,7 +26,13 @@ class Signup extends Component {
 	}
 
 	handleRegister() {
+		this.setState({ errMsg: ''});
+		if(this.refs.password.value !== this.refs.repassword.value) {
+			this.setState({ errMsg: 'Password confirmation does not match Password'})
+			return;
+		}
 
+		this.props.signupAccount({email: this.refs.email.value, password: this.refs.password.value});
 	}
 
 	render() {
@@ -45,7 +53,15 @@ class Signup extends Component {
 							<div className="alert alert-danger" role="alert">
 							  <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  <span className="sr-only">Error:</span>
-							  &nbsp; The email address and password you entered do not match!
+							  &nbsp; Error registering account! Please try again!
+							</div>
+						}
+						{
+							this.state.errMsg !== '' &&
+							<div className="alert alert-danger" role="alert">
+							  <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  <span className="sr-only">Error:</span>
+							  &nbsp; {this.state.errMsg}
 							</div>
 						}
 
@@ -71,7 +87,10 @@ class Signup extends Component {
 								ref="repassword"/>
 						</div>
 
-          	<Button onClick={this.handleRegister} className="btn btn-primary full-width">Sign me up!</Button>
+          	<Button onClick={this.handleRegister}
+										className="btn btn-primary btn-green btn-green-primary full-width">
+							Sign me up!
+						</Button>
 
           </Modal.Body>
           <Modal.Footer>
@@ -90,5 +109,7 @@ function mapStateToProps(state) {
 		isFetching: state.AccountState.isFetching
 	}
 }
-
-export default Signup;
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ signupAccount: signupAccount }, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

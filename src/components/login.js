@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loginUser } from '../actions/auth_action'
-import { 
-	Button, Modal, OverlayTrigger, Popover, Tooltip 
+import {
+	Button, Modal, OverlayTrigger, Popover, Tooltip
 } from 'react-bootstrap';
 
 class Login extends Component {
@@ -51,28 +51,31 @@ class Login extends Component {
 						}
 
 						<div className="form-group">
-							<input 
-								type="text" 
-								className="form-control" 
+							<input
+								type="text"
+								className="form-control"
 								placeholder="Email*"
 								ref="email"/>
 						</div>
 						<div className="form-group">
-							<input 
-								type="password" 
-								className="form-control" 
+							<input
+								type="password"
+								className="form-control"
 								placeholder="Password*"
 								ref="password"/>
 							 <a className="login-forgot-password">Forgot your password?</a>
-						</div> 
+						</div>
 
-                        <Button onClick={this.handleLogin} className="btn btn-primary full-width">Log me in!</Button>
+          	<Button onClick={this.handleLogin}
+										className="btn btn-primary btn-green btn-green-primary full-width">
+							Log me in!
+						</Button>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        
-                        
-                    </Modal.Footer>
+          </Modal.Body>
+	        <Modal.Footer>
+
+
+	        </Modal.Footer>
 				</Modal>
 			</div>
 		)
@@ -89,6 +92,3 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ loginUser: loginUser}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-
-
-

@@ -2,7 +2,7 @@ import request from 'superagent';
 import { ROOT_URL } from './index';
 
 // Refactor: combine auth_action into account_action
-import { loginSuccess, loginFailure } from './auth_action';
+import { loginSuccess, loginFailure, AUTH_TOKEN } from './auth_action';
 
 export const ACCOUNT_SIGNUP_SUCCESS = 'ACCOUNT_SIGNUP_SUCCESS';
 export const ACCOUNT_SIGNUP_FAILURE = 'ACCOUNT_SIGNUP_FAILURE';
@@ -26,6 +26,7 @@ export function signupAccount(creds) {
 				.set('Content-Type', 'application/json')
 				.accept('application/json')
 				.send(creds);
+				
 	return dispatch => {
 		return req.end((err, res) => {
 			if (res.status === 200) {
