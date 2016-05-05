@@ -221,6 +221,7 @@ body:before {
 }
 .company-create h1 {
   font-size: 35px;
+  color: #444;
 }
 .company-create .btn-toolbar .btn-group {
   margin-left: 10px;
@@ -231,6 +232,35 @@ body:before {
 }
 .company-create .btn a:hover {
   color: #777 !important;
+}
+.company-create-basics {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  padding-top: 20px;
+}
+.company-create-basics .add-padding{
+  padding-top: 20px;
+}
+.company-create-basics .segment {
+  background-color: #fff;
+}
+.company-create-basics .segment .row {
+  margin-bottom: 15px;
+}
+.company-create-basics .segment h3{
+  color: #444;
+  font-size: 23px;
+  font-weight: 400;
+  border-bottom: 2px solid #eaeaea;
+  margin-bottom: 25px;
+}
+.company-create-basics .segment label{
+  color: #777;
+  font-weight: 300;
+  font-size: 14px;
+}
+.company-create-basics .segment .form-control {
+  color: #777;
 }
 .index img {
     margin: 40px auto;

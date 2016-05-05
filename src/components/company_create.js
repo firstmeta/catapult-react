@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import CompanyCreateBasics from './company_create_basics';
 
 class CompanyCreate extends Component {
 
@@ -37,6 +38,7 @@ class CompanyCreate extends Component {
           </div>
         </div>
 
+        <CompanyCreateBasics />
 
 
       </div>
