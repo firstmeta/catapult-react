@@ -144,7 +144,6 @@ class CompanyCreateBasics extends Component {
               </div>
             </div>
 
-
             <div className="row">
               <div className="col-md-10 col-md-offset-1 segment">
                 <h3>Company address</h3>
@@ -219,9 +218,22 @@ class CompanyCreateBasics extends Component {
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
 
+            <div className="row">
+              <div className="col-md-10 col-md-offset-1 segment">
+                <div className="row row-centered">
+                  <div className="col-lg-1 col-centered">
+                  <button
+                          className="btn btn-primary btn-green btn-green-primary full-width">
+                    Continue
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     )
