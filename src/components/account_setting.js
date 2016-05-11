@@ -15,7 +15,7 @@ export default class AccountSettingUpload extends Component {
 
 	onDrop(files) {
 		 //console.log('Received files: ', files);
-		 this.props.uploadDocuments(files)
+		 this.props.uploadDocuments(files);
 	}
 
 	render() {

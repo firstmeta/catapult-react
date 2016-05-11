@@ -223,6 +223,9 @@ body:before {
   font-size: 35px;
   color: #444;
 }
+.company-create .col-lg-1 {
+  width: auto;
+}
 .company-create .btn-toolbar .btn-group {
   margin-left: 10px;
 }
@@ -233,6 +236,33 @@ body:before {
 .company-create .btn a:hover {
   color: #777 !important;
 }
+.company-create .content {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  padding-top: 20px;
+}
+.company-create .segment {
+  background-color: #fff;
+}
+.company-create .segment .row {
+  margin-bottom: 15px;
+}
+.company-create .segment h3{
+  color: #444;
+  font-size: 23px;
+  font-weight: 400;
+  border-bottom: 2px solid #eaeaea;
+  margin-bottom: 25px;
+}
+.company-create .segment label{
+  color: #777;
+  font-weight: 300;
+  font-size: 14px;
+}
+.company-create .segment .form-control {
+  color: #777;
+}
+
 .company-create-basics {
   margin-top: 30px;
   margin-bottom: 50px;
@@ -262,6 +292,33 @@ body:before {
 .company-create-basics .segment .form-control {
   color: #777;
 }
+
+/*.company-create-overview {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  padding-top: 20px;
+}*/
+.company-create-overview .add-padding {
+  padding-top: 20px;
+}
+.company-create-overview .team-member {
+  border-bottom: 1px solid #ccc;
+}
+.company-create-overview .team-member-drop-photo {
+  font-size: 11px;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  height: 74px;
+  width: 100%;
+}
+.company-create-overview .team-member-drop-photo img {
+  align-self: center;
+  height: 58px;
+  width: auto;
+  max-width: 90px;
+}
+
 .index img {
     margin: 40px auto;
     border-radius: 4px;

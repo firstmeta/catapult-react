@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import CompanyCreateBasics from './company_create_basics';
+import CompanyCreateOverview from './company_create_overview';
 
 class CompanyCreate extends Component {
 
@@ -12,7 +13,7 @@ class CompanyCreate extends Component {
         <div className="container-fluid">
           <div className="row row-centered">
             <div className="col-lg-1 col-centered">
-            <h1>Let's set up your company!</h1>
+            <h1>Let's raise fund for your company!</h1>
             </div>
           </div>
         </div>
@@ -38,7 +39,7 @@ class CompanyCreate extends Component {
           </div>
         </div>
 
-        <CompanyCreateBasics />
+        <CompanyCreateOverview />
 
 
       </div>
