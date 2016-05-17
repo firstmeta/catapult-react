@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Field from './company_create_team_field';
 import FieldList from './company_create_team_field_list';
+import { SaveCompanyOverview } from '../actions/company_action';
 
 class CompanyCreateOverview extends Component {
 
@@ -9,21 +11,41 @@ class CompanyCreateOverview extends Component {
     super(props);
 
     this.state = {
-      team: [],
-      team1: ''
+      team: []
     }
 
     this.updateTeam = this.updateTeam.bind(this);
-
+    this.saveCompanyOverview = this.saveCompanyOverview.bind(this);
   }
 
-  updateTeam(teamz) {
-    console.log('updateTeam');
-    console.log(teamz);
-    this.setState({team: teamz});
-    this.setState({team1: 'abc'});
+  updateTeam(team) {
+    this.setState({team: team});
+  }
+
+  saveCompanyOverview() {
+    var content = {};
+    var contentTeam = [];
+    var teamPhotos = [];
+
     console.log(this.state.team);
-    console.log(this.state.team);
+
+    this.state.team.forEach((member) => {
+      contentTeam.push({
+        name: member.teamMemberName,
+        role: member.teamMemberRole,
+        intro: member.teamMemberIntro,
+        photoName: member.teamMemberPhoto.name
+      });
+      teamPhotos.push(member.teamMemberPhoto);
+    });
+
+    console.log(teamPhotos);
+    console.log(contentTeam);
+
+    content.companyShortDesc = this.refs.shortDesc.value;
+    content.team = contentTeam;
+
+    this.props.SaveCompanyOverview(content, teamPhotos)
   }
 
   render() {
@@ -52,11 +74,21 @@ class CompanyCreateOverview extends Component {
           <div className="row">
             <div className="col-md-10 col-md-offset-1 segment add-padding">
               <h3>Your team</h3>
-
-
               <FieldList fieldContents={this.state.team} update={this.updateTeam}/>
+            </div>
+          </div>
 
-
+          <div className="row">
+            <div className="col-md-10 col-md-offset-1 segment">
+              <div className="row row-centered">
+                <div className="col-lg-1 col-centered">
+                <button
+                  className="btn btn-primary btn-green btn-green-primary full-width"
+                  onClick={this.saveCompanyOverview}>
+                  Save & Continue
+                </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -67,4 +99,8 @@ class CompanyCreateOverview extends Component {
 
 }
 
-export default CompanyCreateOverview;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({SaveCompanyOverview: SaveCompanyOverview}, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(CompanyCreateOverview);

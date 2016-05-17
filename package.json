@@ -63,6 +63,7 @@
     "postcss-loader": "^0.8.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "core-js": "^2.0.0",
     "normalize.css": "^4.0.0",
     "randomstring": "^1.1.4",
@@ -72,6 +73,7 @@
     "react-dropzone": "^3.4.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.2.4",
+    "react-select": "^1.0.0-beta13",
     "redux": "^3.4.0",
     "redux-thunk": "^2.0.1",
     "superagent": "^1.8.3"

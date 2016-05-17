@@ -12,6 +12,12 @@ class CompanyCreateTeamFieldList extends Component {
     this.updateFieldContent = this.updateFieldContent.bind(this);
   }
 
+  componentWillMount() {
+    if(this.props.fieldContents.length < 1) {
+      this.addField();
+    }
+  }
+
   addField() {
     var fieldContents = this.props.fieldContents.slice();
     var key = randomstring.generate(8);
@@ -26,9 +32,7 @@ class CompanyCreateTeamFieldList extends Component {
   }
 
   updateFieldContent(index, content) {
-    console.log('updateFieldContent');
     var fieldContents = this.props.fieldContents.slice();
-    console.log(fieldContents[index]);
     fieldContents[index].teamMemberName = content.teamMemberName;
     fieldContents[index].teamMemberRole = content.teamMemberRole;
     fieldContents[index].teamMemberIntro = content.teamMemberIntro;
@@ -38,17 +42,8 @@ class CompanyCreateTeamFieldList extends Component {
   }
 
   render() {
-
     var fieldContents = this.props.fieldContents;
     var renderedFields = [];
-
-    // if(fieldContents.length < 1) {
-    //   this.addField();
-    //   return;
-    // }
-
-    console.log('field_list');
-    console.log(fieldContents);
 
     for (var i = 0; i < fieldContents.length; i++) {
       renderedFields.push(

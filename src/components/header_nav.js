@@ -13,7 +13,7 @@ class HeaderNav extends Component {
 
 		return (
 				<div className="header-nav">
-          <nav className="navbar navbar-default navbar-fixed-top ">     
+          <nav className="navbar navbar-default navbar-fixed-top ">
             <div className="navbar-header">
               <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span className="sr-only">Toggle navigation</span>
@@ -30,7 +30,7 @@ class HeaderNav extends Component {
                     <Link to="/browse">Browse Companies<span className="sr-only">(current)</span></Link>
                 </li>
                 <li>
-                	<Link to="/entrepreneurs">Entrepreneurs</Link>
+                	<Link to="/company/start">Entrepreneurs</Link>
                 </li>
                 <li>
                 	<Link to="/investers">Investers</Link>
@@ -57,7 +57,7 @@ class HeaderNav extends Component {
                 </li>
               </ul>
             </div>
-              
+
           </nav>
     		</div>
 		);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loginUser } from '../actions/auth_action'
 import {
-	Button, Modal, OverlayTrigger, Popover, Tooltip
+	Button, Modal
 } from 'react-bootstrap';
 
 class Login extends Component {

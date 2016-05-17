@@ -216,6 +216,34 @@ body:before {
 .landing .summary .call-to-action {
     color: #000;
 }
+.company-start {
+  margin-top: 80px;
+  margin-bottom: 300px;
+  padding-top: 40px;
+}
+.company-start h1 {
+  font-size: 45px;
+  font-weight: 200;
+  color: #444;
+}
+.company-start input {
+  border: none;
+  border-bottom: 1px solid #d9d9de;
+  outline:none;
+  min-width: 495px;
+  min-height: 50px;
+  background-color: #F8F8F8;
+  font-size: 23px;
+  font-weight: 300;
+}
+.company-start button {
+  font-size: 23px;
+  font-weight: 300;
+  max-width: 125px;
+  height: 50px;
+  float: right;
+  margin-top: 20px;
+}
 .company-create {
   margin-top: 80px;
 }
@@ -292,12 +320,19 @@ body:before {
 .company-create-basics .segment .form-control {
   color: #777;
 }
+.company-create-basics .segment .dropdown .btn {
+  width: 100%;
+}
+.company-create-basics .segment .dropdown li {
+  font-size: 12px;
+}
+.company-create-basics .segment .dropdown .dropdown-menu {
+  max-height: 400px;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
 
-/*.company-create-overview {
-  margin-top: 30px;
-  margin-bottom: 50px;
-  padding-top: 20px;
-}*/
 .company-create-overview .add-padding {
   padding-top: 20px;
 }

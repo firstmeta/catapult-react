@@ -13,8 +13,14 @@ class CompanyCreateTeamField extends Component {
   }
 
   onDrop(files) {
-    this.setState({teamMemberPhoto: files[0]});
-    this.handleInputChange();
+    var photo = files[0];
+    this.setState({teamMemberPhoto: photo});
+    this.props.update(this.props.index, {
+      teamMemberName: this.refs.teamMemberName.value,
+      teamMemberRole: this.refs.teamMemberRole.value,
+      teamMemberIntro: this.refs.teamMemberIntro.value,
+      teamMemberPhoto: photo
+    })
   }
 
   handleInputChange() {
@@ -27,8 +33,8 @@ class CompanyCreateTeamField extends Component {
   }
 
   render() {
+    //console.log(this.state.teamMemberPhoto);
     return (
-
       <div className="panel panel-default">
         <div className="panel-body">
           <div className="row">
@@ -39,7 +45,7 @@ class CompanyCreateTeamField extends Component {
                   type="text"
                   className="form-control"
                   ref="teamMemberName"
-                  onChange={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange}
                   value={this.props.teamMemberName}/>
               </div>
             </div>
@@ -49,7 +55,9 @@ class CompanyCreateTeamField extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  ref="teamMemberRole"/>
+                  ref="teamMemberRole"
+                  onChange={this.handleInputChange}
+                  value={this.props.teamMemberRole}/>
               </div>
             </div>
             <div className="col-sm-5">
@@ -57,7 +65,9 @@ class CompanyCreateTeamField extends Component {
               <textarea
                 className="form-control"
                 rows="3"
-                ref="teamMemberIntro"/>
+                ref="teamMemberIntro"
+                onChange={this.handleInputChange}
+                value={this.props.teamMemberIntro}/>
             </div>
             <div className="col-sm-2">
               <label for="team-member-photo">Photo</label>
@@ -69,16 +79,11 @@ class CompanyCreateTeamField extends Component {
                       <img src={this.state.teamMemberPhoto.preview} />
                     </div> : <div>Drop a photo here, or click to select photo to upload.</div>
                 }
-
               </Dropzone>
-
-
-
             </div>
           </div>
         </div>
       </div>
-
     )
   }
 
