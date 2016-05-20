@@ -1,8 +1,8 @@
-require('bootstrap/dist/css/bootstrap.min.css');
+// require('bootstrap/dist/css/bootstrap.min.css');
 require('normalize.css/normalize.css');
 require('styles/App.css');
 require('styles/animate.css');
-require('bootstrap/dist/js/bootstrap.min.js');
+// require('bootstrap/dist/js/bootstrap.min.js');
 
 import React, { Component } from 'react';
 import HeaderNav from './header_nav';
