@@ -20,6 +20,10 @@ a:hover, a:visited, a:link, a:active {
   text-decoration: none;
 }
 
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+
 .btn-green {
     padding: 8px 20px;
     border: 0 none;
@@ -60,6 +64,16 @@ a:hover, a:visited, a:link, a:active {
 }
 .input-group {
     margin-bottom: 15px !important;
+}
+.no-border-right {
+  border-right: 0px;
+}
+.no-border-radius {
+  border-radius: 0px;
+}
+.no-border-radius-right {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 .vertical-align {
     display: flex;
@@ -229,7 +243,7 @@ body:before {
 .company-start input {
   border: none;
   border-bottom: 1px solid #d9d9de;
-  outline:none;
+  outline: none;
   min-width: 495px;
   min-height: 50px;
   background-color: #F8F8F8;
@@ -260,6 +274,10 @@ body:before {
 .company-create .btn-toolbar .btn {
   min-height: 50px;
   padding: 10px 25px;
+}
+.company-create .btn-toolbar .btn-group .btn-clicked {
+    background-color: #E6E6E6;
+    border-color: #ccc;
 }
 .company-create .btn a:hover {
   color: #777 !important;
@@ -336,6 +354,20 @@ body:before {
 .company-create-overview .add-padding {
   padding-top: 20px;
 }
+.company-create-overview .logo-drop-image {
+  font-size: 11px;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  height: 93px;
+  width: 100%;
+}
+.company-create-overview .logo-drop-image img {
+  align-self: center;
+  max-height: 80px;
+  width: auto;
+  max-width: 90px;
+}
 .company-create-overview .team-member {
   border-bottom: 1px solid #ccc;
 }
@@ -352,6 +384,20 @@ body:before {
   height: 58px;
   width: auto;
   max-width: 90px;
+}
+.company-create-overview .team-field-list .panel {
+  margin-bottom: 10px;
+}
+.company-create-overview .team-field-list button {
+  background: none;
+  border: 1px solid #ABAAAA;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #757373;
+  outline: none;
+  padding: 0px;
+  margin-bottom: 25px;
+  width: 100%;
 }
 
 .index img {

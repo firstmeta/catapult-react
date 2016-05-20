@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Dropzone from 'react-dropzone';
 import Field from './company_create_team_field';
 import FieldList from './company_create_team_field_list';
 import { SaveCompanyOverview } from '../actions/company_action';
@@ -11,9 +12,11 @@ class CompanyCreateOverview extends Component {
     super(props);
 
     this.state = {
-      team: []
+      team: [],
+      logo:''
     }
 
+    this.updateLogo = this.updateLogo.bind(this);
     this.updateTeam = this.updateTeam.bind(this);
     this.saveCompanyOverview = this.saveCompanyOverview.bind(this);
   }
@@ -22,12 +25,16 @@ class CompanyCreateOverview extends Component {
     this.setState({team: team});
   }
 
+  updateLogo(files) {
+    console.log(files[0]);
+    var logo = files[0];
+    this.setState({logo: logo});
+  }
+
   saveCompanyOverview() {
     var content = {};
     var contentTeam = [];
     var teamPhotos = [];
-
-    console.log(this.state.team);
 
     this.state.team.forEach((member) => {
       contentTeam.push({
@@ -39,13 +46,11 @@ class CompanyCreateOverview extends Component {
       teamPhotos.push(member.teamMemberPhoto);
     });
 
-    console.log(teamPhotos);
-    console.log(contentTeam);
-
     content.companyShortDesc = this.refs.shortDesc.value;
+    content.logoName = this.state.logo.name;
     content.team = contentTeam;
 
-    this.props.SaveCompanyOverview(content, teamPhotos)
+    this.props.SaveCompanyOverview(content, logo, teamPhotos)
   }
 
   render() {
@@ -57,15 +62,38 @@ class CompanyCreateOverview extends Component {
             <div className="col-md-10 col-md-offset-1 segment add-padding">
               <h3>Company overview</h3>
               <div className="row">
-                <div className="col-sm-8">
+                <div className="col-sm-5">
                   <div className="form-group">
                     <label for="shortDesc">Short description of your company product</label>
                     <textarea
                       className="form-control"
-                      rows="3"
+                      rows="4"
                       ref="shortDesc"
                       id="shortDesc" />
                   </div>
+                </div>
+
+                <div className="col-sm-2">
+                  <label>Company logo</label>
+                  <Dropzone
+                    className="logo-drop-image"
+                    multiple={false}
+                    onDrop={this.updateLogo}>
+                    {
+                      this.state.logo ? <div>
+                          <img src={this.state.logo.preview} />
+                        </div> : <div>Drop your company logo here, or click to select image to upload.</div>
+                    }
+                  </Dropzone>
+                </div>
+
+                <div className="col-sm-5">
+                  <label>Introduction video</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="www.youtube.com/watch?v=awesome-video*"
+                    ref="videoUrl"/>
                 </div>
               </div>
             </div>
@@ -99,8 +127,14 @@ class CompanyCreateOverview extends Component {
 
 }
 
+function mapStateToProps(state) {
+  return {
+    randID: state.router.params.randID
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({SaveCompanyOverview: SaveCompanyOverview}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(CompanyCreateOverview);
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyCreateOverview);
