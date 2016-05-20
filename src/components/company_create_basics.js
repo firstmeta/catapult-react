@@ -2,27 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Select from 'react-select';
-import { SaveCompanyBasics } from '../actions/company_action';
-import { CountryList } from './country_list';
+import { SaveCompanyBasics, FetchCompanyByRandID } from '../actions/company_action';
+import { CountryList, CountryMap } from './country_list';
 
 class CompanyCreateBasics extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      country : {code: 'SG', name: 'Singapore'},
-    }
+    this.state = {country: ''};
 
     this.renderCountryList = this.renderCountryList.bind(this);
     this.saveCompanyBasics = this.saveCompanyBasics.bind(this);
   }
 
+  componentWillMount() {
+    this.props.FetchCompanyByRandID(this.props.randID);
+  }
+
   saveCompanyBasics() {
     this.props.SaveCompanyBasics({
+      randID: this.props.randID,
       companyName: this.refs.companyName.value,
       regNum: this.refs.regNum.value,
-      regCountry: this.state.country.code,
+      regCountry: this.state.country ? this.state.country.code : this.props.company.RegCountry,
       legalType: this.refs.legalType.value,
       industry: this.refs.industry.value,
       teamSize: this.refs.teamSize.value,
@@ -34,7 +37,7 @@ class CompanyCreateBasics extends Component {
       city: this.refs.city.value,
       postalCode: this.refs.postalCode.value,
       stateProvince: this.refs.stateProvince.value,
-      country: this.state.country.code
+      country: this.state.country ? this.state.country.code : this.props.company.Country
     })
   }
 
@@ -43,8 +46,7 @@ class CompanyCreateBasics extends Component {
       return (
         <li
           key={c.code}
-          onClick={() =>
-                    this.setState({country: {code: c.code, name: c.name}})}>
+          onClick={() => this.setState({country: {code: c.code, name: c.name}})}>
           <a>{c.name}</a>
         </li>
       )
@@ -52,6 +54,15 @@ class CompanyCreateBasics extends Component {
   }
 
   render() {
+
+    const { company } = this.props;
+
+    if (!company) {
+      return <div>Loading...</div>;
+    }
+
+    console.log(company);
+
     return (
       <div className="company-create-basics">
         <div className="container-fluid">
@@ -67,6 +78,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Company name*"
+                        defaultValue={company.CompanyName}
                         ref="companyName"
                         id="companyName"/>
                     </div>
@@ -74,19 +86,28 @@ class CompanyCreateBasics extends Component {
                   <div className="col-sm-4">
                     <div className="form-group">
                     <label for="regNum">REGISTRATION NUMBER</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Registration number*"
-                        ref="regNum"/>
-                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Registration number*"
+                      defaultValue={company.RegNumber}
+                      ref="regNum"/>
+                  </div>
                   </div>
                   <div className="col-sm-4">
                     <div className="form-group">
                       <label for="regCountry">REGISTRATION COUNTRY</label>
                       <div className="dropdown">
-                        <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                          {this.state.country.name} &nbsp;
+                        <button
+                          className="btn btn-default dropdown-toggle"
+                          type="button"
+                          id="regCountry"
+                          ref="regCountry"
+                          value={company.RegCountry}
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="true">
+                           { this.state.country ? this.state.country.name : CountryMap[company.RegCountry]} &nbsp;
                           <span className="caret"></span>
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -105,6 +126,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Legal company type*"
+                        defaultValue={company.LegalType}
                         ref="legalType"
                         id="legalType"/>
                     </div>
@@ -124,6 +146,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Industry*"
+                        defaultValue={company.Industry}
                         ref="industry"
                         id="industry"/>
                     </div>
@@ -134,7 +157,8 @@ class CompanyCreateBasics extends Component {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="1-10*"
+                        placeholder="5, 10, 20,...*"
+                        defaultValue={company.TeamSize}
                         ref="teamSize"/>
                     </div>
                   </div>
@@ -145,6 +169,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Website*"
+                        defaultValue={company.Website}
                         ref="website"
                         id="website"/>
                     </div>
@@ -159,6 +184,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Your role in the company*"
+                        defaultValue={company.CreatorRole}
                         ref="creatorRole"
                         id="creatorRole"/>
                     </div>
@@ -179,6 +205,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Your business email*"
+                        defaultValue={company.ContactEmail}
                         ref="contactEmail"
                         id="contactEmail"/>
                     </div>
@@ -190,6 +217,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Your business phone number"
+                        defaultValue={company.ContactNum}
                         ref="contactNum"
                         id="contactNum"/>
                     </div>
@@ -209,19 +237,9 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Address*"
+                        defaultValue={company.Address}
                         ref="address"
                         id="address"/>
-                    </div>
-                  </div>
-                  <div className="col-sm-4">
-                    <div className="form-group">
-                    <label for="addressLine2">ADDRESS LINE 2</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Address line 2*"
-                        ref="addressLine2"
-                        id="addressLine2"/>
                     </div>
                   </div>
                   <div className="col-sm-4">
@@ -231,6 +249,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="City / Town*"
+                        defaultValue={company.City}
                         ref="city"
                         id="city"/>
                     </div>
@@ -245,6 +264,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="Zip / Postal code*"
+                        defaultValue={company.PostalCode}
                         ref="postalCode"
                         id="postalCode"/>
                     </div>
@@ -256,6 +276,7 @@ class CompanyCreateBasics extends Component {
                         type="text"
                         className="form-control"
                         placeholder="State / Province / Region*"
+                        defaultValue={company.StateProvince}
                         ref="stateProvince"
                         id="stateProvince"/>
                     </div>
@@ -265,7 +286,7 @@ class CompanyCreateBasics extends Component {
                       <label for="country">COUNTRY</label>
                       <div className="dropdown">
                         <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                          {this.state.country.name}
+                          { this.state.country ? this.state.country.name : CountryMap[company.RegCountry]}
                         </button>
                       </div>
                     </div>
@@ -294,8 +315,15 @@ class CompanyCreateBasics extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ SaveCompanyBasics: SaveCompanyBasics }, dispatch);
+function mapStateToProps(state) {
+  return {
+    randID: state.router.params.randID,
+    company: state.CompanyState.companyDetails
+  }
 }
 
-export default connect(null, mapDispatchToProps)(CompanyCreateBasics);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ SaveCompanyBasics: SaveCompanyBasics, FetchCompanyByRandID: FetchCompanyByRandID }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyCreateBasics);
