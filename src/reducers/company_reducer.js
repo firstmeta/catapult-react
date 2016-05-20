@@ -1,12 +1,21 @@
 import {
+  COMPANY_START_SUCCESS, FETCH_COMPANY,
   COMPANY_SAVE_BASICS_SUCCESS, COMPANY_SAVE_BASICS_FAILURE
 } from '../actions/company_action';
 
 export default function(state = {
   msg: '',
-  companyEditingId: ''
+  companyDetails: ''
 }, action) {
   switch (action.type) {
+    case COMPANY_START_SUCCESS:
+      return Object.assign({}, state, {
+        companyEditingId: action.data
+      });
+    case FETCH_COMPANY:
+      return Object.assign({}, state, {
+        companyDetails: action.data
+      })
     case COMPANY_SAVE_BASICS_SUCCESS:
       return Object.assign({}, state, {
         msg: action.msg
