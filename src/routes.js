@@ -12,6 +12,6 @@ export default (
 		<IndexRoute component={Landing} />
 		<Route path="api/accountsetting" component={AccountSetting} />
 		<Route path="/company/start" component={CompanyStart} />
-		<Route path="/companycreate" component={CompanyCreate} />
+		<Route path="/company/:randID/edit" component={CompanyCreate} />
 	</Route>
 )
