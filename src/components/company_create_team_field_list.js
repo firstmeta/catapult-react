@@ -59,12 +59,10 @@ class CompanyCreateTeamFieldList extends Component {
     }
 
     return (
-      <div>
+      <div className="team-field-list">
         {renderedFields}
-        <button onClick={this.addField}
-                type="button"
-                className="btn btn-primary btn-green btn-green-primary full-width">
-          Add another field
+        <button onClick={this.addField}>
+          <i className="fa fa-plus" />
         </button>
       </div>
     )

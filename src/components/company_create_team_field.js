@@ -72,7 +72,7 @@ class CompanyCreateTeamField extends Component {
             <div className="col-sm-2">
               <label for="team-member-photo">Photo</label>
               <Dropzone
-                className="team-member-drop-photo" multiple={true}
+                className="team-member-drop-photo" multiple={false}
                 onDrop={this.onDrop}>
                 {
                   this.state.teamMemberPhoto ? <div>
