@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import CompanyCreateBasics from './company_create_basics';
 import CompanyCreateOverview from './company_create_overview';
@@ -7,13 +8,15 @@ class CompanyCreate extends Component {
 
 
   render() {
+    const { randID, step } = this.props;
+
     return (
       <div className="company-create">
 
         <div className="container-fluid">
           <div className="row row-centered">
             <div className="col-lg-1 col-centered">
-            <h1>Let's raise fund for your company!</h1>
+            <h1>Let's set up your company!</h1>
             </div>
           </div>
         </div>
@@ -23,8 +26,26 @@ class CompanyCreate extends Component {
             <div className="col-lg-1 col-centered">
               <div className="btn-toolbar" role="toolbar">
                 <div className="btn-group" role="group">
-                  <button type="button" className="btn btn-default"><Link to="/companycreate/basic">Basics</Link></button>
-                  <button type="button" className="btn btn-default"><Link to="/companycreate/overview">Overview</Link></button>
+                  <Link to={"/company/" + randID + "/edit"}>
+                    <button
+                      type="button"
+                      className={
+                          "btn btn-default no-border-radius-right no-border-right " +
+                          ((!step || step === 'basics') ? "btn-clicked" : "")
+                        }>
+                      Basics
+                    </button>
+                  </Link>
+                  <Link to={"/company/" + randID + "/edit?step=overview"}>
+                    <button
+                      type="button"
+                      className={
+                        "btn btn-default no-border-radius no-border-right " +
+                        ((step === 'overview') ? "btn-clicked" : "")
+                      }>
+                      Overview
+                    </button>
+                  </Link>
                   <button type="button" className="btn btn-default"><Link to="/companycreate/summary">Summary</Link></button>
                 </div>
                 <div className="btn-group" role="group">
@@ -39,12 +60,19 @@ class CompanyCreate extends Component {
           </div>
         </div>
 
-        <CompanyCreateOverview />
-
+        {(!step || step === 'basics') &&  <CompanyCreateBasics />}
+        {step === 'overview' && <CompanyCreateOverview />}
 
       </div>
     )
   }
 }
 
-export default CompanyCreate;
+function mapStateToProps(state) {
+  return {
+    randID: state.router.params.randID,
+    step: state.router.location.query.step
+  }
+}
+
+export default connect(mapStateToProps)(CompanyCreate);
