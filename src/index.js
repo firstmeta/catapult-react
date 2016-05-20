@@ -2,26 +2,39 @@ import 'core-js/fn/object/assign';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { Router, browserHistory } from 'react-router';
+import { createStore, combineReducers,compose, applyMiddleware } from 'redux';
+import { Router, browserHistory, Route, IndexRoute } from 'react-router';
+import { reduxReactRouter, routerStateReducer, ReduxRouter } from 'redux-router';
+import { createHistory } from 'history';
 import thunk from 'redux-thunk';
 
-// import App from './components/Main';
 import reducers from './reducers';
 import routes from './routes';
 
-let createStoreWithMiddleware = applyMiddleware(
-	thunk
-)(createStore);
+import App from './components/Main';
+import Landing from './components/landing';
+import CompanyCreate from './components/company_create';
+import CompanyStart from './components/company_start';
+import AccountSetting from './components/account_setting';
 
-let store = createStoreWithMiddleware(reducers);
+const store = compose(
+	applyMiddleware(thunk),
+	reduxReactRouter({
+		createHistory
+	})
+)(createStore)(reducers);
+
 
 render(
 	<Provider store={store}>
-		<Router history={browserHistory} routes={routes} />
+		<ReduxRouter>
+			<Route path="/" component={App}>
+				<IndexRoute component={Landing} />
+				<Route path="api/accountsetting" component={AccountSetting} />
+				<Route path="/company/start" component={CompanyStart} />
+				<Route path="/company/:randID/edit" component={CompanyCreate} />
+			</Route>
+		</ReduxRouter>
 	</Provider>
 	, document.getElementById('app')
 );
-
-// Render the main component into the dom
-// ReactDOM.render(<App />, document.getElementById('app'));
