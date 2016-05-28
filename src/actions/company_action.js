@@ -1,6 +1,7 @@
 import request from 'superagent';
 import { push } from 'redux-router';
 import { ROOT_URL } from './index';
+import { ROOT_IMAGE_URL } from '../config';
 import { AUTH_TOKEN } from './auth_action';
 
 export const COMPANY_START_SUCCESS = 'COMPANY_START_SUCCESS';
@@ -114,27 +115,73 @@ export function SaveCompanyBasics(content) {
 export function SaveCompanyOverview(content, logo, teamPhotos) {
   var req = request
               .post(`${ROOT_URL}/api/secure/company/save/overview`)
-              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN));
 
   var team = [];
   teamPhotos.forEach((photo) => {
     req.attach(photo.name, photo);
   })
 
-  req.attach(logo.name, logo);
+  if(logo) {
+    req.attach(logo.name, logo);
+  }
 
   req.field('CompanyOverview', JSON.stringify(content));
 
   return dispatch => {
     return req.end((err, res) => {
-      console.log(res);
       if (res.status === 200) {
         dispatch(saveCompanyOverviewSuccess(res));
+        dispatch(push('/company/' + content.randID + '/edit?step=summary'));
       }
       else {
         dispatch(saveCompanyOverviewFailure(res));
       }
     })
   }
+}
 
+export function SaveCompanySummary(content) {
+  var req = request
+              .post(`${ROOT_URL}/api/secure/company/save/summary`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .set('Content-Type', 'application/json')
+              .accept('application/json')
+              .send(content);
+
+  return dispatch => {
+    return req.end((err, res) => {
+      if(res.status === 200) {
+        console.log(res);
+        dispatch(push('/company/' + content.randID + '/preview'));
+      }
+      else {
+        console.log(err);
+      }
+
+    })
+  }
+
+}
+
+export function UploadCompanySummaryImage(imgObj, randID) {
+  var req = request
+              .post(`${ROOT_URL}/api/secure/upload/public_image`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+  var img = imgObj.data.file
+  req.attach(img.name, img);
+  req.field('imageName', img.name);
+  req.field('imageID', randID);
+
+  return dispatch => {
+    return req.end((err, res) => {
+      console.log(res);
+      if(res.status === 200) {
+        imgObj.data.el.$.src = `${ROOT_IMAGE_URL}/${res.text}`
+      }
+      else {
+        console.log(err);
+      }
+    })
+  }
 }
