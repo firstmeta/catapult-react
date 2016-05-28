@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
 import Field from './company_create_team_field';
 import FieldList from './company_create_team_field_list';
-import { SaveCompanyOverview } from '../actions/company_action';
+import { SaveCompanyOverview, FetchCompanyByRandID } from '../actions/company_action';
+import { ROOT_IMAGE_URL } from '../config';
 
 class CompanyCreateOverview extends Component {
 
@@ -16,17 +17,36 @@ class CompanyCreateOverview extends Component {
       logo:''
     }
 
+    this.displayLogo =  this.displayLogo.bind(this);
     this.updateLogo = this.updateLogo.bind(this);
     this.updateTeam = this.updateTeam.bind(this);
+    this.updateTeamTexts = this.updateTeamTexts.bind(this);
     this.saveCompanyOverview = this.saveCompanyOverview.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.FetchCompanyByRandID(this.props.randID);
   }
 
   updateTeam(team) {
     this.setState({team: team});
   }
+  updateTeamTexts(team) {
+    this.state.team = team;
+  }
 
+  displayLogo() {
+    if (this.state.logo.preview) {
+      return <img src={this.state.logo.preview} />;
+    }
+    else if (this.props.company.Logo) {
+      return <img src={ROOT_IMAGE_URL + '/' + this.props.company.Logo} />;
+    }
+    else {
+      return <div>Drop your company logo here, or click to select image to upload.</div>;
+    }
+  }
   updateLogo(files) {
-    console.log(files[0]);
     var logo = files[0];
     this.setState({logo: logo});
   }
@@ -38,22 +58,38 @@ class CompanyCreateOverview extends Component {
 
     this.state.team.forEach((member) => {
       contentTeam.push({
-        name: member.teamMemberName,
-        role: member.teamMemberRole,
-        intro: member.teamMemberIntro,
-        photoName: member.teamMemberPhoto.name
+        name: member.name,
+        role: member.role,
+        intro: member.intro,
+        photoName: (member.photo ? member.photo.name : member.savedPhoto)
       });
-      teamPhotos.push(member.teamMemberPhoto);
+      if(member.photo) {
+        teamPhotos.push(member.photo);
+      }
     });
 
-    content.companyShortDesc = this.refs.shortDesc.value;
-    content.logoName = this.state.logo.name;
+    content.randID = this.props.randID;
+    content.shortDesc = this.refs.shortDesc.value;
     content.team = contentTeam;
+    content.videoUrl = this.refs.videoUrl.value;
+    content.slogan = this.refs.slogan.value;
 
-    this.props.SaveCompanyOverview(content, logo, teamPhotos)
+    if(this.state.logo) {
+      content.logoName = this.state.logo.name;
+    }
+    else if (this.props.company.Logo) {
+      content.savedLogoName = this.props.company.Logo;
+    }
+    this.props.SaveCompanyOverview(content, this.state.logo, teamPhotos);
   }
 
   render() {
+    const { company, timestamp } = this.props;
+
+    if(!company) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div className="company-create-overview content">
         <div className="container-fluid">
@@ -64,10 +100,12 @@ class CompanyCreateOverview extends Component {
               <div className="row">
                 <div className="col-sm-5">
                   <div className="form-group">
-                    <label for="shortDesc">Short description of your company product</label>
+                    <label for="shortDesc">Short blurb</label>
                     <textarea
                       className="form-control"
                       rows="4"
+                      placeholder="How do you describe your company in one tweet?"
+                      defaultValue={company.DescriptionShort}
                       ref="shortDesc"
                       id="shortDesc" />
                   </div>
@@ -80,20 +118,36 @@ class CompanyCreateOverview extends Component {
                     multiple={false}
                     onDrop={this.updateLogo}>
                     {
-                      this.state.logo ? <div>
-                          <img src={this.state.logo.preview} />
-                        </div> : <div>Drop your company logo here, or click to select image to upload.</div>
+                      this.displayLogo()
                     }
                   </Dropzone>
                 </div>
 
-                <div className="col-sm-5">
-                  <label>Introduction video</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="www.youtube.com/watch?v=awesome-video*"
-                    ref="videoUrl"/>
+                <div className="col-sm-5 video-slogan">
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <label>Introduction video</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="www.youtube.com/watch?v=awesome-video*"
+                        defaultValue={company.Video}
+                        ref="videoUrl"/>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <label>Company slogan</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Revolutionize the future."
+                        defaultValue={company.Slogan}
+                        ref="slogan"/>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -102,7 +156,11 @@ class CompanyCreateOverview extends Component {
           <div className="row">
             <div className="col-md-10 col-md-offset-1 segment add-padding">
               <h3>Your team</h3>
-              <FieldList fieldContents={this.state.team} update={this.updateTeam}/>
+              <FieldList
+                fieldContents={this.state.team}
+                update={this.updateTeam}
+                updateTexts={this.updateTeamTexts}
+                savedTeam={this.props.company.Team}/>
             </div>
           </div>
 
@@ -129,12 +187,13 @@ class CompanyCreateOverview extends Component {
 
 function mapStateToProps(state) {
   return {
-    randID: state.router.params.randID
+    randID: state.router.params.randID,
+    company: state.CompanyState.companyDetails
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({SaveCompanyOverview: SaveCompanyOverview}, dispatch);
+  return bindActionCreators({SaveCompanyOverview: SaveCompanyOverview, FetchCompanyByRandID: FetchCompanyByRandID}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyCreateOverview);
