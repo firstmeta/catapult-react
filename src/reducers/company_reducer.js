@@ -1,6 +1,7 @@
 import {
   COMPANY_START_SUCCESS, FETCH_COMPANY,
-  COMPANY_SAVE_BASICS_SUCCESS, COMPANY_SAVE_BASICS_FAILURE
+  COMPANY_SAVE_BASICS_SUCCESS, COMPANY_SAVE_BASICS_FAILURE,
+  COMPANY_SAVE_OVERVIEW_SUCCESS
 } from '../actions/company_action';
 
 export default function(state = {
@@ -24,6 +25,11 @@ export default function(state = {
       return Object.assign({}, state, {
         msg: action.msg
       });
+      case COMPANY_SAVE_OVERVIEW_SUCCESS:
+        return Object.assign({}, state, {
+          msg: action.msg,
+          companyDetails: ''
+        });
     default:
       return state;
   }
