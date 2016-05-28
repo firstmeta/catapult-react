@@ -10,10 +10,26 @@ class CompanyCreateTeamFieldList extends Component {
 
     this.addField = this.addField.bind(this);
     this.updateFieldContent = this.updateFieldContent.bind(this);
+    this.updateFieldContentTexts = this.updateFieldContentTexts.bind(this);
   }
 
   componentWillMount() {
-    if(this.props.fieldContents.length < 1) {
+    if(this.props.savedTeam) {
+      var fieldContents = [];
+
+      this.props.savedTeam.map((member) => {
+        fieldContents.push({
+          name: member.name,
+          role: member.role,
+          intro: member.intro,
+          photo: '',
+          savedPhoto: member.photoName
+        });
+      });
+
+      this.props.update(fieldContents);
+    }
+    else if(this.props.fieldContents.length < 1) {
       this.addField();
     }
   }
@@ -22,23 +38,32 @@ class CompanyCreateTeamFieldList extends Component {
     var fieldContents = this.props.fieldContents.slice();
     var key = randomstring.generate(8);
     fieldContents.push({
-      key: key,
-      teamMemberName: '',
-      teamMemberRole: '',
-      teamMemberIntro: '',
-      teamMemberPhoto: ''
+      name: '',
+      role: '',
+      intro: '',
+      photo: '',
+      savedPhoto: ''
     });
     this.props.update(fieldContents);
   }
 
   updateFieldContent(index, content) {
     var fieldContents = this.props.fieldContents.slice();
-    fieldContents[index].teamMemberName = content.teamMemberName;
-    fieldContents[index].teamMemberRole = content.teamMemberRole;
-    fieldContents[index].teamMemberIntro = content.teamMemberIntro;
-    fieldContents[index].teamMemberPhoto = content.teamMemberPhoto;
+    fieldContents[index].name = content.name;
+    fieldContents[index].role = content.role;
+    fieldContents[index].intro = content.intro;
+    fieldContents[index].photo = content.photo;
 
     this.props.update(fieldContents);
+  }
+  updateFieldContentTexts(index, content) {
+    var fieldContents = this.props.fieldContents.slice();
+    fieldContents[index].name = content.name;
+    fieldContents[index].role = content.role;
+    fieldContents[index].intro = content.intro;
+    fieldContents[index].photo = content.photo;
+
+    this.props.updateTexts(fieldContents);
   }
 
   render() {
@@ -46,15 +71,18 @@ class CompanyCreateTeamFieldList extends Component {
     var renderedFields = [];
 
     for (var i = 0; i < fieldContents.length; i++) {
+      var key = randomstring.generate(8);
       renderedFields.push(
         <Field
-          key={fieldContents[i].key}
+          key={key}
           index={i}
-          teamMemberName={fieldContents[i].teamMemberName}
-          teamMemberRole={fieldContents[i].teamMemberRole}
-          teamMemberIntro={fieldContents[i].teamMemberIntro}
-          teamMemberPhoto={fieldContents[i].teamMemberPhoto}
-          update={this.updateFieldContent}/>
+          name={fieldContents[i].name}
+          role={fieldContents[i].role}
+          intro={fieldContents[i].intro}
+          photo={fieldContents[i].photo}
+          savedPhoto={fieldContents[i].savedPhoto}
+          update={this.updateFieldContent}
+          updateTexts={this.updateFieldContentTexts}/>
       );
     }
 

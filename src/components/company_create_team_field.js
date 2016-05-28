@@ -1,34 +1,48 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
+import { ROOT_IMAGE_URL } from '../config';
 
 class CompanyCreateTeamField extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = { teamMemberPhoto: '' }
+    this.state = { photo: '' }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onDrop = this.onDrop.bind(this);
   }
 
+  displayPhoto() {
+    if(this.props.photo) {
+      return <img src={this.props.photo.preview} />;
+    }
+    else if(this.props.savedPhoto) {
+      return <img src={ROOT_IMAGE_URL + '/' + this.props.savedPhoto} />;
+    }
+    else {
+      return <div>Drop a photo here, or click to select photo to upload.</div>;
+    }
+  }
+
   onDrop(files) {
     var photo = files[0];
-    this.setState({teamMemberPhoto: photo});
+    this.setState({photo: photo});
     this.props.update(this.props.index, {
-      teamMemberName: this.refs.teamMemberName.value,
-      teamMemberRole: this.refs.teamMemberRole.value,
-      teamMemberIntro: this.refs.teamMemberIntro.value,
-      teamMemberPhoto: photo
+      name: this.refs.name.value,
+      role: this.refs.role.value,
+      intro: this.refs.intro.value,
+      photo: photo
     })
   }
 
   handleInputChange() {
-    this.props.update(this.props.index, {
-      teamMemberName: this.refs.teamMemberName.value,
-      teamMemberRole: this.refs.teamMemberRole.value,
-      teamMemberIntro: this.refs.teamMemberIntro.value,
-      teamMemberPhoto: this.state.teamMemberPhoto
+    this.props.updateTexts(this.props.index, {
+      name: this.refs.name.value,
+      role: this.refs.role.value,
+      intro: this.refs.intro.value,
+      photo: this.state.photo
     })
   }
 
@@ -40,34 +54,34 @@ class CompanyCreateTeamField extends Component {
           <div className="row">
             <div className="col-sm-3">
               <div className="form-group">
-                <label for="teamMemberName">Name</label>
+                <label for="name">Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  ref="teamMemberName"
+                  ref="name"
                   onChange={this.handleInputChange}
-                  value={this.props.teamMemberName}/>
+                  defaultValue={this.props.name}/>
               </div>
             </div>
             <div className="col-sm-2">
               <div className="form-group">
-                <label for="teamMemberRole">Role</label>
+                <label for="role">Role</label>
                 <input
                   type="text"
                   className="form-control"
-                  ref="teamMemberRole"
+                  ref="role"
                   onChange={this.handleInputChange}
-                  value={this.props.teamMemberRole}/>
+                  defaultValue={this.props.role}/>
               </div>
             </div>
             <div className="col-sm-5">
-              <label for="teamMemberIntro">Short introduction</label>
+              <label for="intro">Short introduction</label>
               <textarea
                 className="form-control"
                 rows="3"
-                ref="teamMemberIntro"
+                ref="intro"
                 onChange={this.handleInputChange}
-                value={this.props.teamMemberIntro}/>
+                defaultValue={this.props.intro}/>
             </div>
             <div className="col-sm-2">
               <label for="team-member-photo">Photo</label>
@@ -75,9 +89,7 @@ class CompanyCreateTeamField extends Component {
                 className="team-member-drop-photo" multiple={false}
                 onDrop={this.onDrop}>
                 {
-                  this.state.teamMemberPhoto ? <div>
-                      <img src={this.state.teamMemberPhoto.preview} />
-                    </div> : <div>Drop a photo here, or click to select photo to upload.</div>
+                  this.displayPhoto()
                 }
               </Dropzone>
             </div>
