@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import CompanyCreateBasics from './company_create_basics';
 import CompanyCreateOverview from './company_create_overview';
+import CompanyCreateSummary from './company_create_summary';
 
 class CompanyCreate extends Component {
-
 
   render() {
     const { randID, step } = this.props;
@@ -46,7 +46,16 @@ class CompanyCreate extends Component {
                       Overview
                     </button>
                   </Link>
-                  <button type="button" className="btn btn-default"><Link to="/companycreate/summary">Summary</Link></button>
+                  <Link to={"/company/" + randID + "/edit?step=summary"}>
+                    <button
+                      type="button"
+                      className={
+                        "btn btn-default no-border-radius-left " +
+                        ((step === 'summary') ? "btn-clicked" : "")
+                      }>
+                      Summary
+                      </button>
+                  </Link>
                 </div>
                 <div className="btn-group" role="group">
                   <button type="button" className="btn btn-default"><Link to="/companycreate/preview">Preview</Link></button>
@@ -62,7 +71,7 @@ class CompanyCreate extends Component {
 
         {(!step || step === 'basics') &&  <CompanyCreateBasics />}
         {step === 'overview' && <CompanyCreateOverview />}
-
+        {step === 'summary' && <CompanyCreateSummary />}
       </div>
     )
   }
