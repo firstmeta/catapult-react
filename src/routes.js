@@ -5,6 +5,7 @@ import App from './components/Main';
 import Landing from './components/landing';
 import CompanyCreate from './components/company_create';
 import CompanyStart from './components/company_start';
+import CompanyView from './components/company_view';
 import AccountSetting from './components/account_setting';
 
 export default (
@@ -12,6 +13,7 @@ export default (
 		<IndexRoute component={Landing} />
 		<Route path="api/accountsetting" component={AccountSetting} />
 		<Route path="/company/start" component={CompanyStart} />
+		<Route path="/companies/preview/:randID" component={CompanyView} />
 		<Route path="/company/:randID/edit" component={CompanyCreate} />
 	</Route>
 )

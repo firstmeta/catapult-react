@@ -1,9 +1,31 @@
 /* Base Application Styles */
+
+@media screen and (min-width: 1200px) {
+  .col-lg-1 {
+      width: auto;
+  }
+}
+/*@media screen and (min-width: 1215px) {
+  .company-view .left-col {
+    margin-left: 5%;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .company-view .left-col {
+    margin-left: 7%;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .company-view .left-col {
+    margin-left: 9%;
+  }
+}*/
+
 html {
     height: 100%;
 }
 body {
-    background-color: #F8F8F8;
+    background-color: #F6F6F6;
     font-family: 'Raleway', sans-serif;
     height: 100%;
 }
@@ -71,9 +93,16 @@ a:hover, a:visited, a:link, a:active {
 .no-border-radius {
   border-radius: 0px;
 }
+.no-border-radius-left {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
 .no-border-radius-right {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+}
+.no-margin {
+  margin: 0px;
 }
 .vertical-align {
     display: flex;
@@ -131,6 +160,9 @@ body:before {
 }
 .header-nav .navbar-right {
     margin-right: 25px;
+}
+.segment {
+  background-color: #fff;
 }
 
 /* Login */
@@ -235,6 +267,9 @@ body:before {
   margin-bottom: 300px;
   padding-top: 40px;
 }
+.company-start .col-lg-1 {
+  width: auto;
+}
 .company-start h1 {
   font-size: 45px;
   font-weight: 200;
@@ -291,7 +326,7 @@ body:before {
   background-color: #fff;
 }
 .company-create .segment .row {
-  margin-bottom: 15px;
+  /*margin-bottom: 15px;*/
 }
 .company-create .segment h3{
   color: #444;
@@ -307,6 +342,9 @@ body:before {
 }
 .company-create .segment .form-control {
   color: #777;
+}
+.company-create .add-padding {
+  padding-top: 20px
 }
 
 .company-create-basics {
@@ -368,6 +406,12 @@ body:before {
   width: auto;
   max-width: 90px;
 }
+.company-create-overview .video-slogan .row {
+  margin-bottom: 8px;
+}
+.company-create-overview .video-slogan .row input {
+  height: 30px;
+}
 .company-create-overview .team-member {
   border-bottom: 1px solid #ccc;
 }
@@ -399,7 +443,67 @@ body:before {
   margin-bottom: 25px;
   width: 100%;
 }
-
+.company-view {
+  margin-top: 80px;
+}
+.company-view h2, h4 {
+  margin: 0px;
+}
+.company-view .player {
+  max-width: 100% !important;
+  height: 450px !important;
+  width: 100% !important;
+  margin-bottom: 25px;
+}
+.company-view .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.company-view .row-top {
+  margin-bottom: 10px;
+}
+.company-view .left-col {
+  padding-right: 0px;
+  margin-right: 0px;
+}
+.company-view .left-col .details {
+  width: 100%;
+  margin-bottom: 15px;
+  border: none;
+  box-shadow: rgba(0,0,0,0.05) 0 0 1px;
+}
+.company-view .row-top .right-col {
+  padding-top: 10px;
+}
+.company-view .right-col .details {
+  width: 100%;
+  margin-bottom: 15px;
+  border: none;
+  box-shadow: rgba(0,0,0,0.05) 0 0 1px;
+}
+.company-view .right-col .photo {
+  background-color: #E6CFCF;
+  height:50px;
+  width:50px;
+  position:relative;
+  border-radius:100%;
+  overflow:hidden;
+}
+.company-view .right-col .photo img {
+  position:absolute;
+  left:-50%; right:-50%; top:0;
+  margin:auto;
+  height:100%; width:auto;
+}
+.company-view .right-col h4 {
+  margin-bottom: 10px;
+}
+.company-view .team-member p{
+  margin: 0px;
+}
+.company-view .team-member .member-intro {
+  margin-top: 10px;
+}
 .index img {
     margin: 40px auto;
     border-radius: 4px;
