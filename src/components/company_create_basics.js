@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Select from 'react-select';
 import { SaveCompanyBasics, FetchCompanyByRandID } from '../actions/company_action';
-import { CountryList, CountryMap } from './country_list';
+import { CountryList, CountryMap } from './countries';
 
 class CompanyCreateBasics extends Component {
 
@@ -60,8 +60,6 @@ class CompanyCreateBasics extends Component {
     if (!company) {
       return <div>Loading...</div>;
     }
-
-    console.log(company);
 
     return (
       <div className="company-create-basics">
