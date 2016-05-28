@@ -16,7 +16,6 @@ class CompanyCreateOverview extends Component {
       team: [],
       logo:''
     }
-
     this.displayLogo =  this.displayLogo.bind(this);
     this.updateLogo = this.updateLogo.bind(this);
     this.updateTeam = this.updateTeam.bind(this);
@@ -84,7 +83,7 @@ class CompanyCreateOverview extends Component {
   }
 
   render() {
-    const { company, timestamp } = this.props;
+    const { company } = this.props;
 
     if(!company) {
       return <div>Loading...</div>;
