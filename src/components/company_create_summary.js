@@ -23,7 +23,7 @@ class CompanyCreateSummary extends Component {
   }
 
   componentDidMount() {
-    if(this.refs.editable) {
+    if(this.refs.editable && !this._editor) {
       this._editor = AlloyEditor.editable("editable");
       this._editor.get('nativeEditor')
                  .on('imageAdd', this.uploadImage);
@@ -37,7 +37,7 @@ class CompanyCreateSummary extends Component {
   }
 
   initializeContent() {
-    if(this.props.company) {
+    if(this.props.company.Summary) {
       return this.props.company.Summary;
     }
     else {
@@ -72,13 +72,17 @@ class CompanyCreateSummary extends Component {
                 <div className="col-sm-10 col-sm-offset-1">
                   <div>
                     <i>
-                      Tell us more about your company and your company products.
+                      Tell us more about your company and your company's products.
                       You can use the following template or delete everything and add your own.
                       Just <u><strong>click inside the text area</strong></u> to start typing.
                       If you want to add image, just drag and drop it into the text area :).
                     </i>
                   </div>
-                  <div className="editable" ref="editable" id="editable" dangerouslySetInnerHTML={{__html: this.initializeContent()}}>
+                  <div
+                    className="editable"
+                    ref="editable"
+                    id="editable"
+                    dangerouslySetInnerHTML={{__html: this.initializeContent()}}>
                   </div>
                 </div>
               </div>
