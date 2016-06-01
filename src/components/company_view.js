@@ -19,7 +19,6 @@ class CompanyView extends Component {
   }
 
   renderTeam() {
-    console.log(this.props.company.Team);
     if(!this.props.company.Team) {
       return (
         <div></div>
@@ -58,8 +57,6 @@ class CompanyView extends Component {
   render() {
 
     const { company } = this.props;
-
-    console.log(company);
 
     if (!company) {
       return <div>Loading...</div>;
