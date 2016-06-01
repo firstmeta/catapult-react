@@ -14,10 +14,13 @@ class CompanyCreateOverview extends Component {
 
     this.state = {
       team: [],
-      logo:''
+      logo:'',
+      listingImage: ''
     }
     this.displayLogo =  this.displayLogo.bind(this);
+    this.displayListingImage = this.displayListingImage.bind(this);
     this.updateLogo = this.updateLogo.bind(this);
+    this.updateListingImage = this.updateListingImage.bind(this);
     this.updateTeam = this.updateTeam.bind(this);
     this.updateTeamTexts = this.updateTeamTexts.bind(this);
     this.saveCompanyOverview = this.saveCompanyOverview.bind(this);
@@ -45,9 +48,30 @@ class CompanyCreateOverview extends Component {
       return <div>Drop your company logo here, or click to select image to upload.</div>;
     }
   }
+  displayListingImage() {
+    if (this.state.listingImage.preview) {
+      return <img src={this.state.listingImage.preview} />;
+    }
+    else if (this.props.company.ListingImage) {
+      return <img src={ROOT_IMAGE_URL + '/' + this.props.company.ListingImage} />;
+    }
+    else {
+      return (
+        <div>
+          <p>Drop your company listing image here, or click to select image to upload.</p>
+          <p>Size 338 x 190 px</p>
+
+        </div>
+      );
+    }
+  }
   updateLogo(files) {
     var logo = files[0];
     this.setState({logo: logo});
+  }
+  updateListingImage(files) {
+    var img = files[0];
+    this.setState({listingImage: img});
   }
 
   saveCompanyOverview() {
@@ -79,7 +103,15 @@ class CompanyCreateOverview extends Component {
     else if (this.props.company.Logo) {
       content.savedLogoName = this.props.company.Logo;
     }
-    this.props.SaveCompanyOverview(content, this.state.logo, teamPhotos);
+
+    if(this.state.listingImage) {
+      content.listingImageName = this.state.listingImage.name;
+    }
+    else if (this.props.company.ListingImage) {
+      content.savedListingImageName = this.props.company.ListingImage;
+    }
+
+    this.props.SaveCompanyOverview(content, this.state.logo, this.state.listingImage, teamPhotos);
   }
 
   render() {
@@ -97,7 +129,7 @@ class CompanyCreateOverview extends Component {
             <div className="col-md-10 col-md-offset-1 segment add-padding">
               <h3>Company overview</h3>
               <div className="row">
-                <div className="col-sm-5">
+                <div className="col-sm-4">
                   <div className="form-group">
                     <label for="shortDesc">Short blurb</label>
                     <textarea
@@ -113,7 +145,7 @@ class CompanyCreateOverview extends Component {
                 <div className="col-sm-2">
                   <label>Company logo</label>
                   <Dropzone
-                    className="logo-drop-image"
+                    className="drop-image"
                     multiple={false}
                     onDrop={this.updateLogo}>
                     {
@@ -122,7 +154,19 @@ class CompanyCreateOverview extends Component {
                   </Dropzone>
                 </div>
 
-                <div className="col-sm-5 video-slogan">
+                <div className="col-sm-2">
+                  <label>Listing image</label>
+                  <Dropzone
+                    className="drop-image"
+                    multiple={false}
+                    onDrop={this.updateListingImage}>
+                    {
+                      this.displayListingImage()
+                    }
+                  </Dropzone>
+                </div>
+
+                <div className="col-sm-4 video-slogan">
                   <div className="row">
                     <div className="col-sm-12">
                       <label>Introduction video</label>
