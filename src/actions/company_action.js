@@ -10,7 +10,10 @@ export const COMPANY_SAVE_BASICS_SUCCESS = 'COMPANY_SAVE_BASICS_SUCCESS';
 export const COMPANY_SAVE_BASICS_FAILURE = 'COMPANY_SAVE_BASICS_FAILURE';
 export const COMPANY_SAVE_OVERVIEW_SUCCESS = 'COMPANY_SAVE_OVERVIEW_SUCCESS';
 export const COMPANY_SAVE_OVERVIEW_FAILURE = 'COMPANY_SAVE_OVERVIEW_FAILURE';
+export const COMPANY_SUBMIT_REVIEW_SUCCESS = 'COMPANY_SUBMIT_REVIEW_SUCCESS';
+export const COMPANY_SUBMIT_REVIEW_FAILURE = 'COMPANY_SUBMIT_REVIEW_FAILURE';
 export const FETCH_COMPANY = 'FETCH_COMPANY';
+export const FETCH_ALL_COMPANIES = 'FETCH_ALL_COMPANIES';
 
 function startCompanySuccess(company) {
   return {
@@ -48,10 +51,28 @@ function saveCompanyOverviewFailure(msg) {
       msg: msg
     }
 }
+function submitReviewSuccess(msg) {
+  return {
+    type: COMPANY_SUBMIT_REVIEW_SUCCESS,
+    msg: msg
+  }
+}
+function submitReviewFailure(msg) {
+  return {
+    type: COMPANY_SUBMIT_REVIEW_FAILURE,
+    msg: msg
+  }
+}
 
 function fetchCompanyResult(data) {
   return {
     type: FETCH_COMPANY,
+    data: data
+  }
+}
+function fetchAllCompaniesResult(data) {
+  return {
+    type: FETCH_ALL_COMPANIES,
     data: data
   }
 }
@@ -66,7 +87,6 @@ export function StartCompany(content) {
   return dispatch => {
     return req.end((err, res) => {
       if(res.status === 200) {
-        console.log(res.body);
         dispatch(startCompanySuccess(res.body));
         dispatch(push('/company/' + res.body.RandID + '/edit'));
       }
@@ -100,19 +120,17 @@ export function SaveCompanyBasics(content) {
   return dispatch => {
     return req.end((err, res) => {
       if(res.status === 200) {
-        console.log(res);
         dispatch(saveCompanyBasicsSuccess('Company basics saved!'));
         dispatch(push('/company/' + content.randID + '/edit?step=overview'))
       }
       else {
-        console.log(res);
         dispatch(saveCompanyBasicsFailure('Error saving company basics! Please check all the fields!'));
       }
     })
   }
 }
 
-export function SaveCompanyOverview(content, logo, teamPhotos) {
+export function SaveCompanyOverview(content, logo, listingImage, teamPhotos) {
   var req = request
               .post(`${ROOT_URL}/api/secure/company/save/overview`)
               .set('Authorization', localStorage.getItem(AUTH_TOKEN));
@@ -124,6 +142,10 @@ export function SaveCompanyOverview(content, logo, teamPhotos) {
 
   if(logo) {
     req.attach(logo.name, logo);
+  }
+
+  if(listingImage) {
+    req.attach(listingImage.name, listingImage)
   }
 
   req.field('CompanyOverview', JSON.stringify(content));
@@ -152,8 +174,7 @@ export function SaveCompanySummary(content) {
   return dispatch => {
     return req.end((err, res) => {
       if(res.status === 200) {
-        console.log(res);
-        dispatch(push('/company/' + content.randID + '/preview'));
+        dispatch(push('/company/' + content.randID + '/edit?step=preview'));
       }
       else {
         console.log(err);
@@ -161,7 +182,23 @@ export function SaveCompanySummary(content) {
 
     })
   }
-
+}
+export function SubmitCompanyForReview(randID) {
+  var req = request
+              .post(`${ROOT_URL}/api/secure/company/submitforreview`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .field('randID', randID);
+  return dispatch => {
+    return req.end((err, res) => {
+      if(res.status === 200) {
+        dispatch(submitReviewSuccess(res.text))
+      }
+      else {
+        console.log(err);
+        dispatch(submitReviewFailure(res.text));
+      }
+    })
+  }
 }
 
 export function UploadCompanySummaryImage(imgObj, randID) {
@@ -184,4 +221,17 @@ export function UploadCompanySummaryImage(imgObj, randID) {
       }
     })
   }
+}
+
+export function FetchAllActiveCompanies() {
+  var req = request
+              .get(`${ROOT_URL}/api/company/fetch_all_active_companies`)
+              .accept('application/json');
+
+  return dispatch => {
+    return req.end((err, res) => {
+      dispatch(fetchAllCompaniesResult(res.body));
+    })
+  }
+
 }

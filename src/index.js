@@ -13,6 +13,7 @@ import routes from './routes';
 
 import App from './components/Main';
 import Landing from './components/landing';
+import CompanyBrowse from './components/company_browse';
 import CompanyCreate from './components/company_create';
 import CompanyStart from './components/company_start';
 import CompanyView from './components/company_view';
@@ -32,6 +33,7 @@ render(
 			<Route path="/" component={App}>
 				<IndexRoute component={Landing} />
 				<Route path="api/accountsetting" component={AccountSetting} />
+				<Route path="/company/browse" component={CompanyBrowse} />
 				<Route path="/company/start" component={CompanyStart} />
 				<Route path="/company/:randID/edit" component={CompanyCreate} />
 				<Route path="/company/:randID/preview" component={CompanyView} />

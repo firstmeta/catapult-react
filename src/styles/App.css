@@ -346,6 +346,10 @@ body:before {
 .company-create .add-padding {
   padding-top: 20px
 }
+.company-create .submit-review {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 
 .company-create-basics {
   margin-top: 30px;
@@ -392,7 +396,7 @@ body:before {
 .company-create-overview .add-padding {
   padding-top: 20px;
 }
-.company-create-overview .logo-drop-image {
+.company-create-overview .drop-image {
   font-size: 11px;
   border: 2px dashed #ccc;
   border-radius: 4px;
@@ -400,11 +404,14 @@ body:before {
   height: 93px;
   width: 100%;
 }
-.company-create-overview .logo-drop-image img {
+.company-create-overview .drop-image p{
+  margin-bottom: 4px;
+}
+.company-create-overview .drop-image img {
   align-self: center;
-  max-height: 80px;
+  max-height: 90px;
   width: auto;
-  max-width: 90px;
+  max-width: 123px;
 }
 .company-create-overview .video-slogan .row {
   margin-bottom: 8px;
@@ -516,6 +523,51 @@ body:before {
 }
 .company-view .team-member .member-intro {
   margin-top: 10px;
+}
+
+.company-browse {
+  margin-top: 80px;
+}
+.company-browse h1 {
+  font-size: 45px;
+  font-weight: 300;
+  color: #444;
+}
+.company-browse .col-lg-1 {
+  width: auto;
+  margin-bottom: 30px;
+}
+.company-browse .company-list {
+  margin-bottom: 80px;
+}
+.company-browse .company-card .panel {
+  height: 350px;
+  position: relative;
+}
+.company-browse .company-card .panel-body{
+  padding: 0px;
+}
+.company-browse .listing-image img {
+    height: auto;
+    width: 100%;
+}
+.company-browse .content {
+  padding: 8px;
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+.company-browse .content .card-footer{
+  position: absolute;
+  bottom: 10px;
+}
+.company-browse .content h3 {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #000;
+}
+.company-browse .content span {
+  margin-right: 12px;
 }
 .index img {
     margin: 40px auto;
