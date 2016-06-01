@@ -1,11 +1,45 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import CompanyCreateBasics from './company_create_basics';
 import CompanyCreateOverview from './company_create_overview';
 import CompanyCreateSummary from './company_create_summary';
+import CompanyView from './company_view';
+import { SubmitCompanyForReview } from '../actions/company_action';
 
 class CompanyCreate extends Component {
+
+constructor(props) {
+  super(props);
+
+  this.renderSubmitReviewButton = this.renderSubmitReviewButton.bind(this);
+  this.submitForReview = this.submitForReview.bind(this);
+}
+
+submitForReview() {
+  this.props.SubmitCompanyForReview(this.props.randID);
+}
+
+  renderSubmitReviewButton() {
+    return (
+      <div className="container-fluid">
+        <div className="row submit-review">
+          <div className="col-md-10 col-md-offset-1">
+            <div className="row row-centered">
+              <div className="col-lg-1 col-centered">
+              <button
+                className="btn btn-primary btn-green btn-green-primary full-width"
+                onClick={this.submitForReview}>
+                Submit for review
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   render() {
     const { randID, step } = this.props;
@@ -58,11 +92,19 @@ class CompanyCreate extends Component {
                   </Link>
                 </div>
                 <div className="btn-group" role="group">
-                  <button type="button" className="btn btn-default"><Link to="/companycreate/preview">Preview</Link></button>
+                  <Link to={"/company/" + randID + "/edit?step=preview"}>
+                    <button
+                      type="button"
+                      className={
+                        "btn btn-default" + ((step === 'preview') ? "btn-clicked" : "")
+                      }>
+                      Preview
+                    </button>
+                  </Link>
                 </div>
 
                 <div className="btn-group" role="group">
-                  <button type="button" className="btn btn-default"><Link to="/companycreate/submit">Submit</Link></button>
+                  <button type="button" className="btn btn-default"><Link to="/companycreate/submit">Submit for review</Link></button>
                 </div>
               </div>
             </div>
@@ -72,6 +114,10 @@ class CompanyCreate extends Component {
         {(!step || step === 'basics') &&  <CompanyCreateBasics />}
         {step === 'overview' && <CompanyCreateOverview />}
         {step === 'summary' && <CompanyCreateSummary />}
+        {step === 'preview' && <CompanyView />}
+        {step === 'preview' && this.renderSubmitReviewButton()}
+
+
       </div>
     )
   }
@@ -83,5 +129,7 @@ function mapStateToProps(state) {
     step: state.router.location.query.step
   }
 }
-
-export default connect(mapStateToProps)(CompanyCreate);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({SubmitCompanyForReview: SubmitCompanyForReview}, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyCreate);
