@@ -75,6 +75,7 @@ class CompanyView extends Component {
                   </div>
                 </div>
                 <div className="col-md-4 right-col">
+                  <span className="fa fa-tags">&nbsp; {company.Industry}</span>
                   <span className="fa fa-map-marker">&nbsp; {CountryMap[company.Country]}</span>
                 </div>
               </div>

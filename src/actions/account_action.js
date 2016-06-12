@@ -1,5 +1,5 @@
 import request from 'superagent';
-import { ROOT_URL } from './index';
+import { ROOT_URL } from '../config';
 
 // Refactor: combine auth_action into account_action
 import { loginSuccess, loginFailure, AUTH_TOKEN } from './auth_action';
@@ -26,7 +26,7 @@ export function signupAccount(creds) {
 				.set('Content-Type', 'application/json')
 				.accept('application/json')
 				.send(creds);
-				
+
 	return dispatch => {
 		return req.end((err, res) => {
 			if (res.status === 200) {

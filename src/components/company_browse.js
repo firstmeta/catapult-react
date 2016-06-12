@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FetchAllActiveCompanies } from '../actions/company_action';
@@ -24,8 +25,6 @@ class CompanyBrowse extends Component {
       return <div>Loading...</div>;
     }
 
-    console.log(allCompanies);
-
     var numberOfRows = Math.ceil(allCompanies.length / 3);
     var index = 0;
     var rows = [];
@@ -48,23 +47,27 @@ class CompanyBrowse extends Component {
                     }
                     return (
                       <div className="col-md-4">
-                        <div className="company-card">
-                          <div className="panel panel-default">
-                            <div className="panel-body">
-                              <div className="listing-image">
-                                <img src={ROOT_IMAGE_URL + '/' + allCompanies[r+c].ListingImage} />
-                              </div>
-                              <div className="content">
-                                <h3>{allCompanies[r+c].CompanyName + ' - ' + allCompanies[r+c].Slogan}</h3>
-                                <p>{allCompanies[r+c].DescriptionShort}</p>
-                                <div className="card-footer">
-                                  <span className="fa fa-tags">&nbsp; {allCompanies[r+c].Industry}</span>
-                                  <span className="fa fa-map-marker">&nbsp; {CountryMap[allCompanies[r+c].Country]}</span>
+                        <Link to={
+                          allCompanies[r+c].Url ? "/company/view/" + allCompanies[r+c].Url : "/company/view/" + allCompanies[r+c].RandID
+                        }>
+                          <div className="company-card">
+                            <div className="panel panel-default">
+                              <div className="panel-body">
+                                <div className="listing-image">
+                                  <img src={ROOT_IMAGE_URL + '/' + allCompanies[r+c].ListingImage} />
+                                </div>
+                                <div className="content">
+                                  <h3>{allCompanies[r+c].CompanyName + ' - ' + allCompanies[r+c].Slogan}</h3>
+                                  <p>{allCompanies[r+c].DescriptionShort}</p>
+                                  <div className="card-footer">
+                                    <span className="fa fa-tags">&nbsp; {allCompanies[r+c].Industry}</span>
+                                    <span className="fa fa-map-marker">&nbsp; {CountryMap[allCompanies[r+c].Country]}</span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </Link>
                       </div>
                     )
                   })
@@ -83,13 +86,13 @@ class CompanyBrowse extends Component {
     return (
       <div className="company-browse">
 
-      <div className="container-fluid">
-        <div className="row row-centered">
-          <div className="col-lg-1 col-centered">
-          <h1>Browse potential companies</h1>
+        <div className="container-fluid">
+          <div className="row row-centered">
+            <div className="col-lg-1 col-centered">
+            <h1>Browse potential companies</h1>
+            </div>
           </div>
         </div>
-      </div>
 
         <div className="container-fluid company-list">
           <div className="row">

@@ -27,10 +27,15 @@ class HeaderNav extends Component {
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav">
                 <li>
-                    <Link to="/browse">Browse Companies<span className="sr-only">(current)</span></Link>
+                    <Link to="/company/browse">Browse Companies<span className="sr-only">(current)</span></Link>
                 </li>
-                <li>
-                	<Link to="/company/start">Entrepreneurs</Link>
+                <li className="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entrepreneurs <span className="caret"></span></a>
+									<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
+										<li><Link to="/companies-campaigns-mine">My companies</Link></li>
+										<li role="separator" className="divider"></li>
+										<li><Link to="/company/start">Set up company</Link></li>
+									</ul>
                 </li>
                 <li>
                 	<Link to="/investers">Investers</Link>

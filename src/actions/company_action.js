@@ -1,7 +1,6 @@
 import request from 'superagent';
 import { push } from 'redux-router';
-import { ROOT_URL } from './index';
-import { ROOT_IMAGE_URL } from '../config';
+import { ROOT_URL, ROOT_IMAGE_URL } from '../config';
 import { AUTH_TOKEN } from './auth_action';
 
 export const COMPANY_START_SUCCESS = 'COMPANY_START_SUCCESS';
@@ -13,7 +12,8 @@ export const COMPANY_SAVE_OVERVIEW_FAILURE = 'COMPANY_SAVE_OVERVIEW_FAILURE';
 export const COMPANY_SUBMIT_REVIEW_SUCCESS = 'COMPANY_SUBMIT_REVIEW_SUCCESS';
 export const COMPANY_SUBMIT_REVIEW_FAILURE = 'COMPANY_SUBMIT_REVIEW_FAILURE';
 export const FETCH_COMPANY = 'FETCH_COMPANY';
-export const FETCH_ALL_COMPANIES = 'FETCH_ALL_COMPANIES';
+export const FETCH_ALL_ACTIVE_COMPANIES = 'FETCH_ALL_COMPANIES';
+export const FETCH_ALL_MY_COMPANIES = 'FETCH_ALL_MY_COMPANIES';
 
 function startCompanySuccess(company) {
   return {
@@ -70,9 +70,15 @@ function fetchCompanyResult(data) {
     data: data
   }
 }
-function fetchAllCompaniesResult(data) {
+function fetchAllActiveCompaniesResult(data) {
   return {
-    type: FETCH_ALL_COMPANIES,
+    type: FETCH_ALL_ACTIVE_COMPANIES,
+    data: data
+  }
+}
+function fetchAllMyCompaniesResult(data) {
+  return {
+    type: FETCH_ALL_MY_COMPANIES,
     data: data
   }
 }
@@ -212,7 +218,6 @@ export function UploadCompanySummaryImage(imgObj, randID) {
 
   return dispatch => {
     return req.end((err, res) => {
-      console.log(res);
       if(res.status === 200) {
         imgObj.data.el.$.src = `${ROOT_IMAGE_URL}/${res.text}`
       }
@@ -230,8 +235,20 @@ export function FetchAllActiveCompanies() {
 
   return dispatch => {
     return req.end((err, res) => {
-      dispatch(fetchAllCompaniesResult(res.body));
+      dispatch(fetchAllActiveCompaniesResult(res.body));
     })
   }
 
+}
+export function FetchAllMyCompanies() {
+  var req = request
+          .get(`${ROOT_URL}/api/secure/company/fetch_all_my_companies`)
+          .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+          .accept('application/json')
+
+  return dispatch => {
+    return req.end((err, res) => {
+      dispatch(fetchAllMyCompaniesResult(res.body));
+    })
+  }
 }

@@ -41,6 +41,21 @@ a:focus, a:hover {
 a:hover, a:visited, a:link, a:active {
   text-decoration: none;
 }
+h1 {
+  font-size: 45px;
+  font-weight: 300;
+  color: #444;
+}
+h2 {
+  font-size: 35px;
+  font-weight: 300;
+  color: #444;
+}
+label {
+  color: #777;
+  font-weight: 300;
+  font-size: 14px;
+}
 
 .btn:focus,.btn:active {
    outline: none !important;
@@ -129,6 +144,16 @@ a:hover, a:visited, a:link, a:active {
   margin-top: 10px;
   line-height: 60px;
 }
+.segment {
+  background-color: #fff;
+}
+.segment h3{
+  color: #444;
+  font-size: 23px;
+  font-weight: 400;
+  border-bottom: 2px solid #eaeaea;
+  margin-bottom: 25px;
+}
 
 /*Opera Fix*/
 body:before {
@@ -160,9 +185,6 @@ body:before {
 }
 .header-nav .navbar-right {
     margin-right: 25px;
-}
-.segment {
-  background-color: #fff;
 }
 
 /* Login */
@@ -464,7 +486,7 @@ body:before {
   padding-bottom: 20px;
 }
 .company-view {
-  margin-top: 80px;
+  margin-top: 110px;
 }
 .company-view h2, h4 {
   margin: 0px;
@@ -480,7 +502,7 @@ body:before {
   margin-right: 0px;
 }
 .company-view .row-top {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .company-view .left-col {
   padding-right: 0px;
@@ -494,6 +516,9 @@ body:before {
 }
 .company-view .row-top .right-col {
   padding-top: 10px;
+}
+.company-view .row-top .right-col span {
+  margin-right: 10px;
 }
 .company-view .right-col .details {
   width: 100%;
@@ -541,7 +566,7 @@ body:before {
   margin-bottom: 80px;
 }
 .company-browse .company-card .panel {
-  height: 350px;
+  height: 390px;
   position: relative;
 }
 .company-browse .company-card .panel-body{
@@ -568,6 +593,95 @@ body:before {
 }
 .company-browse .content span {
   margin-right: 12px;
+}
+
+.companies-campaigns {
+  margin-top: 80px;
+}
+.companies-campaigns h2 {
+  margin-top: 45px;
+  margin-bottom: 15px;
+}
+.companies-campaigns .header {
+  font-size: 18px;
+  font-weight: 400;
+  border-bottom: 1px solid #868383;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+.companies-campaigns .header span {
+  padding-bottom: 10px;
+}
+.companies-campaigns .row-content {
+  border-bottom: 1px solid #eaeaea;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.companies-campaigns .row-content .status p::first-letter {
+  text-transform: capitalize;
+}
+
+.campaign-create {
+  margin-top: 100px;
+  margin-bottom: 40px;
+}
+.campaign-create h1 {
+  margin: 0px;
+}
+.campaign-create .btn-toolbar {
+  margin-top: 45px;
+}
+.campaign-create .btn-toolbar .btn-group {
+  margin-left: 10px;
+}
+.campaign-create .btn-toolbar .btn {
+  min-height: 50px;
+  padding: 10px 25px;
+}
+.campaign-create .btn-toolbar .btn-group .btn-clicked {
+    background-color: #E6E6E6;
+    border-color: #ccc;
+}
+.campaign-create .btn a:hover {
+  color: #777 !important;
+}
+.campaign-create-basics {
+  margin-top: 35px;
+}
+.campaign-create-basics .field {
+  margin-bottom: 55px;
+}
+.campaign-create-basics input {
+  border: none;
+  border-bottom: 1px solid #d9d9de;
+  outline: none;
+  min-width: 495px;
+  min-height: 50px;
+  background-color: #f6f6f6;
+  font-size: 21px;
+  font-weight: 300;
+}
+.campaign-create-basics textarea {
+  border: none;
+  border-bottom: 1px solid #d9d9de;
+  outline: none;
+  min-width: 495px;
+  background-color: #f6f6f6;
+}
+.campaign-create-basics label {
+  font-size: 18px;
+}
+.campaign-create-basics h3 {
+  font-size: 21px;
+  font-weight: 300;
+  color: #777;
+}
+.campaign-create-basics .content {
+  margin-top: 35px;
 }
 .index img {
     margin: 40px auto;

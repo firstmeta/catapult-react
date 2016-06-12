@@ -1,5 +1,5 @@
 import request from 'superagent';
-import { ROOT_URL } from './index';
+import { ROOT_URL } from '../config';
 
 export const AUTH_TOKEN = 'AUTH_TOKEN';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';

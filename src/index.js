@@ -17,6 +17,8 @@ import CompanyBrowse from './components/company_browse';
 import CompanyCreate from './components/company_create';
 import CompanyStart from './components/company_start';
 import CompanyView from './components/company_view';
+import CompaniesAndCampaignsMine from './components/companies_campaigns_mine';
+import CampaignCreate from './components/campaign_create';
 import AccountSetting from './components/account_setting';
 
 const store = compose(
@@ -36,7 +38,10 @@ render(
 				<Route path="/company/browse" component={CompanyBrowse} />
 				<Route path="/company/start" component={CompanyStart} />
 				<Route path="/company/:randID/edit" component={CompanyCreate} />
-				<Route path="/company/:randID/preview" component={CompanyView} />
+				<Route path="/company/view/:randID" component={CompanyView} />
+				<Route path="/companies-campaigns-mine" component={CompaniesAndCampaignsMine} />
+				<Route path="/campaign/:companyRandID/edit" component={CampaignCreate} />
+				<Route path="/campaign/:companyRandID/:campaignRandID/edit" component={CampaignCreate} />
 			</Route>
 		</ReduxRouter>
 	</Provider>
