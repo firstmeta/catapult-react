@@ -683,6 +683,16 @@ body:before {
 .campaign-create-basics .content {
   margin-top: 35px;
 }
+
+.campaign-create-summary {
+  margin-top: 35px;
+}
+.campaign-create-summary h3 {
+  font-size: 21px;
+  font-weight: 300;
+  color: #777;
+}
+
 .index img {
     margin: 40px auto;
     border-radius: 4px;

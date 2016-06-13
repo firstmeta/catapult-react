@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import CampaignCreateBasics from './campaign_create_basics';
+import CampaignCreateStory from './campaign_create_story';
 
 class CampaignCreate extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class CampaignCreate extends Component {
                       "btn btn-default no-border-radius-left " +
                       ((step === 'summary') ? "btn-clicked" : "")
                     }>
-                    Summary
+                    Story
                     </button>
                 </Link>
               </div>
@@ -76,7 +77,8 @@ class CampaignCreate extends Component {
         </div>
       </div>
 
-      <CampaignCreateBasics />
+      {(!step || step === 'basics') && <CampaignCreateBasics />}
+      {step === 'summary' && <CampaignCreateStory />}
 
       </div>
     )

@@ -32,7 +32,7 @@ class CompaniesAndCampaignsMine extends Component {
 
           </div>
           <div className="col-sm-2">
-            { (c.Status === 'ACTIVE') && <Link to={'campaign/' + c.RandID + '/create'}>Raise fund</Link>}
+            { (c.Status === 'ACTIVE') && <Link to={'campaign/' + c.RandID + '/edit'}>Raise fund</Link>}
           </div>
         </div>
       )

@@ -30,10 +30,8 @@ export function SaveCampaignBasics(content) {
   return dispatch => {
     return req.end((err, res) => {
       if(res.status === 200) {
-        console.log(res.body);
-        console.log(res.body.CampaignRandID);
         dispatch(saveCampaignBasicsSuccess(res.body.CampaignRandID));
-        dispatch(push('/campaign/' + res.body.CampaignRandID + '/edit?step=preview'));
+        dispatch(push('/campaign/' + content.companyRandID + '/' + res.body.CampaignRandID + '/edit?step=summary'));
       }
       else {
         dispatch(saveCampaignBasicsFailure(res.text));
