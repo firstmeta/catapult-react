@@ -40,8 +40,8 @@ render(
 				<Route path="/company/:randID/edit" component={CompanyCreate} />
 				<Route path="/company/view/:randID" component={CompanyView} />
 				<Route path="/companies-campaigns-mine" component={CompaniesAndCampaignsMine} />
-				<Route path="/campaign/:companyRandID/edit" component={CampaignCreate} />
-				<Route path="/campaign/:companyRandID/:campaignRandID/edit" component={CampaignCreate} />
+				<Route path="/campaign/:companyRandID/new" component={CampaignCreate} />
+				<Route path="/campaign/:campaignRandID/edit" component={CampaignCreate} />
 			</Route>
 		</ReduxRouter>
 	</Provider>

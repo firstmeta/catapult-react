@@ -25,7 +25,7 @@ class CampaignCreate extends Component {
       <div className="container-fluid">
         <div className="row row-centered">
           <div className="col-lg-1 col-centered">
-          <h1>Let's raise fund for your company</h1>
+          <h1>Let&#39;s raise fund for your company!</h1>
           </div>
         </div>
       </div>
@@ -46,12 +46,12 @@ class CampaignCreate extends Component {
                   </button>
                 </Link>
 
-                <Link to={"/campaign/" + campaignRandID + "/edit?step=summary"}>
+                <Link to={"/campaign/" + campaignRandID + "/edit?step=story"}>
                   <button
                     type="button"
                     className={
                       "btn btn-default no-border-radius-left " +
-                      ((step === 'summary') ? "btn-clicked" : "")
+                      ((step === 'story') ? "btn-clicked" : "")
                     }>
                     Story
                     </button>
@@ -78,7 +78,7 @@ class CampaignCreate extends Component {
       </div>
 
       {(!step || step === 'basics') && <CampaignCreateBasics />}
-      {step === 'summary' && <CampaignCreateStory />}
+      {step === 'story' && <CampaignCreateStory />}
 
       </div>
     )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player';
 import { FetchCompanyByRandID } from '../actions/company_action';
 import { CountryMap } from './countries';
 import { ROOT_IMAGE_URL } from '../config';

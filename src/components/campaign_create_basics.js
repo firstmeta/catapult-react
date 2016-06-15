@@ -35,6 +35,7 @@ class CampaignCreateBasics extends Component {
         </div>
 
         <div className="container-fluid content">
+
           <div className="row row-centered">
             <div className="col-lg-1 col-centered">
 
@@ -109,6 +110,8 @@ class CampaignCreateBasics extends Component {
             </div>
           </div>
         </div>
+
+
       </div>
     )
   }

@@ -678,19 +678,40 @@ body:before {
 .campaign-create-basics h3 {
   font-size: 21px;
   font-weight: 300;
-  color: #777;
+  color: #555;
 }
 .campaign-create-basics .content {
   margin-top: 35px;
 }
-
-.campaign-create-summary {
+.campaign-create-basics .content .segment {
+  padding-top: 30px;
+}
+.campaign-create-story {
   margin-top: 35px;
 }
-.campaign-create-summary h3 {
+.campaign-create-story h3 {
   font-size: 21px;
   font-weight: 300;
-  color: #777;
+  color: #555;
+  margin-bottom: 0px;
+}
+.campaign-create-story hr {
+  margin-top: 5px;
+  margin-bottom: 30px;
+  border-top: 1px solid #ccc;
+}
+.campaign-create-story .content {
+  background-color: #fff;
+  padding-top: 35px;
+}
+.campaign-create-story .editable {
+  border: 1px solid #eaeaea;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+.campaign-create-story .row-last {
+  padding-bottom: 20px;
 }
 
 .index img {
