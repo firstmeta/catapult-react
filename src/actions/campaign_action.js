@@ -79,6 +79,7 @@ export function FetchCampaignByRandID(randID) {
               .accept('application/json')
   return dispatch => {
     return req.end((err, res) => {
+      console.log(res.body);
       dispatch(fetchCampaignResult(res.body));
     })
   }

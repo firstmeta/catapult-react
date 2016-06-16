@@ -714,6 +714,71 @@ body:before {
   padding-bottom: 20px;
 }
 
+.campaign-view {
+  margin-top: 110px;
+}
+.campaign-viewh2, h4 {
+  margin: 0px;
+}
+.campaign-view .player {
+  max-width: 100% !important;
+  height: 450px !important;
+  width: 100% !important;
+  margin-bottom: 25px;
+}
+.campaign-view .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.campaign-view .row-top {
+  margin-bottom: 20px;
+}
+.campaign-view .left-col {
+  padding-right: 0px;
+  margin-right: 0px;
+}
+.campaign-view .left-col .details {
+  width: 100%;
+  margin-bottom: 15px;
+  border: none;
+  box-shadow: rgba(0,0,0,0.05) 0 0 1px;
+}
+.campaign-view .row-top .right-col {
+  padding-top: 30px;
+}
+.campaign-view .row-top .right-col span {
+  margin-right: 15px;
+}
+.campaign-view .right-col .details {
+  width: 100%;
+  margin-bottom: 15px;
+  border: none;
+  box-shadow: rgba(0,0,0,0.05) 0 0 1px;
+}
+.campaign-view .right-col .photo {
+  background-color: #E6CFCF;
+  height:50px;
+  width:50px;
+  position:relative;
+  border-radius:100%;
+  overflow:hidden;
+}
+.campaign-view .right-col .photo img {
+  position:absolute;
+  left:-50%; right:-50%; top:0;
+  margin:auto;
+  height:100%; width:auto;
+}
+.campaign-view .right-col h4 {
+  margin-bottom: 10px;
+}
+.campaign-view .team-member p{
+  margin: 0px;
+}
+.campaign-view .team-member .member-intro {
+  margin-top: 10px;
+}
+
 .index img {
     margin: 40px auto;
     border-radius: 4px;

@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import CampaignCreateBasics from './campaign_create_basics';
 import CampaignCreateStory from './campaign_create_story';
+import CampaignView from './campaign_view';
 
 class CampaignCreate extends Component {
   constructor(props) {
@@ -79,6 +80,7 @@ class CampaignCreate extends Component {
 
       {(!step || step === 'basics') && <CampaignCreateBasics />}
       {step === 'story' && <CampaignCreateStory />}
+      {step === 'preview' && <CampaignView />}
 
       </div>
     )
