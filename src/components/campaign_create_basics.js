@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { SaveCampaignBasics } from '../actions/campaign_action';
+import { FetchCampaignBasics, SaveCampaignBasics } from '../actions/campaign_action';
 
 class CampaignCreateBasics extends Component {
 
@@ -11,19 +11,29 @@ class CampaignCreateBasics extends Component {
     this.save = this.save.bind(this);
   }
 
+  componentWillMount() {
+    this.props.FetchCampaignBasics(this.props.campaignRandID);
+  }
+
   save() {
     this.props.SaveCampaignBasics({
       campaignRandID: this.props.campaignRandID,
-      companyRandID: this.props.companyRandID,
-      raisingAmount: this.refs.raisingAmount.value,
+      amountRaising: this.refs.amountRaising.value,
       purpose: this.refs.purpose.value,
       valuation: this.refs.valuation.value,
       customerBaseSize: this.refs.customerBaseSize.value,
-      investors: this.refs.investors.value
+      investors: this.refs.investors.value,
+      currency: this.refs.currencyAmount.value
     })
   }
 
   render() {
+
+    const { campaign } = this.props;
+     if(!campaign) {
+       return <div>Loading...</div>;
+     }
+
     return (
       <div className="campaign-create-basics">
         <div className="container-fluid">
@@ -38,15 +48,21 @@ class CampaignCreateBasics extends Component {
 
           <div className="row row-centered">
             <div className="col-lg-1 col-centered">
-
               <div className="row field">
-                <div className="col-md-12">
-                  <label for="raisingAmount">How much do you want to raise?</label>
+                <div className="col-sm-12">
+                  <label for="amountRaising">How much do you want to raise?</label>
                   <div>
                     <input
                       type="text"
                       placeholder="50000, 100000, 1000000,..."
-                      ref="raisingAmount" />
+                      defaultValue={campaign.AmountRaising != 0 ? campaign.AmountRaising : ''}
+                      ref="amountRaising" />
+
+                      <input
+                        type="text"
+                        className="currency"
+                        placeholder="SGD"
+                        ref="currencyAmount"/>
                   </div>
                 </div>
               </div>
@@ -57,6 +73,7 @@ class CampaignCreateBasics extends Component {
                   <div>
                     <textarea
                       rows="4"
+                      defaultValue={campaign.Purpose}
                       ref="purpose" />
                   </div>
                 </div>
@@ -69,7 +86,14 @@ class CampaignCreateBasics extends Component {
                     <input
                       type="text"
                       placeholder="500000, 1000000, 5000000,..."
+                      defaultValue={campaign.Valuation != 0 ? campaign.Valuation : ''}
                       ref="valuation" />
+
+                      <input
+                        type="text"
+                        className="currency"
+                        placeholder="SGD"
+                        ref="currencyValuation"/>
                   </div>
                 </div>
               </div>
@@ -81,6 +105,7 @@ class CampaignCreateBasics extends Component {
                     <input
                       type="text"
                       placeholder="1000, 10000, 100000,..."
+                      defaultValue={campaign.CustomerBaseSize}
                       ref="customerBaseSize" />
                   </div>
                 </div>
@@ -92,6 +117,7 @@ class CampaignCreateBasics extends Component {
                   <div>
                     <input
                       type="text"
+                      defaultValue={campaign.Investors}
                       ref="investors" />
                   </div>
                 </div>
@@ -118,12 +144,14 @@ class CampaignCreateBasics extends Component {
 }
 function mapStateToProps(state) {
   return {
-    companyRandID: state.router.params.companyRandID,
     campaignRandID: state.router.params.campaignRandID,
-    editingCampaignID: state.CampaignState.editingCampaignID
+    campaign: state.CampaignState.campaignBasics
   }
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({SaveCampaignBasics: SaveCampaignBasics}, dispatch);
+  return bindActionCreators({
+    FetchCampaignBasics: FetchCampaignBasics,
+    SaveCampaignBasics: SaveCampaignBasics
+  }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignCreateBasics);

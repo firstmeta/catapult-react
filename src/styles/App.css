@@ -621,6 +621,10 @@ body:before {
   margin-right: 20px;
   margin-bottom: 10px;
 }
+.companies-campaigns .row-content .start-campaign {
+  color: #777;
+  cursor: pointer;
+}
 .companies-campaigns .row-content .status p::first-letter {
   text-transform: capitalize;
 }
@@ -659,17 +663,22 @@ body:before {
   border: none;
   border-bottom: 1px solid #d9d9de;
   outline: none;
-  min-width: 495px;
+  min-width: 450px;
   min-height: 50px;
   background-color: #f6f6f6;
   font-size: 21px;
   font-weight: 300;
 }
+.campaign-create-basics .currency {
+  min-width: 55px;
+  max-width: 55px;
+  margin-left: 10px;
+}
 .campaign-create-basics textarea {
   border: none;
   border-bottom: 1px solid #d9d9de;
   outline: none;
-  min-width: 495px;
+  min-width: 450px;
   background-color: #f6f6f6;
 }
 .campaign-create-basics label {
@@ -777,6 +786,22 @@ body:before {
 }
 .campaign-view .team-member .member-intro {
   margin-top: 10px;
+}
+.campaign-view .invest .heading {
+  font-size: 38px;
+  font-weight: 300;
+}
+.campaign-view .invest .progess-invest {
+  width: 100%;
+  overflow: hidden;
+}
+.campaign-view .invest .progess-bar{
+  height: 8px;
+  width: 85%;
+  border-radius: 4px;
+  background-color: #e6f8fe;
+  margin-top: 15px;
+  float: left;
 }
 
 .index img {

@@ -95,7 +95,24 @@ class CampaignView extends Component {
 
                   <div className="row">
                     <div className="col">
-                      
+                      <div className="panel panel-default details invest">
+                        <div className="panel-body">
+                          <div className="heading">
+                            <span className="heading">{campaign.AmountRaised} {campaign.Currency}</span>
+                          </div>
+                          <div>funded of {campaign.AmountRaising} {campaign.Currency}</div>
+                          <div className="progress-invest">
+                            <div className="progess-bar"></div> &nbsp; <span>0 %</span>
+                          </div>
+
+                          <hr />
+
+                          <div className="line">
+                            <span className="heading">{campaign.NumberBackers}</span> &nbsp; investors
+                          </div>
+
+                        </div>
+                      </div>
                     </div>
                   </div>
 

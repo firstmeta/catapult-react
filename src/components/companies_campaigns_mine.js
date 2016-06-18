@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FetchAllMyCompanies } from '../actions/company_action'
+import { FetchAllMyCompanies } from '../actions/company_action';
+import { StartCampaign } from '../actions/campaign_action';
 
 class CompaniesAndCampaignsMine extends Component {
 
@@ -32,7 +33,15 @@ class CompaniesAndCampaignsMine extends Component {
 
           </div>
           <div className="col-sm-2">
-            { (c.Status === 'ACTIVE') && <Link to={'campaign/' + c.RandID + '/edit'}>Raise fund</Link>}
+            {
+              (c.Status === 'ACTIVE') &&
+
+              (
+                !c.CampaignRandID ?
+                  <span className="start-campaign" onClick={() => {this.props.StartCampaign(c.RandID)}}>Raise fund</span> :
+                  <Link to={'campaign/' + c.CampaignRandID + '/edit'}>Update campagin</Link>
+              )
+            }
           </div>
         </div>
       )
@@ -114,7 +123,10 @@ function mapStateToProps(state) {
   return { companies: state.CompanyState.allMyCompanies };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({FetchAllMyCompanies: FetchAllMyCompanies}, dispatch);
+  return bindActionCreators({
+    FetchAllMyCompanies: FetchAllMyCompanies,
+    StartCampaign: StartCampaign
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompaniesAndCampaignsMine);

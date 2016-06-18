@@ -89,7 +89,6 @@ class CampaignCreate extends Component {
 
 function mapStateToProps(state) {
   return {
-    companyRandID: state.router.params.companyRandID,
     campaignRandID: state.router.params.campaignRandID,
     step: state.router.location.query.step
   }

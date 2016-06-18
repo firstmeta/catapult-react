@@ -19,7 +19,7 @@ class CampaignCreateStory extends Component {
   }
 
   componentDidMount() {
-    if(this.refs.editable && !this._editor) {
+    if(this.refs.campaignEditable && !this._editor) {
       this._editor = AlloyEditor.editable("campaignEditable");
       this._editor.get('nativeEditor')
                  .on('imageAdd', this.uploadImage);
