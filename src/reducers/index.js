@@ -5,6 +5,7 @@ import AccountReducer from './account_reducer';
 import CompanyReducer from './company_reducer';
 import CampaignState from './campaign_reducer';
 import AlertGlobalState from './alert_reducer';
+import AdminState from './admin_reducer';
 
 const rootReducer = combineReducers({
 	router: routerStateReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
 	AccountState: AccountReducer,
 	CompanyState: CompanyReducer,
 	CampaignState: CampaignState,
-	AlertGlobalState: AlertGlobalState
+	AlertGlobalState: AlertGlobalState,
+	AdminState: AdminState
 });
 
 export default rootReducer;

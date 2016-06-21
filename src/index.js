@@ -20,6 +20,7 @@ import CompanyView from './components/company_view';
 import CompaniesAndCampaignsMine from './components/companies_campaigns_mine';
 import CampaignCreate from './components/campaign_create';
 import AccountSetting from './components/account_setting';
+import Admin from './components/admin';
 
 const store = compose(
 	applyMiddleware(thunk),
@@ -41,6 +42,7 @@ render(
 				<Route path="/company/view/:randID" component={CompanyView} />
 				<Route path="/companies-campaigns-mine" component={CompaniesAndCampaignsMine} />
 				<Route path="/campaign/:campaignRandID/edit" component={CampaignCreate} />
+				<Route path="/keeper" component={Admin} />
 			</Route>
 		</ReduxRouter>
 	</Provider>
