@@ -187,6 +187,11 @@ body:before {
     margin-right: 25px;
 }
 
+.global-alert {
+  margin-top: 20px;
+}
+
+
 /* Login */
 .login-name {
     cursor: pointer;
@@ -803,6 +808,7 @@ body:before {
   margin-top: 15px;
   float: left;
 }
+
 
 .index img {
     margin: 40px auto;

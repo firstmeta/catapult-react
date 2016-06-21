@@ -6,6 +6,7 @@ import CompanyCreateBasics from './company_create_basics';
 import CompanyCreateOverview from './company_create_overview';
 import CompanyCreateSummary from './company_create_summary';
 import CompanyView from './company_view';
+import Alert from './global_alert';
 import { SubmitCompanyForReview } from '../actions/company_action';
 
 class CompanyCreate extends Component {
@@ -110,6 +111,8 @@ submitForReview() {
             </div>
           </div>
         </div>
+
+        <Alert />
 
         {(!step || step === 'basics') &&  <CompanyCreateBasics />}
         {step === 'overview' && <CompanyCreateOverview />}

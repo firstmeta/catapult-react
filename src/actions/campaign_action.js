@@ -2,10 +2,14 @@ import request from 'superagent';
 import { push } from 'redux-router';
 import { ROOT_URL, ROOT_IMAGE_URL } from '../config';
 import { AUTH_TOKEN } from './auth_action';
+import { AlertGlobal } from './alert_action';
+import { ALERT_SUCCESS, ALERT_ERROR } from '../components/global_alert';
 
 export const CAMPAIGN_START = 'CAMPAIGN_START';
 export const CAMPAIGN_SAVE_BASICS_SUCCESS = 'CAMPAIGN_SAVE_BASICS_SUCCESS';
 export const CAMPAIGN_SAVE_BASICS_FAILURE = 'CAMPAIGN_SAVE_BASICS_FAILURE';
+export const CAMPAIGN_SUBMIT_REVIEW_SUCCESS = 'CAMPAIGN_SUBMIT_REVIEW_SUCCESS';
+export const CAMPAIGN_SUBMIT_REVIEW_FAILURE = 'CAMPAIGN_SUBMIT_REVIEW_FAILURE';
 export const FETCH_CAMPAIGN = 'FETCH_CAMPAIGN';
 export const FETCH_CAMPAIGN_BASICS = 'FETCH_CAMPAIGN_BASICS';
 export const FETCH_CAMPAIGN_STORY = 'FETCH_CAMPAIGN_STORY';
@@ -25,6 +29,18 @@ function saveCampaignBasicsSuccess(data) {
 function saveCampaignBasicsFailure(data) {
   return {
     type: CAMPAIGN_SAVE_BASICS_FAILURE,
+    data: data
+  }
+}
+function submitReviewSuccess(data) {
+  return {
+    type: CAMPAIGN_SUBMIT_REVIEW_SUCCESS,
+    data: data
+  }
+}
+function submitReviewFailure(data) {
+  return {
+    type: CAMPAIGN_SUBMIT_REVIEW_FAILURE,
     data: data
   }
 }
@@ -81,7 +97,7 @@ export function SaveCampaignBasics(content) {
         dispatch(push('/campaign/' + content.campaignRandID + '/edit?step=story'));
       }
       else {
-        dispatch(saveCampaignBasicsFailure(res.text));
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
       }
     })
   }
@@ -100,7 +116,26 @@ export function SaveCampaignStory(content) {
         dispatch(push('/campaign/'+ content.campaignRandID + '/edit?step=preview'));
       }
       else {
-        console.log(err);
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
+    })
+  }
+}
+
+export function SubmitCampaignForReview(randID) {
+  var req = request
+              .post(`${ROOT_URL}/api/secure/campaign/submitforreview`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .field('randID', randID);
+
+  return dispatch => {
+    return req.end((err, res) => {
+      if(res.status === 200) {
+        //dispatch(submitReviewSuccess(res.text));
+        dispatch(AlertGlobal({content: res.text, type: ALERT_SUCCESS}));
+      }
+      else {
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
       }
     })
   }
@@ -127,7 +162,7 @@ export function FetchCampaignBasics(randID) {
         dispatch(fetchCampaignBasicsResult(res.body));
       }
       else {
-        console.log(err);
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
       }
     })
   }

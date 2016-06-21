@@ -39,7 +39,7 @@ class CompaniesAndCampaignsMine extends Component {
               (
                 !c.CampaignRandID ?
                   <span className="start-campaign" onClick={() => {this.props.StartCampaign(c.RandID)}}>Raise fund</span> :
-                  <Link to={'campaign/' + c.CampaignRandID + '/edit'}>Update campagin</Link>
+                  <Link to={'campaign/' + c.CampaignRandID + '/edit'}>Update campaign</Link>
               )
             }
           </div>

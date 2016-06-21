@@ -7,7 +7,8 @@ import {
 export default function(state = {
   campaignDetails: '',
   campaignStory: '',
-  campaignRandID: ''
+  campaignRandID: '',
+  msg: ''
 }, action){
   switch(action.type) {
     case CAMPAIGN_START:

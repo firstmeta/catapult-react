@@ -107,8 +107,30 @@ class CampaignView extends Component {
 
                           <hr />
 
-                          <div className="line">
+                          <div>
                             <span className="heading">{campaign.NumberBackers}</span> &nbsp; investors
+                          </div>
+
+                          <hr />
+
+                          <div>
+                            <span className="heading">{campaign.AmountRaising / campaign.Valuation * 100} %</span>
+                              &nbsp; of company's shares offered ({campaign.AmountRaising} {campaign.Currency} valuation)
+                          </div>
+
+                          <hr />
+
+                          <div>
+                            <span className="heading">{!campaign.Days ? 0 : campaign.Days}</span> &nbsp; days left to invest
+                          </div>
+
+                          <hr />
+
+                          <div>
+                            <button
+                              className="btn btn-primary btn-green btn-green-primary full-width">
+                              Invest
+                            </button>
                           </div>
 
                         </div>

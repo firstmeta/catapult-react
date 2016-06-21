@@ -2,6 +2,8 @@ import request from 'superagent';
 import { push } from 'redux-router';
 import { ROOT_URL, ROOT_IMAGE_URL } from '../config';
 import { AUTH_TOKEN } from './auth_action';
+import { AlertGlobal } from './alert_action';
+import { ALERT_SUCCESS, ALERT_ERROR } from '../components/global_alert';
 
 export const COMPANY_START_SUCCESS = 'COMPANY_START_SUCCESS';
 export const COMPANY_START_FAILURE = 'COMPANY_START_FAILURE';
@@ -197,11 +199,12 @@ export function SubmitCompanyForReview(randID) {
   return dispatch => {
     return req.end((err, res) => {
       if(res.status === 200) {
-        dispatch(submitReviewSuccess(res.text))
+        //dispatch(submitReviewSuccess(res.text))
+        dispatch(AlertGlobal({content: res.text, type: ALERT_SUCCESS}));
       }
       else {
-        console.log(err);
-        dispatch(submitReviewFailure(res.text));
+        //dispatch(submitReviewFailure(res.text));
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
       }
     })
   }

@@ -31,7 +31,7 @@ class CampaignCreateBasics extends Component {
 
     const { campaign } = this.props;
      if(!campaign) {
-       return <div>Loading...</div>;
+       return <div></div>;
      }
 
     return (
@@ -61,7 +61,8 @@ class CampaignCreateBasics extends Component {
                       <input
                         type="text"
                         className="currency"
-                        placeholder="SGD"
+                        placeholder='SGD'
+                        defaultValue={campaign.Currency ? campaign.Currency : ''}
                         ref="currencyAmount"/>
                   </div>
                 </div>
@@ -93,6 +94,7 @@ class CampaignCreateBasics extends Component {
                         type="text"
                         className="currency"
                         placeholder="SGD"
+                        defaultValue={campaign.Currency ? campaign.Currency : ''}
                         ref="currencyValuation"/>
                   </div>
                 </div>

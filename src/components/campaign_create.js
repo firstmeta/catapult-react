@@ -5,20 +5,47 @@ import { Link } from 'react-router';
 import CampaignCreateBasics from './campaign_create_basics';
 import CampaignCreateStory from './campaign_create_story';
 import CampaignView from './campaign_view';
+import { SubmitCampaignForReview } from '../actions/campaign_action';
+import Alert from './global_alert';
+import { RemoveAlert } from '../actions/alert_action';
 
 class CampaignCreate extends Component {
   constructor(props) {
     super(props);
 
-    this.submitCampaign = this.submitCampaign.bind(this);
+    this.submitForReview = this.submitForReview.bind(this);
   }
 
-  submitCampaign() {
+  componentWillMount() {
+    this.props.RemoveAlert();
+  }
 
+  submitForReview() {
+    this.props.SubmitCampaignForReview(this.props.campaignRandID);
+  }
+
+  renderSubmitReviewButton() {
+    return (
+      <div className="container-fluid">
+        <div className="row submit-review">
+          <div className="col-md-10 col-md-offset-1">
+            <div className="row row-centered">
+              <div className="col-lg-1 col-centered">
+              <button
+                className="btn btn-primary btn-green btn-green-primary full-width"
+                onClick={this.submitForReview}>
+                Submit for review
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   render() {
-    const { companyRandID, campaignRandID, step } = this.props;
+    const { companyRandID, campaignRandID, step, alert } = this.props;
 
     return (
       <div className="campaign-create">
@@ -78,9 +105,12 @@ class CampaignCreate extends Component {
         </div>
       </div>
 
+      <Alert />
+
       {(!step || step === 'basics') && <CampaignCreateBasics />}
       {step === 'story' && <CampaignCreateStory />}
       {step === 'preview' && <CampaignView />}
+      {step === 'preview' && this.renderSubmitReviewButton()}
 
       </div>
     )
@@ -93,5 +123,11 @@ function mapStateToProps(state) {
     step: state.router.location.query.step
   }
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    SubmitCampaignForReview: SubmitCampaignForReview,
+    RemoveAlert: RemoveAlert
+  }, dispatch);
+}
 
-export default connect(mapStateToProps)(CampaignCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(CampaignCreate);
