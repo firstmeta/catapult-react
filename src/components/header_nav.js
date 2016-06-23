@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Login from './login';
-import Logout from './Logout';
+import Logout from './logout';
 import Signup from './signup';
 import CatapultLogo from '../images/catapult_logo.png';
 
