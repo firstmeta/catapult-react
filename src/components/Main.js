@@ -3,6 +3,7 @@ require('normalize.css/normalize.css');
 require('styles/App.css');
 require('styles/animate.css');
 require('styles/alloy-editor-ocean-min.css');
+require('react-bootstrap-table/css/react-bootstrap-table-all.min.css')
 // require('bootstrap/dist/js/bootstrap.min.js');
 
 import React, { Component } from 'react';

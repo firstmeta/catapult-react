@@ -23,5 +23,24 @@ export function UploadEditorPublicImage(imgObj, randID) {
       }
     })
   }
-  
+
+}
+
+export function UploadPrivateFile(file) {
+  var req = request
+              .post(`${ROOT_URL}/api/secure/upload/private_file`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .attach(file.name, file)
+              .field('fileName', file.name);
+
+  return dispatch => {
+    return req.end((err, res) => {
+      if(res.status === 200) {
+        console.log(res.text);
+      }
+      else {
+        console.log(err);
+      }
+    })
+  }
 }

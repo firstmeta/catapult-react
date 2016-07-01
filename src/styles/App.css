@@ -490,6 +490,37 @@ body:before {
 .company-create-summary .row-last {
   padding-bottom: 20px;
 }
+.company-create-kyc {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.company-create-kyc .drop-file {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  font-size: 13px;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  position: relative;
+  height:200px;
+  width: 100%;
+}
+.company-create-kyc .drop-file .uploading-filename {
+  font-size: 15px;
+  position: absolute;
+  top: 70px;
+}
+.company-create-kyc .drop-file .plus {
+  font-size: 50px;
+  font-weight: 100;
+  color: #ccc;
+  position: absolute;
+  left: 110px;
+  top: 60px;
+}
+.company-create-kyc .row-last {
+  padding-bottom: 20px;
+}
 .company-view {
   margin-top: 110px;
 }
@@ -808,7 +839,27 @@ body:before {
   margin-top: 15px;
   float: left;
 }
-
+.admin {
+  margin-top: 110px;
+  margin-bottom: 80px;
+}
+.admin h3 {
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 30px;
+}
+.admin .admin-company-details {
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.admin .admin-company-details a {
+  font-style: italic;
+  border-bottom: 1px solid #ccc;
+}
+.admin .admin-company-details .btn-green {
+  margin-top: 24px;
+  height: 35px;
+}
 
 .index img {
     margin: 40px auto;

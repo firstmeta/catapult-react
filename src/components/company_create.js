@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import CompanyCreateBasics from './company_create_basics';
 import CompanyCreateOverview from './company_create_overview';
 import CompanyCreateSummary from './company_create_summary';
+import CompanyCreateKYC from './company_create_kyc';
 import CompanyView from './company_view';
 import Alert from './global_alert';
 import { SubmitCompanyForReview } from '../actions/company_action';
@@ -93,6 +94,18 @@ submitForReview() {
                   </Link>
                 </div>
                 <div className="btn-group" role="group">
+                  <Link to={"/company/" + randID + "/edit?step=documents"}>
+                    <button
+                      type="button"
+                      className={
+                        "btn btn-default" + ((step === 'documents') ? "btn-clicked" : "")
+                      }>
+                      Documents
+                    </button>
+                  </Link>
+                </div>
+
+                <div className="btn-group" role="group">
                   <Link to={"/company/" + randID + "/edit?step=preview"}>
                     <button
                       type="button"
@@ -117,6 +130,7 @@ submitForReview() {
         {(!step || step === 'basics') &&  <CompanyCreateBasics />}
         {step === 'overview' && <CompanyCreateOverview />}
         {step === 'summary' && <CompanyCreateSummary />}
+        {step === 'documents' && <CompanyCreateKYC />}
         {step === 'preview' && <CompanyView />}
         {step === 'preview' && this.renderSubmitReviewButton()}
 

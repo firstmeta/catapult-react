@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
-import { uploadDocuments } from '../actions/account_action'
+import { uploadDocuments } from '../actions/account_action';
+import { UploadPrivateFile } from '../actions/common_action';
 
 
 export default class AccountSettingUpload extends Component {
@@ -15,7 +16,8 @@ export default class AccountSettingUpload extends Component {
 
 	onDrop(files) {
 		 //console.log('Received files: ', files);
-		 this.props.uploadDocuments(files);
+		 //this.props.UploadPrivateFile(files);
+		 this.props.UploadPrivateFile(files[0]);
 	}
 
 	render() {
@@ -30,6 +32,8 @@ export default class AccountSettingUpload extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({uploadDocuments}, dispatch);
+	return bindActionCreators({
+		uploadDocuments, UploadPrivateFile
+	}, dispatch);
 }
 export default connect(null, mapDispatchToProps)(AccountSettingUpload);

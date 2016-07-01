@@ -35,7 +35,7 @@ render(
 		<ReduxRouter>
 			<Route path="/" component={App}>
 				<IndexRoute component={Landing} />
-				<Route path="api/accountsetting" component={AccountSetting} />
+				<Route path="/account/settings" component={AccountSetting} />
 				<Route path="/company/browse" component={CompanyBrowse} />
 				<Route path="/company/start" component={CompanyStart} />
 				<Route path="/company/:randID/edit" component={CompanyCreate} />
