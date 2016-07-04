@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
+import { SaveCompanyFile } from '../actions/company_action';
 
 class CompanyCreateKYC extends Component {
 
@@ -14,7 +15,7 @@ class CompanyCreateKYC extends Component {
   }
 
   upload() {
-
+    this.props.SaveCompanyFile(this.props.randID, this.state.uploadingFile);
   }
 
   displayFileName() {
@@ -93,7 +94,7 @@ class CompanyCreateKYC extends Component {
                 <div className="col-lg-1 col-centered">
                   <button
                     className="btn btn-primary btn-green btn-green-primary full-width"
-                    >
+                    onClick={this.upload}>
                     Save & Continue
                   </button>
                 </div>
@@ -106,5 +107,12 @@ class CompanyCreateKYC extends Component {
     )
   }
 }
-
-export default CompanyCreateKYC;
+function mapStateToProps(state) {
+  return {
+    randID: state.router.params.randID
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({SaveCompanyFile: SaveCompanyFile}, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyCreateKYC);

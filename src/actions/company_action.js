@@ -11,6 +11,8 @@ export const COMPANY_SAVE_BASICS_SUCCESS = 'COMPANY_SAVE_BASICS_SUCCESS';
 export const COMPANY_SAVE_BASICS_FAILURE = 'COMPANY_SAVE_BASICS_FAILURE';
 export const COMPANY_SAVE_OVERVIEW_SUCCESS = 'COMPANY_SAVE_OVERVIEW_SUCCESS';
 export const COMPANY_SAVE_OVERVIEW_FAILURE = 'COMPANY_SAVE_OVERVIEW_FAILURE';
+export const COMPANY_SAVE_FILE_SUCCESS = 'COMPANY_SAVE_FILE_SUCCESS';
+export const COMPANY_SAVE_FILE_FAILURE = 'COMPANY_SAVE_FILE_FAILURE';
 export const COMPANY_SUBMIT_REVIEW_SUCCESS = 'COMPANY_SUBMIT_REVIEW_SUCCESS';
 export const COMPANY_SUBMIT_REVIEW_FAILURE = 'COMPANY_SUBMIT_REVIEW_FAILURE';
 export const FETCH_COMPANY = 'FETCH_COMPANY';
@@ -182,12 +184,31 @@ export function SaveCompanySummary(content) {
   return dispatch => {
     return req.end((err, res) => {
       if(res.status === 200) {
-        dispatch(push('/company/' + content.randID + '/edit?step=preview'));
+        dispatch(push('/company/' + content.randID + '/edit?step=documents'));
       }
       else {
         console.log(err);
       }
 
+    })
+  }
+}
+export function SaveCompanyFile(randID, file) {
+  var req = request
+              .post(`${ROOT_URL}/api/secure/company/save/file`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .field('randID', randID)
+              .field('fileName', file.name)
+              .attach(file.name, file);
+
+  return dispatch => {
+    return req.end((err, res) => {
+      if(res.status === 200) {
+        dispatch(push('/company/' + randID + '/edit?step=preview'));
+      }
+      else {
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
     })
   }
 }

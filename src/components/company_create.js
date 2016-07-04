@@ -98,7 +98,7 @@ submitForReview() {
                     <button
                       type="button"
                       className={
-                        "btn btn-default" + ((step === 'documents') ? "btn-clicked" : "")
+                        "btn btn-default" + ((step === 'document') ? "btn-clicked" : "")
                       }>
                       Documents
                     </button>
@@ -133,7 +133,6 @@ submitForReview() {
         {step === 'documents' && <CompanyCreateKYC />}
         {step === 'preview' && <CompanyView />}
         {step === 'preview' && this.renderSubmitReviewButton()}
-
 
       </div>
     )

@@ -58,7 +58,7 @@ class CompanyView extends Component {
 
     const { company } = this.props;
 
-    if (!company) {
+    if (!company || company.RandID !== this.props.randID) {
       return <div>Loading...</div>;
     }
 

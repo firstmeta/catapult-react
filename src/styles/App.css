@@ -860,6 +860,9 @@ body:before {
   margin-top: 24px;
   height: 35px;
 }
+.admin .admin-company-details iframe {
+  display: none;
+}
 
 .index img {
     margin: 40px auto;

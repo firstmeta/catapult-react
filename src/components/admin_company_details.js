@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AdminSaveCompanyStatus } from '../actions/admin_action';
+import { AdminSaveCompanyStatus, AdminFetchCompanyFile } from '../actions/admin_action';
 
 class AdminCompanyDetails extends Component {
 
@@ -12,6 +12,7 @@ class AdminCompanyDetails extends Component {
     this.state = {company: ''};
     this.onInputChange = this.onInputChange.bind(this);
     this.updateCompanyStatus = this.updateCompanyStatus.bind(this);
+    this.downloadFiles = this.downloadFiles.bind(this);
   }
 
   onInputChange(event) {
@@ -40,6 +41,9 @@ class AdminCompanyDetails extends Component {
   updateCompanyStatus() {
     this.props.AdminSaveCompanyStatus(this.state.company.RandID, this.state.company.Status);
   }
+  downloadFiles() {
+    this.props.AdminFetchCompanyFile(this.state.company.RandID);
+  }
 
   render() {
     const { company } = this.props;
@@ -47,7 +51,6 @@ class AdminCompanyDetails extends Component {
     if(!company) {
       return <div></div>;
     }
-    console.log(company);
     if(!this.state.company || this.state.company.ID !== company.ID) {
       this.state.company = company;
     }
@@ -100,6 +103,14 @@ class AdminCompanyDetails extends Component {
               Save
             </button>
           </div>
+          <div className="col-sm-2">
+            <button
+              className="btn btn-primary btn-green btn-green-primary full-width"
+              onClick={this.downloadFiles}>
+              Download files
+            </button>
+            <iframe id="frame" src="http://localhost:8080/api/company/fetch_company_file/3005090616310950680"></iframe>
+          </div>
         </div>
         <div className="row">
           <div className="col-sm-6">
@@ -123,12 +134,14 @@ class AdminCompanyDetails extends Component {
 }
 function mapStateToProps(state) {
   return {
-    company: state.CompanyState.companyDetails
+    company: state.CompanyState.companyDetails,
+    companyFile: state.CompanyState.companyFile
   }
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    AdminSaveCompanyStatus: AdminSaveCompanyStatus
+    AdminSaveCompanyStatus: AdminSaveCompanyStatus,
+    AdminFetchCompanyFile: AdminFetchCompanyFile
   }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCompanyDetails);
