@@ -6,7 +6,7 @@ import { ALERT_SUCCESS, ALERT_ERROR } from '../components/global_alert';
 
 export const ADMIN_FETCH_ALL_ACCOUNTS = 'ADMIN_FETCH_ALL_ACCOUNTS';
 export const ADMIN_FETCH_ALL_COMPANIES = 'ADMIN_FETCH_ALL_COMPANIES';
-export const ADMIN_FETCH_COMPANY_FILE = 'ADMIN_FETCH_COMPANY_FILE';
+export const ADMIN_FETCH_COMPANY_FILE_DOWNLOAD_URL = 'ADMIN_FETCH_COMPANY_FILE_DOWNLOAD_URL';
 
 function fetchAllAccountsResult(data) {
   return {
@@ -20,9 +20,9 @@ function fetchAllCompaniesResult(data) {
     data: data
   }
 }
-function fetchCompanyFileResult(data) {
+function fetchCompanyFileDownLoadUrlResult(data) {
   return {
-    type: ADMIN_FETCH_COMPANY_FILE,
+    type: ADMIN_FETCH_COMPANY_FILE_DOWNLOAD_URL,
     data: data
   }
 }
@@ -80,21 +80,20 @@ export function AdminSaveCompanyStatus(companyRandID, status) {
     })
   }
 }
-export function AdminFetchCompanyFile(companyRandID) {
+export function AdminGenerateCompanyFileDownloadUrl(randID) {
   var req = request
-              .post(`${ROOT_URL}/api/keeper/fetch_company_file`)
+              .post(`${ROOT_URL}/api/keeper/generate_company_file_download_code`)
               .set('Authorization', localStorage.getItem(AUTH_TOKEN))
-              .field('companyRandID', companyRandID)
+              .field('companyRandID', randID)
   return dispatch => {
     return req.end((err, res) => {
-      console.log(res);
-      console.log(res.header);
-      console.log(res.headers);
-      dispatch(fetchCompanyFileResult({
-        mime: res.header['content-type'],
-        filename: res.header['filename'],
-        fileData: res.text
-      }))
+      if(res.status === 200) {
+        var code = res.text;
+        dispatch(fetchCompanyFileDownLoadUrlResult(`${ROOT_URL}/api/company/fetch_company_file/${randID}/${code}`));
+      }
+      else {
+          dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
     })
   }
 }

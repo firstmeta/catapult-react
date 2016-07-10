@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router';
 import Dropzone from 'react-dropzone';
 import { SaveCompanyFile } from '../actions/company_action';
 
@@ -30,13 +31,20 @@ class CompanyCreateKYC extends Component {
       return (
         <div>
           <span>Drop your zipped file here, or click to select file to upload.</span>
-          <p className="plus">+</p>
+          <div className="row row-centered">
+            <div className="col-lg-1 col-centered">
+              <p className="plus">+</p>
+            </div>
+          </div>
+
         </div>
       )
     }
   }
 
   render() {
+    const { randID } = this.props;
+    
     return (
       <div className="company-create-kyc">
         <div className="container-fluid">
@@ -68,13 +76,13 @@ class CompanyCreateKYC extends Component {
                               </ul>
                           </li>
                         </ol>
-                      <p>Please zip everything into one file before uploading.
+                      <p>Please <u><strong>zip</strong></u> everything into one file before uploading.
                          We will <u><strong>encrypt</strong></u> your uploaded file and store it securely. </p>
-                      <p><u>(You can skip this step now, and complete it later when you start a fund raising campaign with us.)</u></p>
+                      <p><u><strong>(You can skip this step now, and complete it later when you start a fund raising campaign with us.)</strong></u></p>
                     </i>
                   </div>
                   <div className="row">
-                    <div className="col-sm-4 col-md-offset-4">
+                    <div className="col-sm-6 col-md-offset-3">
                       <Dropzone
                         className="drop-file"
                         multiple={false}
@@ -90,14 +98,25 @@ class CompanyCreateKYC extends Component {
 
           <div className="row">
             <div className="col-md-10 col-md-offset-1 segment row-last">
-              <div className="row row-centered">
-                <div className="col-lg-1 col-centered">
+              <div className="row">
+                <div className="col-sm-3 col-sm-offset-5">
                   <button
-                    className="btn btn-primary btn-green btn-green-primary full-width"
+                    className="btn btn-primary btn-green btn-green-primary"
                     onClick={this.upload}>
-                    Save & Continue
+                    Save
                   </button>
+
+                  &nbsp;&nbsp;
+
+                  <Link to={"/company/" + randID + "/edit?step=preview"}>
+                    <button
+                      className="btn btn-primary btn-green btn-green-primary"
+                      >
+                      Continue
+                  </button>
+                  </Link>
                 </div>
+
               </div>
             </div>
           </div>

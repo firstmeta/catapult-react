@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AdminSaveCompanyStatus, AdminFetchCompanyFile } from '../actions/admin_action';
+import FileDownload from './file_download';
+import {
+  AdminSaveCompanyStatus,
+  AdminGenerateCompanyFileDownloadUrl
+} from '../actions/admin_action';
 
 class AdminCompanyDetails extends Component {
 
@@ -42,7 +46,7 @@ class AdminCompanyDetails extends Component {
     this.props.AdminSaveCompanyStatus(this.state.company.RandID, this.state.company.Status);
   }
   downloadFiles() {
-    this.props.AdminFetchCompanyFile(this.state.company.RandID);
+    this.props.AdminGenerateCompanyFileDownloadUrl(this.state.company.RandID);
   }
 
   render() {
@@ -104,12 +108,12 @@ class AdminCompanyDetails extends Component {
             </button>
           </div>
           <div className="col-sm-2">
+            <FileDownload />
             <button
               className="btn btn-primary btn-green btn-green-primary full-width"
               onClick={this.downloadFiles}>
               Download files
             </button>
-            <iframe id="frame" src="http://localhost:8080/api/company/fetch_company_file/3005090616310950680"></iframe>
           </div>
         </div>
         <div className="row">
@@ -134,14 +138,13 @@ class AdminCompanyDetails extends Component {
 }
 function mapStateToProps(state) {
   return {
-    company: state.CompanyState.companyDetails,
-    companyFile: state.CompanyState.companyFile
+    company: state.CompanyState.companyDetails
   }
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     AdminSaveCompanyStatus: AdminSaveCompanyStatus,
-    AdminFetchCompanyFile: AdminFetchCompanyFile
+    AdminGenerateCompanyFileDownloadUrl: AdminGenerateCompanyFileDownloadUrl
   }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCompanyDetails);

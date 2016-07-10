@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import WorldMapImg from '../images/world_map.png';
 import PeopleConnectImg from '../images/people_connect.png';
 
-export default class Landing extends Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { OpenSignup } from '../actions/account_action';
+
+ class Landing extends Component {
 	render() {
 		return (
 			<div className="landing">
@@ -15,7 +19,9 @@ export default class Landing extends Component {
                           Invest in startup companies together with peers and established venture capitals
                       </p>
 
-                      <a className="btn btn-common animated wow bounceIn" href="#main-features">Find Out How</a>
+                      <a
+												className="btn btn-common animated wow bounceIn"
+												onClick={() => this.props.OpenSignup()}>Join our waiting list</a>
                   </div>
               </div>
 					</div>
@@ -37,7 +43,7 @@ export default class Landing extends Component {
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
 	                    	<i className="fa fa-slideshare"></i>
 	                    </div>
-                      
+
                   </div>
                   <div className= "row">
                     <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
@@ -58,7 +64,7 @@ export default class Landing extends Component {
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
 	                    	<i className="fa fa-line-chart"></i>
 	                    </div>
-                      
+
                   </div>
                   <div className= "row">
                     <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
@@ -79,7 +85,7 @@ export default class Landing extends Component {
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
 	                    	<i className="fa fa-folder-open-o"></i>
 	                    </div>
-                      
+
                   </div>
                   <div className= "row">
                     <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
@@ -111,16 +117,16 @@ export default class Landing extends Component {
         					<div class="feature-content animated fadeInRight">
                       <h3 className="small-title">Startup Investing. Now Smart and Flexible</h3>
                       <p>
-                          With the crowdfunding being offered being hosted on the <a href="https://www.ethereum.org/">Ethereum blockchain</a>, 
-                          you can now readily partake in new investment opportunities from anywhere around the globe. 
+                          With the crowdfunding being offered being hosted on the <a href="https://www.ethereum.org/">Ethereum blockchain</a>,
+                          you can now readily partake in new investment opportunities from anywhere around the globe.
                       </p>
                       <p>
-                          Additionally, you can now use Ethereum smart contracts to facilitate trades. 
-                          No more hassle with custodians, trusteeships or middlemen agents when buying and selling startup equities. 
+                          Additionally, you can now use Ethereum smart contracts to facilitate trades.
+                          No more hassle with custodians, trusteeships or middlemen agents when buying and selling startup equities.
                           All the equity that you hold in your Ethereum wallet can only be accessed by you.
                       </p>
                       <p>
-                          That also means that you jump right into equity crowdfunding even with small investment amounts. 
+                          That also means that you jump right into equity crowdfunding even with small investment amounts.
                           Less market friction, more liquidity. No more getting locked out of opportunities as a retail investor.
                       </p>
                   </div>
@@ -136,11 +142,11 @@ export default class Landing extends Component {
         					<div class="feature-content animated fadeInRight">
         						<h3 className="small-title">Startup Investing. Now Smart and Flexible</h3>
         						<p>
-                        No more having to walk into the world of startup investment alone. 
+                        No more having to walk into the world of startup investment alone.
                         At Catapult, only the best startups from the portfolio of the partnering venture capital funds are selected for you to acquire equity in.
                     </p>
                     <p>
-                        Also, with the equity being offered on the <a href="https://www.ethereum.org/">Ethereum smart contracts</a>, 
+                        Also, with the equity being offered on the <a href="https://www.ethereum.org/">Ethereum smart contracts</a>,
                         you can co-invest in the startups with not only just the venture funds, but together with your peers and friends.
                     </p>
                     <p>
@@ -169,3 +175,7 @@ export default class Landing extends Component {
 		)
 	}
 }
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ OpenSignup: OpenSignup }, dispatch);
+}
+export default connect(null, mapDispatchToProps)(Landing);

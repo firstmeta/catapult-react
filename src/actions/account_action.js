@@ -10,6 +10,9 @@ export const ACCOUNT_SIGNUP_FAILURE = 'ACCOUNT_SIGNUP_FAILURE';
 export const ACCOUNT_DOCUMENTS_UPLOAD_SUCCESS = 'ACCOUNT_DOCUMENTS_UPLOAD_SUCCESS';
 export const ACCOUNT_DOCUMENTS_UPLOAD_FAILURE = 'ACCOUNT_DOCUMENTS_UPLOAD_FAILURE';
 
+export const SIGNUP_OPEN = 'SIGNUP_OPEN';
+export const SIGNUP_CLOSE = 'SIGNUP_CLOSE';
+
 function signupSuccess() {
 	return {
 		type: ACCOUNT_SIGNUP_SUCCESS
@@ -41,6 +44,16 @@ export function signupAccount(creds) {
 	}
 }
 
+export function OpenSignup() {
+	return (dispatch) => {
+		dispatch({type: SIGNUP_OPEN});
+	}
+}
+export function CloseSignup() {
+	return (dispatch) => {
+		dispatch({type: SIGNUP_CLOSE});
+	}
+}
 
 function uploadSuccess(message) {
 	return {

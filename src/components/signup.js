@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { signupAccount } from '../actions/account_action';
+import { signupAccount, CloseSignup } from '../actions/account_action';
 import {
 	Button, Modal
 } from 'react-bootstrap';
@@ -19,6 +19,8 @@ class Signup extends Component {
 
 	close() {
 		this.setState({ showModal: false });
+		this.props.CloseSignup();
+
 	}
 
 	open() {
@@ -36,15 +38,17 @@ class Signup extends Component {
 	}
 
 	render() {
-		const { isLogined, isFetching } = this.props;
+		const { isLogined, isFetching, signupShowed } = this.props;
 		return (
 			<div className="signup">
 				<span onClick={this.open} className="register-name">
 					Sign up
 				</span>
-				<Modal show={this.state.showModal && !isLogined} onHide={this.close} dialogClassName="login-modal">
+				<Modal show={(this.state.showModal || signupShowed) && !isLogined} onHide={this.close} dialogClassName="signup-modal">
 					<Modal.Header closeButton>
               <Modal.Title>Sign up</Modal.Title>
+							<p className="subscribe-text">The Catapult will launch soon.
+										Be the first to know by signing up with us.</p>
           </Modal.Header>
           <Modal.Body>
 
@@ -93,10 +97,7 @@ class Signup extends Component {
 						</Button>
 
           </Modal.Body>
-          <Modal.Footer>
 
-
-          </Modal.Footer>
 				</Modal>
 			</div>
 		)
@@ -106,10 +107,14 @@ class Signup extends Component {
 function mapStateToProps(state) {
 	return {
 		isLogined: state.AuthState.isLogined,
-		isFetching: state.AccountState.isFetching
+		isFetching: state.AccountState.isFetching,
+		signupShowed: state.AccountState.signupShowed
 	}
 }
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ signupAccount: signupAccount }, dispatch);
+	return bindActionCreators({
+		signupAccount: signupAccount,
+		CloseSignup: CloseSignup
+	}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

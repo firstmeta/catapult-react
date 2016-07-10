@@ -72,10 +72,6 @@ class Login extends Component {
 						</Button>
 
           </Modal.Body>
-	        <Modal.Footer>
-
-
-	        </Modal.Footer>
 				</Modal>
 			</div>
 		)

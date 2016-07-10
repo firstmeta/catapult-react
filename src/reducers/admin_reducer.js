@@ -1,11 +1,12 @@
 import {
-  ADMIN_FETCH_ALL_ACCOUNTS, ADMIN_FETCH_ALL_COMPANIES, ADMIN_FETCH_COMPANY_FILE
+  ADMIN_FETCH_ALL_ACCOUNTS, ADMIN_FETCH_ALL_COMPANIES,
+  ADMIN_FETCH_COMPANY_FILE_DOWNLOAD_URL
 } from '../actions/admin_action';
 
 export default function(state = {
   allAccounts: '',
   allCompanies: '',
-  companyFile: ''
+  companyFileDownloadUrl: ''
 }, action) {
   switch (action.type) {
     case ADMIN_FETCH_ALL_ACCOUNTS:
@@ -16,9 +17,9 @@ export default function(state = {
       return Object.assign({}, state, {
         allCompanies: action.data
       });
-    case ADMIN_FETCH_COMPANY_FILE:
+    case ADMIN_FETCH_COMPANY_FILE_DOWNLOAD_URL:
       return Object.assign({}, state, {
-        companyFile: action.data
+        companyFileDownloadUrl: action.data
       });
     default:
       return state;
