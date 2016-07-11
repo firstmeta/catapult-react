@@ -2,8 +2,7 @@ import request from 'superagent';
 import { push } from 'redux-router';
 import { ROOT_URL, ROOT_IMAGE_URL } from '../config';
 import { AUTH_TOKEN } from './auth_action';
-import { AlertGlobal } from './alert_action';
-import { ALERT_SUCCESS, ALERT_ERROR } from '../components/global_alert';
+import { AlertGlobal, ALERT_SUCCESS, ALERT_ERROR } from './alert_action';
 
 export const CAMPAIGN_START = 'CAMPAIGN_START';
 export const CAMPAIGN_SAVE_BASICS_SUCCESS = 'CAMPAIGN_SAVE_BASICS_SUCCESS';

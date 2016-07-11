@@ -1,5 +1,6 @@
 import request from 'superagent';
 import { ROOT_URL } from '../config';
+import { AlertGlobal, ALERT_SUCCESS, ALERT_ERROR } from './alert_action';
 
 // Refactor: combine auth_action into account_action
 import { loginSuccess, loginFailure, AUTH_TOKEN } from './auth_action';
@@ -25,10 +26,10 @@ function signupFailure() {
 }
 export function signupAccount(creds) {
 	var req = request
-				.post(`${ROOT_URL}/api/signup`)
-				.set('Content-Type', 'application/json')
-				.accept('application/json')
-				.send(creds);
+							.post(`${ROOT_URL}/api/signup`)
+							.set('Content-Type', 'application/json')
+							.accept('application/json')
+							.send(creds);
 
 	return dispatch => {
 		return req.end((err, res) => {
@@ -52,6 +53,23 @@ export function OpenSignup() {
 export function CloseSignup() {
 	return (dispatch) => {
 		dispatch({type: SIGNUP_CLOSE});
+	}
+}
+export function VerifyEmail(email ,code) {
+	var req = request
+							.post(`${ROOT_URL}/api/account/verify_email`)
+							.field('email', email)
+							.field('code', code);
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200) {
+				dispatch(AlertGlobal({content: res.text, type: ALERT_SUCCESS}));
+			}
+			else {
+				dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+			}
+		})
 	}
 }
 

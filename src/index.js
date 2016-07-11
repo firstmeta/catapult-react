@@ -20,6 +20,7 @@ import CompanyView from './components/company_view';
 import CompaniesAndCampaignsMine from './components/companies_campaigns_mine';
 import CampaignCreate from './components/campaign_create';
 import AccountSetting from './components/account_setting';
+import EmailVerification from './components/email_verification';
 import Admin from './components/admin';
 
 const store = compose(
@@ -35,6 +36,7 @@ render(
 		<ReduxRouter>
 			<Route path="/" component={App}>
 				<IndexRoute component={Landing} />
+				<Route path="/account/verify_email" component={EmailVerification} />
 				<Route path="/account/settings" component={AccountSetting} />
 				<Route path="/company/browse" component={CompanyBrowse} />
 				<Route path="/company/start" component={CompanyStart} />

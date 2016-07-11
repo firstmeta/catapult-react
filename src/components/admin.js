@@ -55,6 +55,7 @@ class Admin extends Component {
                 <TableHeaderColumn dataField="ID" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="FullName" dataSort={true}>Full Name</TableHeaderColumn>
                 <TableHeaderColumn dataField="Email">Email</TableHeaderColumn>
+                <TableHeaderColumn dataField="EmailVerified">Email Verified</TableHeaderColumn>
                 <TableHeaderColumn dataField="AccountType">Account Type</TableHeaderColumn>
                 <TableHeaderColumn dataField="CreatedOn">Create On</TableHeaderColumn>
               </BootstrapTable>

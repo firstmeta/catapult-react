@@ -3,11 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RemoveAlert } from '../actions/alert_action';
 
-export const ALERT_SUCCESS = 'success';
-export const ALERT_INFO = 'info';
-export const ALERT_WARNING = 'warning';
-export const ALERT_ERROR = 'danger';
-
 class GlobalAlert extends Component {
   constructor(props) {
     super(props);
