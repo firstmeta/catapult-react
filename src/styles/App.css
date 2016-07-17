@@ -257,7 +257,7 @@ body:before {
 }
 .landing .jumbotron .sub-heading { margin-bottom: 25px; }
 .landing .main-features {
-    background-color: #ECF0F1;
+    background-color: #FFF;
     padding-top: 35px;
 }
 .landing .main-features .title {
@@ -266,7 +266,7 @@ body:before {
 .landing .main-features .content {
     margin-top: 35px;
     padding-bottom: 65px;
-    background-color: #ECF0F1;
+    background-color: #FFF;
 }
 .landing h2{
     color: #E74C3C;

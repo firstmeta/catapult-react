@@ -30,7 +30,7 @@ class HeaderNav extends Component {
                     <Link to="/company/browse">Browse Companies<span className="sr-only">(current)</span></Link>
                 </li>
                 <li className="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entrepreneurs <span className="caret"></span></a>
+									<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entrepreneurs <span className="caret"></span></a>
 									<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
 										<li><Link to="/companies-campaigns-mine">My companies</Link></li>
 										<li role="separator" className="divider"></li>
@@ -38,15 +38,9 @@ class HeaderNav extends Component {
 									</ul>
                 </li>
                 <li>
-                	<Link to="/investers">Investers</Link>
+                	<Link to="/investors">Investors</Link>
                 </li>
               </ul>
-              <form className="navbar-form navbar-left" role="search">
-                <div className="form-group">
-                  <input type="text" className="form-control" placeholder="Search" /> &nbsp;
-                </div>
-                <button type="submit" className="btn btn-default">Submit</button>
-              </form>
 
               <ul className="nav navbar-nav navbar-right">
                 <li>
@@ -75,3 +69,10 @@ function mapStateToProps(state) {
   }
 }
 export default connect(mapStateToProps)(HeaderNav);
+
+{/*<form className="navbar-form navbar-left" role="search">
+	<div className="form-group">
+		<input type="text" className="form-control" placeholder="Search" /> &nbsp;
+	</div>
+	<button type="submit" className="btn btn-default">Submit</button>
+</form>*/}

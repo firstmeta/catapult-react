@@ -39,14 +39,14 @@ class CompanyBrowse extends Component {
         {
           rows.map((r) => {
             return (
-              <div className="row">
+              <div className="row" key={r}>
                 {
                   cols.map((c) => {
                     if(!allCompanies[r+c]) {
                       return <div />
                     }
                     return (
-                      <div className="col-md-4">
+                      <div className="col-md-4" key={allCompanies[r+c].RandID}>
                         <Link to={
                           allCompanies[r+c].Url ? "/company/view/" + allCompanies[r+c].Url : "/company/view/" + allCompanies[r+c].RandID
                         }>
