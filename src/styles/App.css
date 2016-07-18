@@ -212,6 +212,12 @@ body:before {
     margin-top: 120px !important;
     width: 300px !important;
 }
+.login-modal .modal-footer span {
+  color: #777;
+}
+.login-modal .modal-footer a {
+  color: #25abdc;
+}
 
 /* Landing */
 .landing {

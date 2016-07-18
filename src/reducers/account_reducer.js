@@ -1,11 +1,12 @@
 import {
   ACCOUNT_SIGNUP_SUCCESS, ACCOUNT_SIGNUP_FAILURE,
-  SIGNUP_OPEN, SIGNUP_CLOSE
+  SIGNUP_OPEN, SIGNUP_CLOSE, LOGIN_OPEN, LOGIN_CLOSE
 } from '../actions/account_action';
 
 export default function(state = {
   isFetching: false,
-  signupShowed: false
+  signupShowed: false,
+  loginShowed: false
 }, action) {
   switch (action.type) {
     case ACCOUNT_SIGNUP_SUCCESS:
@@ -23,6 +24,14 @@ export default function(state = {
     case SIGNUP_CLOSE:
       return Object.assign({}, state, {
         signupShowed: false
+      });
+    case LOGIN_OPEN:
+      return Object.assign({}, state, {
+        loginShowed: true
+      });
+    case LOGIN_CLOSE:
+      return Object.assign({}, state, {
+        loginShowed: false
       });
     default:
       return state;

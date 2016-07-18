@@ -13,6 +13,8 @@ export const ACCOUNT_DOCUMENTS_UPLOAD_FAILURE = 'ACCOUNT_DOCUMENTS_UPLOAD_FAILUR
 
 export const SIGNUP_OPEN = 'SIGNUP_OPEN';
 export const SIGNUP_CLOSE = 'SIGNUP_CLOSE';
+export const LOGIN_OPEN = 'LOGIN_OPEN';
+export const LOGIN_CLOSE = 'LOGIN_CLOSE';
 
 function signupSuccess() {
 	return {
@@ -55,6 +57,17 @@ export function CloseSignup() {
 		dispatch({type: SIGNUP_CLOSE});
 	}
 }
+export function OpenLogin() {
+	return (dispatch) => {
+		dispatch({type: LOGIN_OPEN});
+	}
+}
+export function CloseLogin() {
+	return (dispatch) => {
+		dispatch({type: LOGIN_CLOSE});
+	}
+}
+
 export function VerifyEmail(email ,code) {
 	var req = request
 							.post(`${ROOT_URL}/api/account/verify_email`)

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loginUser } from '../actions/auth_action'
+import { CloseLogin, OpenSignup } from '../actions/account_action';
 import {
 	Button, Modal
 } from 'react-bootstrap';
@@ -19,6 +20,7 @@ class Login extends Component {
 
 	close() {
 		this.setState({ showModal: false });
+		this.props.CloseLogin();
 	}
 
 	open() {
@@ -30,20 +32,21 @@ class Login extends Component {
 	}
 
 	render() {
-		const { isLogined, isFetching } = this.props
+		const { isLogined, isFetching, loginShowed } = this.props
 		return (
 			<div className="login">
 				<span onClick={this.open} className="login-name">
 					Login
 				</span>
-				<Modal show={this.state.showModal && !isLogined} onHide={this.close} dialogClassName="login-modal">
+				<Modal show={(this.state.showModal || loginShowed) && !isLogined} onHide={this.close} dialogClassName="login-modal">
 					<Modal.Header closeButton>
-                        <Modal.Title>Login</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+            <Modal.Title>Login</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
 
-                    	{isFetching && !isLogined &&
-	                    	<div className="alert alert-danger" role="alert">
+          	{
+							isFetching && !isLogined &&
+	            <div className="alert alert-danger" role="alert">
 							  <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  <span className="sr-only">Error:</span>
 							  &nbsp; The email address and password you entered do not match!
@@ -66,12 +69,24 @@ class Login extends Component {
 							 <a className="login-forgot-password">Forgot your password?</a>
 						</div>
 
+
           	<Button onClick={this.handleLogin}
 										className="btn btn-primary btn-green btn-green-primary full-width">
 							Log me in!
 						</Button>
 
           </Modal.Body>
+					<Modal.Footer>
+     				<div>
+         			<span>Not a member yet? &nbsp;</span>
+							<a onClick={() => {
+									this.close();
+									this.props.OpenSignup()
+							}}>
+								Register for free!
+							</a>
+         		</div>
+     			</Modal.Footer>
 				</Modal>
 			</div>
 		)
@@ -81,10 +96,15 @@ class Login extends Component {
 function mapStateToProps(state) {
 	return {
 		isLogined: state.AuthState.isLogined,
-		isFetching: state.AuthState.isFetching
+		isFetching: state.AuthState.isFetching,
+		loginShowed: state.AccountState.loginShowed
 	}
 }
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ loginUser: loginUser}, dispatch);
+	return bindActionCreators({
+		loginUser: loginUser,
+		CloseLogin: CloseLogin,
+		OpenSignup: OpenSignup
+	}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

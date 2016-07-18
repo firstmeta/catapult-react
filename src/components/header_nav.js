@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import Login from './login';
 import Logout from './logout';
 import Signup from './signup';
 import CatapultLogo from '../images/catapult_logo.png';
+import { OpenLogin } from '../actions/account_action';
 
 class HeaderNav extends Component {
 	render() {
@@ -30,12 +32,25 @@ class HeaderNav extends Component {
                     <Link to="/company/browse">Browse Companies<span className="sr-only">(current)</span></Link>
                 </li>
                 <li className="dropdown">
-									<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entrepreneurs <span className="caret"></span></a>
-									<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
-										<li><Link to="/companies-campaigns-mine">My companies</Link></li>
-										<li role="separator" className="divider"></li>
-										<li><Link to="/company/start">Set up company</Link></li>
-									</ul>
+									<a
+										className="dropdown-toggle"
+										data-toggle="dropdown"
+										role="button" aria-haspopup="true"
+										aria-expanded="false"
+										onClick={!isLogined && (() => this.props.OpenLogin())}>
+
+										Entrepreneurs
+										<span className="caret"></span>
+									</a>
+									{
+										isLogined &&
+										<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
+											<li><Link to="/companies-campaigns-mine">My companies</Link></li>
+											<li role="separator" className="divider"></li>
+											<li><Link to="/company/start">Set up company</Link></li>
+										</ul>
+									}
+
                 </li>
                 <li>
                 	<Link to="/investors">Investors</Link>
@@ -68,7 +83,10 @@ function mapStateToProps(state) {
     isLogined: state.AuthState.isLogined
   }
 }
-export default connect(mapStateToProps)(HeaderNav);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({OpenLogin: OpenLogin}, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderNav);
 
 {/*<form className="navbar-form navbar-left" role="search">
 	<div className="form-group">
