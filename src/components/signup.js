@@ -95,7 +95,7 @@ class Signup extends Component {
 										className="btn btn-primary btn-green btn-green-primary full-width">
 							Sign me up!
 						</Button>
-
+						<p className="signup-policy">By registering with us, you agree to our <a target="_blank" href="/policy">privacy policy</a>.</p>
           </Modal.Body>
 
 				</Modal>
