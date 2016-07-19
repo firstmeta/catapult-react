@@ -53,7 +53,7 @@ import { OpenSignup } from '../actions/account_action';
 
                         <h3 className="small-title text-center" >Collaboration</h3>
                         <p className="text-justify">
-                            Leverage on the expertise of established venture capital fund.
+                            Leverage on the expertise of established venture capital funds.
                         </p>
                     </div>
                   </div>
