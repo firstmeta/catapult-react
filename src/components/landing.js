@@ -41,10 +41,10 @@ import { OpenSignup } from '../actions/account_action';
           	<div className="col-md-10 col-md-offset-1">
           		<div className="row">
 
-	              <div className= "col-md-4">
+	              <div className= "col-md-3">
                   <div className="row">
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
-	                    	<i className="fa fa-slideshare"></i>
+	                    	<img src="http://catapult.asia/imgs/lightning.svg" />
 	                    </div>
 
                   </div>
@@ -53,16 +53,16 @@ import { OpenSignup } from '../actions/account_action';
 
                         <h3 className="small-title text-center" >Collaboration</h3>
                         <p className="text-justify">
-                            Leverage on the expertise of established venture capital funds.
+                            Leverage on the expertise of established venture capital fund.
                         </p>
                     </div>
                   </div>
 	              </div>
 
-	              <div className= "col-md-4">
+	              <div className= "col-md-3">
                   <div className="row">
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
-	                    	<i className="fa fa-line-chart"></i>
+	                    	<img src="http://catapult.asia/imgs/briefcase.svg" />
 	                    </div>
 
                   </div>
@@ -71,19 +71,16 @@ import { OpenSignup } from '../actions/account_action';
 
                         <h3 className="small-title text-center">Liquidity</h3>
                         <p className="text-justify">
-                            Missed out on prior startup opportunities? You can now get back into the action.
-                        </p>
-                        <p className="text-justify">
-                            Start off by browsing through our featured list of startups.
+                          Trading securities on the secondary market.
                         </p>
                     </div>
                   </div>
 	              </div>
 
-	              <div className= "col-md-4">
+	              <div className= "col-md-3">
                   <div className="row">
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
-	                    	<i className="fa fa-folder-open-o"></i>
+	                    	<img src="http://catapult.asia/imgs/lightbulb.svg" />
 	                    </div>
 
                   </div>
@@ -92,10 +89,25 @@ import { OpenSignup } from '../actions/account_action';
 
                         <h3 className="small-title text-center">Transparency</h3>
                         <p className="text-justify">
-                            No more opaque corporate structures from startups.
+                            All fundraising campaigns & transactions visible on the Blockchain.
                         </p>
+                    </div>
+                  </div>
+	              </div>
+
+                <div className= "col-md-3">
+                  <div className="row">
+                  	 	<div className="col-sm-8 col-sm-offset-2 text-center">
+	                    	<img src="http://catapult.asia/imgs/padlock.svg" />
+	                    </div>
+
+                  </div>
+                  <div className= "row">
+                    <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
+
+                        <h3 className="small-title text-center">SECURITY</h3>
                         <p className="text-justify">
-                            With the corporate structures being represented on blockchain smart contracts, the status and progress of startups can be tracked easily.
+                            Complete security of funds & data.
                         </p>
                     </div>
                   </div>

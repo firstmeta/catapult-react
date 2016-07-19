@@ -288,6 +288,10 @@ body:before {
     padding-bottom: 65px;
     background-color: #FFF;
 }
+.landing .main-features img {
+    height: 80px;
+    width: 80px;
+}
 .landing h2{
     color: #E74C3C;
     font-weight: 800;
