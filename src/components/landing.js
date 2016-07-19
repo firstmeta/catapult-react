@@ -38,10 +38,10 @@ import { OpenSignup } from '../actions/account_action';
           </div>
 
           <div className="row content">
-          	<div className="col-md-10 col-md-offset-1">
+          	<div className="col-md-8 col-md-offset-2">
           		<div className="row">
 
-	              <div className= "col-md-3">
+	              <div className= "col-md-4">
                   <div className="row">
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
 	                    	<img src="http://catapult.asia/imgs/lightning.svg" />
@@ -59,7 +59,7 @@ import { OpenSignup } from '../actions/account_action';
                   </div>
 	              </div>
 
-	              <div className= "col-md-3">
+	              <div className= "col-md-4">
                   <div className="row">
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
 	                    	<img src="http://catapult.asia/imgs/briefcase.svg" />
@@ -77,7 +77,7 @@ import { OpenSignup } from '../actions/account_action';
                   </div>
 	              </div>
 
-	              <div className= "col-md-3">
+	              <div className= "col-md-4">
                   <div className="row">
                   	 	<div className="col-sm-8 col-sm-offset-2 text-center">
 	                    	<img src="http://catapult.asia/imgs/lightbulb.svg" />
@@ -90,24 +90,6 @@ import { OpenSignup } from '../actions/account_action';
                         <h3 className="small-title text-center">Transparency</h3>
                         <p className="text-justify">
                             All fundraising campaigns & transactions visible on the Blockchain.
-                        </p>
-                    </div>
-                  </div>
-	              </div>
-
-                <div className= "col-md-3">
-                  <div className="row">
-                  	 	<div className="col-sm-8 col-sm-offset-2 text-center">
-	                    	<img src="http://catapult.asia/imgs/padlock.svg" />
-	                    </div>
-
-                  </div>
-                  <div className= "row">
-                    <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
-
-                        <h3 className="small-title text-center">SECURITY</h3>
-                        <p className="text-justify">
-                            Complete security of funds & data.
                         </p>
                     </div>
                   </div>
