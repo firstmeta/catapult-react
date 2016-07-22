@@ -53,7 +53,7 @@ import { OpenSignup } from '../actions/account_action';
 
                         <h3 className="small-title text-center">COLLABORATION</h3>
                         <p className="text-justify">
-                            Leverage on the expertise of established venture capital funds.
+                            <span className="feature-desc">Leverage on the expertise of established venture capital funds.</span>
                         </p>
                     </div>
                   </div>
@@ -71,7 +71,7 @@ import { OpenSignup } from '../actions/account_action';
 
                         <h3 className="small-title text-center">LIQUIDITY</h3>
                         <p className="text-justify">
-                          Trade securities on the secondary market.
+                          <span className="feature-desc">Trade securities on the secondary market.</span>
                         </p>
                     </div>
                   </div>
