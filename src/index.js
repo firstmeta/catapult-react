@@ -20,6 +20,7 @@ import CompanyView from './components/company_view';
 import CompaniesAndCampaignsMine from './components/companies_campaigns_mine';
 import CampaignCreate from './components/campaign_create';
 import AccountSetting from './components/account_setting';
+import PasswordReset from './components/account_pwd_reset';
 import EmailVerification from './components/email_verification';
 import Admin from './components/admin';
 import Policy from './components/policy';
@@ -39,6 +40,7 @@ render(
 				<IndexRoute component={Landing} />
 				<Route path="/account/verify_email" component={EmailVerification} />
 				<Route path="/account/settings" component={AccountSetting} />
+				<Route path="/account/reset_pwd" component={PasswordReset} />
 				<Route path="/company/browse" component={CompanyBrowse} />
 				<Route path="/company/start" component={CompanyStart} />
 				<Route path="/company/:randID/edit" component={CompanyCreate} />

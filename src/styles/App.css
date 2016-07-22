@@ -226,11 +226,50 @@ body:before {
     margin-top: 120px !important;
     width: 300px !important;
 }
+.login-modal .modal-body a {
+  color: #25abdc;
+  font-size: 12px;
+  font-weight: 200;
+}
 .login-modal .modal-footer span {
   color: #777;
 }
 .login-modal .modal-footer a {
   color: #25abdc;
+}
+/* Pwd reset */
+.pwd-reset-modal {
+    margin-top: 120px !important;
+    width: 300px !important;
+}
+.pwd-reset-modall .modal-footer span {
+  color: #777;
+}
+.pwd-reset-modal .modal-footer a {
+  color: #25abdc;
+}
+
+.pwd-reset {
+  margin-top: 100px;
+  margin-bottom: 70px;
+}
+.pwd-reset label {
+  font-size: 17px;
+  margin-bottom: 0px;
+}
+.pwd-reset input {
+  border: none;
+  border-bottom: 1px solid #d9d9de;
+  outline: none;
+  min-width: 320px;
+  /*min-height: 50px;*/
+  background-color: #f6f6f6;
+  font-size: 21px;
+  font-weight: 300;
+}
+.pwd-reset .btn-green-primary {
+  margin-top: 30px;
+  min-width: 200px;
 }
 
 /* Landing */
@@ -254,39 +293,42 @@ body:before {
   background: rgba(231,76,60,0.9);
 }
 .landing .jumbotron {
-    background: url(../images/landing_bg.jpg);
-    -webkit-background-size: cover;
-    background-size: cover;
-    background-position: center center;
-    height: 700px;
-    margin-bottom: 0px;
+  background: url(../images/landing_bg.jpg);
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  height: 700px;
+  margin-bottom: 0px;
 }
 .landing .jumbotron .row {
-    padding-top: 45px;
+  padding-top: 45px;
 }
 .landing .jumbotron .intro-section {
-    color: #ffffff;
-    text-align: center;
-    padding-top: 90px;
+  color: #ffffff;
+  text-align: center;
+  padding-top: 90px;
 }
 .landing .jumbotron .intro {
-    font-size: 50px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
+  font-size: 50px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
 }
 .landing .jumbotron .sub-heading { margin-bottom: 25px; }
 .landing .main-features {
-    background-color: #FFF;
-    padding-top: 35px;
+  background-color: #FFF;
+  padding-top: 35px;
 }
 .landing .main-features .title {
-    text-align: center;
+  text-align: center;
 }
 .landing .main-features .content {
-    margin-top: 50px;
-    padding-bottom: 70px;
-    background-color: #FFF;
+  margin-top: 50px;
+  padding-bottom: 70px;
+  background-color: #FFF;
+}
+.landing .main-features .content .feature-desc {
+  font-weight: 300;
 }
 .landing .main-features img {
     height: 80px;
@@ -584,6 +626,9 @@ body:before {
   margin-bottom: 15px;
   border: none;
   box-shadow: rgba(0,0,0,0.05) 0 0 1px;
+}
+.company-view .left-col .description img{
+  max-width: 100% !important;
 }
 .company-view .row-top .right-col {
   padding-top: 10px;

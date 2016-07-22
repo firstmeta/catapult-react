@@ -43,15 +43,15 @@ import { OpenSignup } from '../actions/account_action';
 
 	              <div className= "col-md-4">
                   <div className="row">
-                  	 	<div className="col-sm-8 col-sm-offset-2 text-center">
-	                    	<img src="http://catapult.asia/imgs/lightning.svg" />
+                  	 	<div className="col-sm-10 col-sm-offset-1 text-center">
+                        <img src="http://catapult.asia/imgs/briefcase.svg" />
 	                    </div>
 
                   </div>
                   <div className= "row">
-                    <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
+                    <div className="col-sm-10 col-sm-offset-1 animated fadeInRight">
 
-                        <h3 className="small-title text-center" >Collaboration</h3>
+                        <h3 className="small-title text-center">COLLABORATION</h3>
                         <p className="text-justify">
                             Leverage on the expertise of established venture capital funds.
                         </p>
@@ -61,17 +61,17 @@ import { OpenSignup } from '../actions/account_action';
 
 	              <div className= "col-md-4">
                   <div className="row">
-                  	 	<div className="col-sm-8 col-sm-offset-2 text-center">
-	                    	<img src="http://catapult.asia/imgs/briefcase.svg" />
+                  	 	<div className="col-sm-10 col-sm-offset-1 text-center">
+	                    	<img src="http://catapult.asia/imgs/lightning.svg" />
 	                    </div>
 
                   </div>
                   <div className= "row">
-                    <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
+                    <div className="col-sm-10 col-sm-offset-1 animated fadeInRight">
 
-                        <h3 className="small-title text-center">Liquidity</h3>
+                        <h3 className="small-title text-center">LIQUIDITY</h3>
                         <p className="text-justify">
-                          Trading securities on the secondary market.
+                          Trade securities on the secondary market.
                         </p>
                     </div>
                   </div>
@@ -79,17 +79,17 @@ import { OpenSignup } from '../actions/account_action';
 
 	              <div className= "col-md-4">
                   <div className="row">
-                  	 	<div className="col-sm-8 col-sm-offset-2 text-center">
+                  	 	<div className="col-sm-10 col-sm-offset-1 text-center">
 	                    	<img src="http://catapult.asia/imgs/lightbulb.svg" />
 	                    </div>
 
                   </div>
                   <div className= "row">
-                    <div className="col-sm-8 col-sm-offset-2 animated fadeInRight">
+                    <div className="col-sm-10 col-sm-offset-1 animated fadeInRight">
 
-                        <h3 className="small-title text-center">Transparency</h3>
+                        <h3 className="small-title text-center">TRANSPARENCY</h3>
                         <p className="text-justify">
-                            All fundraising campaigns & transactions visible on the Blockchain.
+                          <span className="feature-desc">All fundraising campaigns & transactions recorded & visible on the blockchain.</span>
                         </p>
                     </div>
                   </div>

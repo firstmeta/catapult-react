@@ -1,4 +1,5 @@
 export const ALERT = 'ALERT_SHOW';
+export const ALERT_LOCAL = 'ALERT_LOCAL_SHOW';
 
 export const ALERT_SUCCESS = 'success';
 export const ALERT_INFO = 'info';
@@ -15,6 +16,20 @@ export function AlertGlobal(msg) {
 export function RemoveAlert() {
   return {
     type: ALERT,
+    msg: ''
+  }
+}
+
+export function AlertLocal(msg) {
+  return {
+    type: ALERT_LOCAL,
+    msg: msg
+  }
+}
+
+export function RemoveAlertLocal() {
+  return {
+    type: ALERT_LOCAL,
     msg: ''
   }
 }

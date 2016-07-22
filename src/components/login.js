@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loginUser } from '../actions/auth_action'
-import { CloseLogin, OpenSignup } from '../actions/account_action';
+import { CloseLogin, OpenSignup, OpenPwdReset } from '../actions/account_action';
 import {
 	Button, Modal
 } from 'react-bootstrap';
@@ -32,7 +32,7 @@ class Login extends Component {
 	}
 
 	render() {
-		const { isLogined, isFetching, loginShowed } = this.props
+		const { isLogined, isFetching, loginShowed } = this.props;
 		return (
 			<div className="login">
 				<span onClick={this.open} className="login-name">
@@ -66,7 +66,14 @@ class Login extends Component {
 								className="form-control"
 								placeholder="Password*"
 								ref="password"/>
-							 <a className="login-forgot-password">Forgot your password?</a>
+							 <a
+								 	className="login-forgot-password"
+									onClick={() => {
+										this.close();
+										this.props.OpenPwdReset();
+									}}>
+									Forgot your password?
+							</a>
 						</div>
 
 
@@ -81,13 +88,15 @@ class Login extends Component {
          			<span>Not a member yet? &nbsp;</span>
 							<a onClick={() => {
 									this.close();
-									this.props.OpenSignup()
+									this.props.OpenSignup();
 							}}>
 								Register for free!
 							</a>
          		</div>
      			</Modal.Footer>
 				</Modal>
+
+
 			</div>
 		)
 	}
@@ -104,7 +113,8 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
 		loginUser: loginUser,
 		CloseLogin: CloseLogin,
-		OpenSignup: OpenSignup
+		OpenSignup: OpenSignup,
+		OpenPwdReset: OpenPwdReset
 	}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

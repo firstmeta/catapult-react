@@ -1,12 +1,14 @@
 import {
   ACCOUNT_SIGNUP_SUCCESS, ACCOUNT_SIGNUP_FAILURE,
-  SIGNUP_OPEN, SIGNUP_CLOSE, LOGIN_OPEN, LOGIN_CLOSE
+  SIGNUP_OPEN, SIGNUP_CLOSE, LOGIN_OPEN, LOGIN_CLOSE,
+  PWD_RESET_OPEN, PWD_RESET_CLOSE
 } from '../actions/account_action';
 
 export default function(state = {
   isFetching: false,
   signupShowed: false,
-  loginShowed: false
+  loginShowed: false,
+  pwdResetShowed: false
 }, action) {
   switch (action.type) {
     case ACCOUNT_SIGNUP_SUCCESS:
@@ -33,6 +35,14 @@ export default function(state = {
       return Object.assign({}, state, {
         loginShowed: false
       });
+    case PWD_RESET_OPEN:
+      return Object.assign({}, state, {
+        pwdResetShowed: true
+      });
+    case PWD_RESET_CLOSE:
+      return Object.assign({}, state, {
+        pwdResetShowed: false
+      })
     default:
       return state;
   }

@@ -139,7 +139,6 @@ class CampaignCreateBasics extends Component {
           </div>
         </div>
 
-
       </div>
     )
   }

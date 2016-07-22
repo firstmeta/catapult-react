@@ -84,7 +84,7 @@ class CompanyView extends Component {
                 <div className="col-md-8 left-col">
                   <ReactPlayer className="player" url={company.Video} controls={true}/>
 
-                  <div className="panel panel-default details">
+                  <div className="panel panel-default details description">
                     <div className="panel-body " dangerouslySetInnerHTML={{__html: this.props.company.Summary}}>
                     </div>
                   </div>

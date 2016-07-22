@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import Login from './login';
 import Logout from './logout';
 import Signup from './signup';
+import PasswordReset from './account_pwd_reset_request';
 import CatapultLogo from '../images/catapult_logo.png';
 import { OpenLogin } from '../actions/account_action';
 
@@ -69,6 +70,7 @@ class HeaderNav extends Component {
                     {!isLogined && <Signup />}
                   </a>
                 </li>
+								<li><PasswordReset /></li>
               </ul>
             </div>
 
