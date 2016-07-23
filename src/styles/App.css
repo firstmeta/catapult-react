@@ -328,7 +328,8 @@ body:before {
   background-color: #FFF;
 }
 .landing .main-features .content .feature-desc {
-  font-weight: 300;
+  font-weight: 200;
+  font-size: 15px;
 }
 .landing .main-features img {
     height: 80px;
@@ -338,6 +339,9 @@ body:before {
     color: #E74C3C;
     font-weight: 800;
     font-size: 50px;
+}
+.landing h3 {
+  color: #505050;
 }
 .landing .fa-slideshare, .fa-line-chart, .fa-folder-open-o{
     font-size: 80px;
