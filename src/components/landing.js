@@ -33,7 +33,7 @@ import { OpenSignup } from '../actions/account_action';
 		    <div className="container-fluid main-features" id="main-features">
 		    	<div className="row title">
             <div className="col-md-12">
-               <h2>Powering Startup Investment with Blockchain Smart Contracts</h2>
+               <h2>Startup investing made easy, efficient & transparent</h2>
             </div>
           </div>
 
