@@ -391,6 +391,12 @@ body:before {
   font-weight: 200;
   margin-top: 15px;
 }
+.landing .explain .content .col {
+  padding-left: 70px;
+}
+.landing .explain .content ul {
+  padding-left: 25px;
+}
 .company-start {
   margin-top: 80px;
   margin-bottom: 300px;

@@ -113,7 +113,7 @@ import { OpenSignup } from '../actions/account_action';
           <div className="row content">
             <div className="col-md-6 col-md-offset-3">
               <div className="row">
-                <div className="col-sm-5 col-sm-offset-1">
+                <div className="col-sm-6 col">
                   Investors
                   <ul>
                     <li>invest with small amounts.</li>
@@ -121,7 +121,7 @@ import { OpenSignup } from '../actions/account_action';
                     <li>trade their investments.</li>
                   </ul>
                 </div>
-                <div className="col-sm-5 col-sm-offset-1">
+                <div className="col-sm-6 col">
                   Startups
                   <ul>
                     <li>save time fundraising.</li>
