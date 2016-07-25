@@ -140,7 +140,6 @@ import { OpenSignup } from '../actions/account_action';
         	<div className="row">
         		<div className="col-md-8 col-md-offset-2 animated zoomIn">
               <h2 className="call-to-action">Don't Miss the Growth Journeys of Asia's Most Exciting Startups!</h2>
-              <h2>Catapult: Powering Startup Investment with Smart Contracts</h2>
           </div>
         	</div>
         </div>
