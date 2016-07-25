@@ -100,6 +100,42 @@ import { OpenSignup } from '../actions/account_action';
           </div>
         </div>
 
+        <div className="container-fluid explain">
+          <div className="row title">
+            <div className="col-md-10 col-md-offset-1">
+               <h2>Why Crowdfunding?</h2>
+               <p>
+                 Startup crowdfunding unleashes endless potential. With crowdfunding, anyone with a promising idea and a plan in place can reach out to the crowds and receive funding to build a successful company.
+               </p>
+            </div>
+          </div>
+
+          <div className="row content">
+            <div className="col-md-6 col-md-offset-3">
+              <div className="row">
+                <div className="col-sm-5 col-sm-offset-1">
+                  Investors
+                  <ul>
+                    <li>invest with small amounts.</li>
+                    <li>diversify investment portfolios.</li>
+                    <li>trade their investments.</li>
+                  </ul>
+                </div>
+                <div className="col-sm-5 col-sm-offset-1">
+                  Startups
+                  <ul>
+                    <li>save time fundraising.</li>
+                    <li>increase traction.</li>
+                    <li>receive crowd validation.</li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
         <div className="container-fluid summary">
         	<div className="row">
         		<div className="col-md-8 col-md-offset-2 animated zoomIn">

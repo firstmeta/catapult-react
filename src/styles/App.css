@@ -274,7 +274,7 @@ body:before {
 
 /* Landing */
 .landing {
-    color: #999;
+    color: #6f6f6f;
     font-family: 'Raleway', sans-serif;
 }
 .landing .btn {
@@ -370,6 +370,26 @@ body:before {
 }
 .landing .summary .call-to-action {
     color: #000;
+}
+.landing .explain {
+  padding-top: 10px;
+  padding-bottom: 35px;
+  background-color: #fff;
+}
+.landing .explain .title {
+  text-align: center;
+}
+.landing .explain .title h3 {
+  font-size: 24px;
+}
+.landing .explain .title p {
+  font-size: 20px;
+  font-weight: 200;
+}
+.landing .explain .content{
+  font-size: 16px;
+  font-weight: 200;
+  margin-top: 15px;
 }
 .company-start {
   margin-top: 80px;
