@@ -146,6 +146,8 @@ function mapStateToProps(state) {
   }
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({SubmitCompanyForReview: SubmitCompanyForReview}, dispatch);
+  return bindActionCreators({
+    SubmitCompanyForReview: SubmitCompanyForReview
+  }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyCreate);
