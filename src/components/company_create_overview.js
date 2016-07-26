@@ -66,8 +66,14 @@ class CompanyCreateOverview extends Component {
     else {
       return (
         <div>
-          <p>Drop your company listing image here, or click to select image to upload.</p>
-          <p>Size 338 x 190 px</p>
+          <p>
+            Drop your company <i><u>listing image</u></i> here, or click to select image to upload.
+            The listing image is used for our Browse Company page.
+          </p>
+          <div className="img-size">
+            <p> ~ 340 x 200 px</p>
+          </div>
+
 
         </div>
       );
