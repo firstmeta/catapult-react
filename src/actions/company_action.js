@@ -139,7 +139,7 @@ export function SaveCompanyBasics(content) {
   }
 }
 
-export function SaveCompanyOverview(content, logo, listingImage, teamPhotos) {
+export function SaveCompanyOverview(content, overallSketch, listingImage, teamPhotos) {
   var req = request
               .post(`${ROOT_URL}/api/secure/company/save/overview`)
               .set('Authorization', localStorage.getItem(AUTH_TOKEN));
@@ -149,8 +149,8 @@ export function SaveCompanyOverview(content, logo, listingImage, teamPhotos) {
     req.attach(photo.name, photo);
   })
 
-  if(logo) {
-    req.attach(logo.name, logo);
+  if(overallSketch) {
+    req.attach(overallSketch.name, overallSketch);
   }
 
   if(listingImage) {

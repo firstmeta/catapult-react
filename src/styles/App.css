@@ -531,6 +531,10 @@ body:before {
 .company-create-overview .add-padding {
   padding-top: 20px;
 }
+.company-create-overview .slogan {
+  margin-bottom: 8px;
+  height: 30px
+}
 .company-create-overview .drop-image {
   font-size: 11px;
   border: 2px dashed #ccc;
@@ -544,15 +548,46 @@ body:before {
 }
 .company-create-overview .drop-image img {
   align-self: center;
-  max-height: 90px;
+  max-height: 150px;
   width: auto;
-  max-width: 123px;
+  max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+.company-create-overview .listing-image {
+  height: 157px;
+}
+
 .company-create-overview .video-slogan .row {
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 .company-create-overview .video-slogan .row input {
   height: 30px;
+}
+.company-create-overview .video-slogan .product-photo img {
+  max-height: 80px;
+}
+.company-create-overview .video-slogan .product-photo hr {
+  margin-top: 10px;
+  margin-bottom: 4px;
+  border-top: 1px solid #888888;
+}
+.company-create-overview .video-slogan .product-photo .title {
+  width: 50%;
+  margin-top:0;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 15px;
+  font-weight: 300;
+  font-style: italic;
+}
+.company-create-overview .video-slogan .product-photo .img-size p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 300;
 }
 .company-create-overview .team-member {
   border-bottom: 1px solid #ccc;
@@ -640,6 +675,13 @@ body:before {
   width: 100% !important;
   margin-bottom: 25px;
 }
+.company-view .overall-sketch {
+  margin-bottom: 25px;
+}
+.company-view .overall-sketch img {
+  width: 100%;
+  height: auto;
+}
 .company-view .row {
   margin-left: 0px;
   margin-right: 0px;
@@ -658,7 +700,8 @@ body:before {
   box-shadow: rgba(0,0,0,0.05) 0 0 1px;
 }
 .company-view .left-col .description img{
-  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
 }
 .company-view .row-top .right-col {
   padding-top: 10px;

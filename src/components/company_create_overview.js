@@ -14,12 +14,12 @@ class CompanyCreateOverview extends Component {
 
     this.state = {
       team: [],
-      logo:'',
+      overallSketch:'',
       listingImage: ''
     }
-    this.displayLogo =  this.displayLogo.bind(this);
+    this.displayOverallSketch =  this.displayOverallSketch.bind(this);
     this.displayListingImage = this.displayListingImage.bind(this);
-    this.updateLogo = this.updateLogo.bind(this);
+    this.updateOverallSketch = this.updateOverallSketch.bind(this);
     this.updateListingImage = this.updateListingImage.bind(this);
     this.updateTeam = this.updateTeam.bind(this);
     this.updateTeamTexts = this.updateTeamTexts.bind(this);
@@ -37,15 +37,23 @@ class CompanyCreateOverview extends Component {
     this.state.team = team;
   }
 
-  displayLogo() {
-    if (this.state.logo.preview) {
-      return <img src={this.state.logo.preview} />;
+  displayOverallSketch() {
+    if (this.state.overallSketch.preview) {
+      return <img src={this.state.overallSketch.preview} />;
     }
-    else if (this.props.company.Logo) {
-      return <img src={ROOT_IMAGE_URL + '/' + this.props.company.Logo} />;
+    else if (this.props.company.OverallSketch) {
+      return <img src={ROOT_IMAGE_URL + '/' + this.props.company.OverallSketch} />;
     }
     else {
-      return <div>Drop your company logo here, or click to select image to upload.</div>;
+      return (
+        <div>
+            <p>Drop a sketch that describes your company overall products, services.
+            You can also click to select image to upload.</p>
+            <div className="img-size">
+              <p> ~ 640 x 360 px</p>
+            </div>
+        </div>
+      );
     }
   }
   displayListingImage() {
@@ -65,9 +73,9 @@ class CompanyCreateOverview extends Component {
       );
     }
   }
-  updateLogo(files) {
-    var logo = files[0];
-    this.setState({logo: logo});
+  updateOverallSketch(files) {
+    var overallSketch = files[0];
+    this.setState({overallSketch: overallSketch});
   }
   updateListingImage(files) {
     var img = files[0];
@@ -97,11 +105,11 @@ class CompanyCreateOverview extends Component {
     content.videoUrl = this.refs.videoUrl.value;
     content.slogan = this.refs.slogan.value;
 
-    if(this.state.logo) {
-      content.logoName = this.state.logo.name;
+    if(this.state.overallSketch) {
+      content.overallSketchName = this.state.overallSketch.name;
     }
-    else if (this.props.company.Logo) {
-      content.savedLogoName = this.props.company.Logo;
+    else if (this.props.company.OverallSketch) {
+      content.savedOverallSketchName = this.props.company.OverallSketch;
     }
 
     if(this.state.listingImage) {
@@ -111,7 +119,7 @@ class CompanyCreateOverview extends Component {
       content.savedListingImageName = this.props.company.ListingImage;
     }
 
-    this.props.SaveCompanyOverview(content, this.state.logo, this.state.listingImage, teamPhotos);
+    this.props.SaveCompanyOverview(content, this.state.overallSketch, this.state.listingImage, teamPhotos);
   }
 
   render() {
@@ -129,9 +137,20 @@ class CompanyCreateOverview extends Component {
             <div className="col-md-10 col-md-offset-1 segment add-padding">
               <h3>Company overview</h3>
               <div className="row">
-                <div className="col-sm-4">
+                <div className="col-sm-5">
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <label>Company slogan</label>
+                      <input
+                        type="text"
+                        className="form-control slogan"
+                        placeholder="Revolutionize the future."
+                        defaultValue={company.Slogan}
+                        ref="slogan"/>
+                    </div>
+                  </div>
                   <div className="form-group">
-                    <label for="shortDesc">Short blurb</label>
+                    <label>Short blurb</label>
                     <textarea
                       className="form-control"
                       rows="4"
@@ -142,22 +161,10 @@ class CompanyCreateOverview extends Component {
                   </div>
                 </div>
 
-                <div className="col-sm-2">
-                  <label>Company logo</label>
-                  <Dropzone
-                    className="drop-image"
-                    multiple={false}
-                    onDrop={this.updateLogo}>
-                    {
-                      this.displayLogo()
-                    }
-                  </Dropzone>
-                </div>
-
-                <div className="col-sm-2">
+                <div className="col-sm-3">
                   <label>Listing image</label>
                   <Dropzone
-                    className="drop-image"
+                    className="drop-image listing-image"
                     multiple={false}
                     onDrop={this.updateListingImage}>
                     {
@@ -179,15 +186,28 @@ class CompanyCreateOverview extends Component {
                     </div>
                   </div>
 
-                  <div className="row">
+                  <div className="row product-photo">
                     <div className="col-sm-12">
-                      <label>Company slogan</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Revolutionize the future."
-                        defaultValue={company.Slogan}
-                        ref="slogan"/>
+                      <div className="row">
+                        <div className="col-sm-5">
+                          <hr />
+                        </div>
+                        <div className="col-sm-2">
+                          <div className="title">OR</div>
+                        </div>
+                        <div className="col-sm-5">
+                          <hr />
+                        </div>
+                      </div>
+
+                      <Dropzone
+                        className="drop-image"
+                        multiple={false}
+                        onDrop={this.updateOverallSketch}>
+                        {
+                          this.displayOverallSketch()
+                        }
+                      </Dropzone>
                     </div>
                   </div>
 
