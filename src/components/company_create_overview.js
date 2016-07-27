@@ -67,8 +67,8 @@ class CompanyCreateOverview extends Component {
       return (
         <div>
           <p>
-            Drop your company <i><u>listing image</u></i> here, or click to select image to upload.
-            The listing image is used for our Browse Company page.
+            Drop your company <i className="bold-600">listing image</i> here, or click to select image to upload.
+            The listing image is used for our <a href="/company/browse" target="_blank"><u>Browse Companies</u></a> page.
           </p>
           <div className="img-size">
             <p> ~ 340 x 200 px</p>

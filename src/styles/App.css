@@ -60,7 +60,9 @@ label {
   font-weight: 300;
   font-size: 14px;
 }
-
+.bold-600 {
+  font-weight: 600;
+}
 .btn {
   font-weight: 300;
 }
