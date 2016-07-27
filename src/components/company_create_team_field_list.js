@@ -9,6 +9,7 @@ class CompanyCreateTeamFieldList extends Component {
     super(props);
 
     this.addField = this.addField.bind(this);
+    this.removeField = this.removeField.bind(this);
     this.updateFieldContent = this.updateFieldContent.bind(this);
     this.updateFieldContentTexts = this.updateFieldContentTexts.bind(this);
   }
@@ -47,6 +48,12 @@ class CompanyCreateTeamFieldList extends Component {
     this.props.update(fieldContents);
   }
 
+  removeField(index) {
+    var fieldContents = this.props.fieldContents.slice();
+    fieldContents.splice(index, 1);
+    this.props.update(fieldContents);
+  }
+
   updateFieldContent(index, content) {
     var fieldContents = this.props.fieldContents.slice();
     fieldContents[index].name = content.name;
@@ -82,6 +89,7 @@ class CompanyCreateTeamFieldList extends Component {
           photo={fieldContents[i].photo}
           savedPhoto={fieldContents[i].savedPhoto}
           update={this.updateFieldContent}
+          remove={this.removeField}
           updateTexts={this.updateFieldContentTexts}/>
       );
     }

@@ -50,7 +50,16 @@ class CompanyCreateTeamField extends Component {
     //console.log(this.state.teamMemberPhoto);
     return (
       <div className="panel panel-default">
-        <div className="panel-body">
+        <div className="panel-body team-field">
+          <div className="row">
+            <div className="col-md-12">
+              <span
+                className="remove-field"
+                onClick={() => this.props.remove(this.props.index)}>
+                x
+              </span>
+            </div>
+          </div>
           <div className="row">
             <div className="col-sm-3">
               <div className="form-group">

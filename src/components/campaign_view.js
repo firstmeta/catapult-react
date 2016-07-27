@@ -102,7 +102,7 @@ class CampaignView extends Component {
                           </div>
                           <div>funded of {campaign.AmountRaising} {campaign.Currency}</div>
                           <div className="progress-invest">
-                            <div className="progess-bar"></div> &nbsp; <span>0 %</span>
+                            <div className="progress-bar"></div> &nbsp; <span>0 %</span>
                           </div>
 
                           <hr />

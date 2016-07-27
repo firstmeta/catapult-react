@@ -27,13 +27,14 @@ html {
 body {
     background-color: #F6F6F6;
     font-family: 'Raleway', sans-serif;
+    font-weight: 300;
     height: 100%;
     color: #505050;
 }
 
 /* Elements styles: button, a, custom width*/
 a {
-    color: #777;
+    color: #505050;
     text-decoration: none;
 }
 a:focus, a:hover {
@@ -46,18 +47,23 @@ h1 {
   font-size: 45px;
   font-weight: 300;
   color: #333;
+  /*color: #505050;*/
 }
 h2 {
   font-size: 35px;
   font-weight: 300;
   color: #333;
+  /*color: #505050;*/
 }
 label {
-  color: #777;
+  /*color: #777;*/
   font-weight: 300;
   font-size: 14px;
 }
 
+.btn {
+  font-weight: 300;
+}
 .btn:focus,.btn:active {
    outline: none !important;
 }
@@ -232,7 +238,7 @@ body:before {
   font-weight: 200;
 }
 .login-modal .modal-footer span {
-  color: #777;
+  /*color: #777;*/
 }
 .login-modal .modal-footer a {
   color: #25abdc;
@@ -243,7 +249,7 @@ body:before {
     width: 300px !important;
 }
 .pwd-reset-modall .modal-footer span {
-  color: #777;
+  /*color: #777;*/
 }
 .pwd-reset-modal .modal-footer a {
   color: #25abdc;
@@ -450,7 +456,8 @@ body:before {
     border-color: #ccc;
 }
 .company-create .btn a:hover {
-  color: #777 !important;
+  /*color: #777 !important;*/
+  color: #505050 !important;
 }
 .company-create .content {
   margin-top: 30px;
@@ -471,12 +478,12 @@ body:before {
   margin-bottom: 25px;
 }
 .company-create .segment label{
-  color: #777;
+  /*color: #777;*/
   font-weight: 300;
   font-size: 14px;
 }
 .company-create .segment .form-control {
-  color: #777;
+  /*color: #777;*/
 }
 .company-create .add-padding {
   padding-top: 20px
@@ -508,12 +515,12 @@ body:before {
   margin-bottom: 25px;
 }
 .company-create-basics .segment label{
-  color: #777;
+  /*color: #777;*/
   font-weight: 300;
   font-size: 14px;
 }
 .company-create-basics .segment .form-control {
-  color: #777;
+  /*color: #777;*/
 }
 .company-create-basics .segment .dropdown .btn {
   width: 100%;
@@ -619,6 +626,15 @@ body:before {
   padding: 0px;
   margin-bottom: 25px;
   width: 100%;
+}
+.company-create-overview .team-field {
+  padding-top: 5px;
+}
+.company-create-overview .team-field .remove-field {
+  float: right;
+  font-weight: 200;
+  cursor: pointer;
+  padding-left: 5px;
 }
 .company-create-summary {
   margin-top: 30px;
@@ -768,7 +784,7 @@ body:before {
 }
 .company-browse .content {
   padding: 8px;
-  color: #777;
+  /*color: #777;*/
   font-size: 13px;
   margin-bottom: 20px;
 }
@@ -812,7 +828,7 @@ body:before {
   margin-bottom: 10px;
 }
 .companies-campaigns .row-content .start-campaign {
-  color: #777;
+  /*color: #777;*/
   cursor: pointer;
 }
 .companies-campaigns .row-content .status p::first-letter {
@@ -841,7 +857,8 @@ body:before {
     border-color: #ccc;
 }
 .campaign-create .btn a:hover {
-  color: #777 !important;
+  /*color: #777 !important;*/
+  color: #505050 !important;
 }
 .campaign-create-basics {
   margin-top: 35px;
@@ -985,7 +1002,7 @@ body:before {
   width: 100%;
   overflow: hidden;
 }
-.campaign-view .invest .progess-bar{
+.campaign-view .invest .progress-bar{
   height: 8px;
   width: 85%;
   border-radius: 4px;
