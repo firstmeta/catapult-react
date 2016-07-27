@@ -30,6 +30,7 @@ submitForReview() {
           <div className="col-md-10 col-md-offset-1">
             <div className="row row-centered">
               <div className="col-lg-1 col-centered">
+              <a name="submitReview"></a>
               <button
                 className="btn btn-primary btn-green btn-green-primary full-width"
                 onClick={this.submitForReview}>
@@ -118,7 +119,11 @@ submitForReview() {
                 </div>
 
                 <div className="btn-group" role="group">
-                  <button type="button" className="btn btn-default"><Link to="#submitReview">Submit for review</Link></button>
+                  <a href={"/company/"+ randID +"/edit?step=preview#submitReview"}>
+                    <button type="button" className="btn btn-default">
+                      Submit for review
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>

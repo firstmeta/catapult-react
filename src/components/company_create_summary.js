@@ -96,7 +96,7 @@ class CompanyCreateSummary extends Component {
                 <button
                   className="btn btn-primary btn-green btn-green-primary full-width"
                   onClick={this.saveCompanySummary}>
-                  Save & Preview
+                  Save & Continue
                 </button>
                 </div>
               </div>
