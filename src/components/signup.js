@@ -88,7 +88,14 @@ class Signup extends Component {
 								type="password"
 								className="form-control"
 								placeholder="Re-enter password*"
-								ref="repassword"/>
+								ref="repassword"
+								onKeyUp={
+									(e) => {
+										if(e.which === 13){
+            					this.handleRegister();
+    								}
+									}
+								}/>
 						</div>
 
           	<Button onClick={this.handleRegister}

@@ -58,14 +58,28 @@ class Login extends Component {
 								type="text"
 								className="form-control"
 								placeholder="Email*"
-								ref="email"/>
+								ref="email"
+								onKeyUp={
+									(e) => {
+										if(e.which === 13){
+            					this.handleLogin();
+    								}
+									}
+								}/>
 						</div>
 						<div className="form-group">
 							<input
 								type="password"
 								className="form-control"
 								placeholder="Password*"
-								ref="password"/>
+								ref="password"
+								onKeyUp={
+									(e) => {
+										if(e.which === 13){
+            					this.handleLogin();
+    								}
+									}
+								}/>
 							 <a
 								 	className="login-forgot-password"
 									onClick={() => {
