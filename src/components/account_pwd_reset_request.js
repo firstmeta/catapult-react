@@ -40,13 +40,21 @@ class PasswordResetRequest extends Component {
                 type="text"
                 className="form-control"
                 placeholder="Email*"
-                ref="email"/>
+                ref="email"
+                onKeyUp={
+									(e) => {
+										if(e.which === 13){
+                      this.props.RequestResetPassword(this.refs.email.value);
+                      this.close();
+    								}
+									}
+								}/>
             </div>
 
 
             <Button onClick={() => {
                         this.props.RequestResetPassword(this.refs.email.value);
-                        this.close()
+                        this.close();
                     }}
                     className="btn btn-primary btn-green btn-green-primary full-width">
               Send request
