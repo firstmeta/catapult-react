@@ -8,6 +8,7 @@ import { OpenSignup } from '../actions/account_action';
 
  class Landing extends Component {
 	render() {
+    const { isLogined } = this.props;
 		return (
 			<div className="landing">
 				<div className="jumbotron">
@@ -21,10 +22,12 @@ import { OpenSignup } from '../actions/account_action';
                       <p className="sub-heading">
                           Find out more about featured startups on our platform
                       </p>
-
-                      <a
-												className="btn btn-common animated wow bounceIn"
-												onClick={() => this.props.OpenSignup()}>Join our waiting list</a>
+                      {
+                        !isLogined &&
+                        <a
+  												className="btn btn-common animated wow bounceIn"
+  												onClick={() => this.props.OpenSignup()}>Join our waiting list</a>
+                      }
                   </div>
               </div>
 					</div>
@@ -148,7 +151,12 @@ import { OpenSignup } from '../actions/account_action';
 		)
 	}
 }
+function mapStateToProps(state) {
+  return {
+    isLogined: state.AuthState.isLogined,
+  }
+}
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ OpenSignup: OpenSignup }, dispatch);
 }
-export default connect(null, mapDispatchToProps)(Landing);
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

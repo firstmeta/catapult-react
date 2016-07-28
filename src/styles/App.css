@@ -405,6 +405,50 @@ body:before {
 .landing .explain .content ul {
   padding-left: 25px;
 }
+
+.investors h2{
+  color: #fff;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+.investors .jumbotron {
+  background: url('http://catapult.asia/imgs/thecrowd.jpg');
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  height: 550px;
+  margin-bottom: 0px;
+}
+.investors .intro-section {
+  color: #ffffff;
+  text-align: center;
+  padding-top: 25px;
+}
+.investors .intro-section p {
+  font-size: 16px;
+  font-weight: 200 !important;
+}
+.investors .intro-section .text-bg {
+  background-color: #000;
+  padding: 25px;
+  opacity: 0.6;
+}
+.investors .btn {
+  font-size: 22px;
+  font-family: 'Raleway', sans-serif;
+  padding: 15px 30px;
+  border: none;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.investors .btn-common {
+  color: #ffffff;
+  font-weight: 200;
+  background: rgba(232,53,34, 1);
+}
+
 .company-start {
   margin-top: 80px;
   margin-bottom: 300px;

@@ -19,6 +19,7 @@ import CompanyStart from './components/company_start';
 import CompanyView from './components/company_view';
 import CompaniesAndCampaignsMine from './components/companies_campaigns_mine';
 import CampaignCreate from './components/campaign_create';
+import Investors from './components/investors';
 import AccountSetting from './components/account_setting';
 import PasswordReset from './components/account_pwd_reset';
 import EmailVerification from './components/email_verification';
@@ -47,6 +48,7 @@ render(
 				<Route path="/company/view/:randID" component={CompanyView} />
 				<Route path="/companies-campaigns-mine" component={CompaniesAndCampaignsMine} />
 				<Route path="/campaign/:campaignRandID/edit" component={CampaignCreate} />
+				<Route path="/investors" component={Investors} />
 				<Route path="/policy" component={Policy} />
 				<Route path="/keeper" component={Admin} />
 			</Route>
