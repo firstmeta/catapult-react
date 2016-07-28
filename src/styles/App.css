@@ -349,7 +349,7 @@ body:before {
     font-size: 50px;
 }
 .landing h3 {
-  color: #505050;
+  color: #e74c3c;
 }
 .landing .fa-slideshare, .fa-line-chart, .fa-folder-open-o{
     font-size: 80px;
@@ -698,6 +698,9 @@ body:before {
   margin-top: 15px;
   margin-bottom: 20px;
   padding: 15px;
+}
+.company-create-summary .editable img{
+  max-width: 100% !important;
 }
 .company-create-summary .row-last {
   padding-bottom: 20px;
