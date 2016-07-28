@@ -16,7 +16,7 @@ class Investors extends Component {
                 <div className="text-bg">
                   <h2>Don't Miss the Growth Journeys of Asia's Most Exciting Startups!</h2>
                   <p>Soon investors will be able to invest in Southeast Asian startups via the Catapult investment platform. What's more, investors will have the chance to trade acquired investment tokens on the secondary market.</p>
-                  <p>The Catapult team believes that everyone deserves a chance to invest in promising startups, this the platform will enable retail investors to co-invest alongside established investors.</p>
+                  <p>The Catapult team believes that everyone deserves a chance to invest in promising startups, this is why the platform will enable retail investors to co-invest alongside established investors.</p>
                   <p>The platform will be launching soon. Until then, please feel free to sign up for our waiting list to stay up-to-date on launch details, new startups on the platform, established partnerships, etc.</p>
                   {
                     !isLogined &&
@@ -29,6 +29,9 @@ class Investors extends Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="space">
+
         </div>
       </div>
     )
