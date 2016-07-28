@@ -75,8 +75,9 @@ class CompanyCreateSummary extends Component {
                     <i>
                       Tell us more about your company and your company's products.
                       You can use the following template or delete everything and add your own.
-                      Just <u><strong>click inside the text area</strong></u> to start typing.
-                      If you want <strong>to add image, just drag and drop </strong>it into the text area :).
+                      Just <u><strong>click inside the text area</strong></u> to start typing, and <strong>select the text to format</strong> it.
+                      If you want <strong>to add an image, just drag and drop </strong>it into the text area.
+                      If you want <strong>to resize an image,  just grab one of its edges or corners. </strong>:)
                     </i>
                   </div>
                   <div
