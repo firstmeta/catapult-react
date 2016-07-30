@@ -67,7 +67,7 @@ export default () => {
                   Singapore 139951
                 </strong>
               </p>
-              <p>Email Address: <strong>support@firstmeta.com</strong></p>
+              <p>Email Address: <strong>support@catapult.asia</strong></p>
           </div>
         </div>
       </div>
