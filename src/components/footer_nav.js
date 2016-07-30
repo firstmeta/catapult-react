@@ -5,7 +5,10 @@ export default class FooterNav extends Component {
 		return (
 			<footer className="footer">
       	<div className="container">
-          	<p>Catapult by <a href="http://firstmeta.com" title="Catapult - Equity Crowdfunding on Blockchain">First Meta Pte. Ltd. </a>© 2016</p>
+          	<p>
+							Catapult by <a href="http://firstmeta.com" title="Catapult - Equity Crowdfunding on Blockchain">First Meta Pte. Ltd. </a>© 2016
+							&nbsp; | &nbsp; <a href="/aboutus" target="_blank">About Us</a>
+						</p>
 						<hr />
 						<div className="disclaimer">This is a technology demonstration website. All of the data and functionalities displayed are for demonstration purposes only.
 							 The information contained in this website is for general information purposes only.
