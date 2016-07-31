@@ -21,7 +21,7 @@ export default () => {
             <div className="col-md-10 col-md-offset-1">
               <div className="row">
                 <div className="col-sm-4">
-                  <div><img src="http://catapult.asia/imgs/team_gustav.jpg"/></div>
+                  <div><img src="https://catapult.asia/imgs/team_gustav.jpg"/></div>
                   <div className="designation">
                     <p>Gustav Liblik</p>
                     <p>CEO</p>
@@ -33,7 +33,7 @@ export default () => {
                   </div>
                 </div>
                 <div className="col-sm-4">
-                  <div><img src="http://catapult.asia/imgs/team_an.jpg"/></div>
+                  <div><img src="https://catapult.asia/imgs/team_an.jpg"/></div>
                   <div className="designation">
                     <p>Phan Ngo Hoang An</p>
                     <p>CTO</p>
@@ -45,7 +45,7 @@ export default () => {
                   </div>
                 </div>
                 <div className="col-sm-4">
-                  <div><img src="http://catapult.asia/imgs/team_melvin.jpg"/></div>
+                  <div><img src="https://catapult.asia/imgs/team_melvin.jpg"/></div>
                   <div className="designation">
                     <p>Melvin Ong</p>
                     <p>COO</p>
