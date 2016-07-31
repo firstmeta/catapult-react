@@ -47,7 +47,7 @@ import { OpenSignup } from '../actions/account_action';
 	              <div className= "col-md-4">
                   <div className="row">
                   	 	<div className="col-sm-10 col-sm-offset-1 text-center">
-                        <img src="http://catapult.asia/imgs/briefcase.svg" />
+                        <img src="https://catapult.asia/imgs/briefcase.svg" />
 	                    </div>
 
                   </div>
@@ -65,7 +65,7 @@ import { OpenSignup } from '../actions/account_action';
 	              <div className= "col-md-4">
                   <div className="row">
                   	 	<div className="col-sm-10 col-sm-offset-1 text-center">
-	                    	<img src="http://catapult.asia/imgs/lightning.svg" />
+	                    	<img src="https://catapult.asia/imgs/lightning.svg" />
 	                    </div>
 
                   </div>
@@ -83,7 +83,7 @@ import { OpenSignup } from '../actions/account_action';
 	              <div className= "col-md-4">
                   <div className="row">
                   	 	<div className="col-sm-10 col-sm-offset-1 text-center">
-	                    	<img src="http://catapult.asia/imgs/lightbulb.svg" />
+	                    	<img src="https://catapult.asia/imgs/lightbulb.svg" />
 	                    </div>
 
                   </div>
