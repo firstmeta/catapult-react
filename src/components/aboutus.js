@@ -27,7 +27,7 @@ export default () => {
                     <p>CEO</p>
                     <div className="bio">
                       <p> - Founded 3 startups with 2 successful exits.</p>
-                      <p> - Practised financial &amp; commercial law.</p>
+                      <p> - Practised financial & commercial law with specialisation in computational law & smart contracts.</p>
                       <p> - Extensive sales experience &amp; award winner.</p>
                     </div>
                   </div>
