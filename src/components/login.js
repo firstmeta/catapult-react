@@ -32,7 +32,7 @@ class Login extends Component {
 	}
 
 	render() {
-		const { isLogined, isFetching, loginShowed } = this.props;
+		const { isLogined, isFetching, loginShowed, error } = this.props;
 		return (
 			<div className="login">
 				<span onClick={this.open} className="login-name">
@@ -50,6 +50,15 @@ class Login extends Component {
 							  <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  <span className="sr-only">Error:</span>
 							  &nbsp; The email address and password you entered do not match!
+							</div>
+						}
+
+						{
+							error &&
+	            <div className="alert alert-danger" role="alert">
+							  <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  <span className="sr-only">Error:</span>
+							  &nbsp; {error}
 							</div>
 						}
 
@@ -120,7 +129,8 @@ function mapStateToProps(state) {
 	return {
 		isLogined: state.AuthState.isLogined,
 		isFetching: state.AuthState.isFetching,
-		loginShowed: state.AccountState.loginShowed
+		loginShowed: state.AccountState.loginShowed,
+		error: state.AccountState.error
 	}
 }
 function mapDispatchToProps(dispatch) {

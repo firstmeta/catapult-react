@@ -6,7 +6,9 @@ import { createStore, combineReducers,compose, applyMiddleware } from 'redux';
 import { Router, browserHistory, Route, IndexRoute } from 'react-router';
 import { reduxReactRouter, routerStateReducer, ReduxRouter } from 'redux-router';
 import { createHistory } from 'history';
+
 import thunk from 'redux-thunk';
+import { CheckAuthMiddleware } from './middlewares/check_auth_mddlw';
 
 import reducers from './reducers';
 import routes from './routes';
@@ -28,7 +30,7 @@ import Admin from './components/admin';
 import Policy from './components/policy';
 
 const store = compose(
-	applyMiddleware(thunk),
+	applyMiddleware(thunk, CheckAuthMiddleware),
 	reduxReactRouter({
 		createHistory
 	})

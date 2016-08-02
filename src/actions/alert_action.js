@@ -6,10 +6,11 @@ export const ALERT_INFO = 'info';
 export const ALERT_WARNING = 'warning';
 export const ALERT_ERROR = 'danger';
 
-export function AlertGlobal(msg) {
+export function AlertGlobal(msg, errorCode) {
   return {
     type: ALERT,
-    msg: msg
+    msg: msg,
+    errorCode: errorCode
   }
 }
 

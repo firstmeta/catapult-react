@@ -10,6 +10,8 @@ export const COMPANY_SAVE_BASICS_SUCCESS = 'COMPANY_SAVE_BASICS_SUCCESS';
 export const COMPANY_SAVE_BASICS_FAILURE = 'COMPANY_SAVE_BASICS_FAILURE';
 export const COMPANY_SAVE_OVERVIEW_SUCCESS = 'COMPANY_SAVE_OVERVIEW_SUCCESS';
 export const COMPANY_SAVE_OVERVIEW_FAILURE = 'COMPANY_SAVE_OVERVIEW_FAILURE';
+export const COMPANY_SAVE_SUMMARY_SUCCESS = 'COMPANY_SAVE_SUMMARY_SUCCESS';
+export const COMPANY_SAVE_SUMMARY_FAILURE = 'COMPANY_SAVE_SUMMARY_FAILURE';
 export const COMPANY_SAVE_FILE_SUCCESS = 'COMPANY_SAVE_FILE_SUCCESS';
 export const COMPANY_SAVE_FILE_FAILURE = 'COMPANY_SAVE_FILE_FAILURE';
 export const COMPANY_SUBMIT_REVIEW_SUCCESS = 'COMPANY_SUBMIT_REVIEW_SUCCESS';
@@ -24,10 +26,11 @@ function startCompanySuccess(company) {
     data: company.RandID
   }
 }
-function startCompanyFailure(msg) {
+function startCompanyFailure(msg, errorCode) {
   return {
     type: COMPANY_START_FAILURE,
-    msg: msg
+    msg: msg,
+    errorCode: errorCode
   }
 }
 function saveCompanyBasicsSuccess(msg) {
@@ -36,10 +39,11 @@ function saveCompanyBasicsSuccess(msg) {
     msg: msg
   }
 }
-function saveCompanyBasicsFailure(msg) {
+function saveCompanyBasicsFailure(msg, errorCode) {
   return {
     type: COMPANY_SAVE_BASICS_FAILURE,
-    msg: msg
+    msg: msg,
+    errorCode: errorCode
   }
 }
 function saveCompanyOverviewSuccess(msg) {
@@ -48,22 +52,38 @@ function saveCompanyOverviewSuccess(msg) {
     msg: msg
   }
 }
-function saveCompanyOverviewFailure(msg) {
+function saveCompanyOverviewFailure(msg, errorCode) {
     return {
       type: COMPANY_SAVE_OVERVIEW_FAILURE,
-      msg: msg
+      msg: msg,
+      errorCode: errorCode
     }
 }
+function saveCompanySummarySuccess(msg) {
+  return {
+    type: COMPANY_SAVE_SUMMARY_SUCCESS,
+    msg: msg
+  }
+}
+function saveCompanySummaryFailure(msg, errorCode) {
+  return {
+    type: COMPANY_SAVE_SUMMARY_FAILURE,
+    msg: msg,
+    errorCode: errorCode
+  }
+}
+
 function submitReviewSuccess(msg) {
   return {
     type: COMPANY_SUBMIT_REVIEW_SUCCESS,
     msg: msg
   }
 }
-function submitReviewFailure(msg) {
+function submitReviewFailure(msg, errorCode) {
   return {
     type: COMPANY_SUBMIT_REVIEW_FAILURE,
-    msg: msg
+    msg: msg,
+    errorCode: errorCode
   }
 }
 
@@ -100,7 +120,7 @@ export function StartCompany(content) {
         dispatch(push('/company/' + res.body.RandID + '/edit'));
       }
       else {
-        dispatch(startCompanyFailure(res.body));
+        dispatch(startCompanyFailure(res.body, res.status));
       }
     })
   }
@@ -133,7 +153,7 @@ export function SaveCompanyBasics(content) {
         dispatch(push('/company/' + content.randID + '/edit?step=overview'))
       }
       else {
-        dispatch(saveCompanyBasicsFailure('Error saving company basics! Please check all the fields!'));
+        dispatch(saveCompanyBasicsFailure('Error saving company basics! Please check all the fields!', res.status));
       }
     })
   }
@@ -166,7 +186,7 @@ export function SaveCompanyOverview(content, overallSketch, listingImage, teamPh
         dispatch(push('/company/' + content.randID + '/edit?step=summary'));
       }
       else {
-        dispatch(saveCompanyOverviewFailure(res));
+        dispatch(saveCompanyOverviewFailure(res.body, res.status));
       }
     })
   }
@@ -186,7 +206,7 @@ export function SaveCompanySummary(content) {
         dispatch(push('/company/' + content.randID + '/edit?step=documents'));
       }
       else {
-        console.log(err);
+        dispatch(saveCompanySummaryFailure(res.body, res.status));
       }
 
     })
@@ -206,7 +226,7 @@ export function SaveCompanyFile(randID, file) {
         dispatch(push('/company/' + randID + '/edit?step=preview'));
       }
       else {
-        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}, res.status));
       }
     })
   }
@@ -224,7 +244,7 @@ export function SubmitCompanyForReview(randID) {
       }
       else {
         //dispatch(submitReviewFailure(res.text));
-        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}, res.status));
       }
     })
   }
@@ -245,7 +265,7 @@ export function UploadCompanySummaryImage(imgObj, randID) {
         imgObj.data.el.$.src = `${ROOT_IMAGE_URL}/${res.text}`
       }
       else {
-        console.log(err);
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}, res.status));
       }
     })
   }

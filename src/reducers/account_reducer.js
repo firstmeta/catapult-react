@@ -8,7 +8,8 @@ export default function(state = {
   isFetching: false,
   signupShowed: false,
   loginShowed: false,
-  pwdResetShowed: false
+  pwdResetShowed: false,
+  error: ''
 }, action) {
   switch (action.type) {
     case ACCOUNT_SIGNUP_SUCCESS:
@@ -29,11 +30,13 @@ export default function(state = {
       });
     case LOGIN_OPEN:
       return Object.assign({}, state, {
-        loginShowed: true
+        loginShowed: true,
+        error: action.error
       });
     case LOGIN_CLOSE:
       return Object.assign({}, state, {
-        loginShowed: false
+        loginShowed: false,
+        error: ''
       });
     case PWD_RESET_OPEN:
       return Object.assign({}, state, {
