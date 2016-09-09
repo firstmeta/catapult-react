@@ -133,6 +133,9 @@ label {
     align-items: center;
     flex-direction: column;
 }
+.spinner {
+  max-width: 128px;
+}
 
 /* Page structure */
 .wrap { min-height: 100%; }
@@ -519,6 +522,99 @@ body:before {
 .aboutus .team .bio p {
   margin-bottom: 10px;
   line-height: 115%;
+}
+
+.settings {
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+.settings .header {
+  border-bottom: 1px solid #dcdedd;
+}
+
+.settings-wallet .wallet-address {
+  margin-top: 40px;
+  text-align: center;
+}
+.settings-wallet .wallet-address .segment {
+  padding: 20px;
+}
+.settings-wallet .wallet-address label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  text-decoration: underline;
+}
+.settings-wallet .wallet-address p {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.settings-wallet-pwd-form {
+  margin-top: 40px;
+}
+.settings-wallet-pwd-form .segment {
+  padding-top: 20px;
+}
+.settings-wallet-pwd-form .segment input{
+  width: 100%;
+  margin-bottom: 10px;
+}
+.settings-wallet-pwd-form .segment .note {
+  margin-top: 10px;
+}
+.settings-wallet-pwd-form .segment .note span {
+  font-style: italic;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.settings-wallet-generate-result-spinner {
+  margin-top: 40px;
+  text-align: center;
+}
+.settings-wallet-generate-result {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.settings-wallet-generate-result .segment {
+  padding: 30px;
+}
+.settings-wallet-generate-result .segment label {
+  /*font-weight: 600;*/
+  margin-bottom: 0px;
+}
+.settings-wallet-generate-result .segment label strong {
+  font-weight: 600;
+}
+.settings-wallet-generate-result .segment .panel {
+  padding: 10px;
+}
+.settings-wallet-generate-result .segment  input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.settings-wallet-generate-result.segment .note {
+  margin-top: 20px;
+}
+.settings-wallet-generate-result .segment .note span {
+  font-style: italic;
+  font-weight: 400;
+  text-decoration: underline;
+}
+.settings-wallet-generate-result .segment .address {
+  text-align: center;
+}
+.settings-wallet-generate-result .segment .address p{
+  font-size: 20px;
+  font-weight: 400;
+}
+.settings-wallet-generate-result .segment .address label {
+  font-size: 16px;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+.settings-wallet-generate-result .segment  button {
+  margin-top: 20px;
 }
 
 .company-start {

@@ -6,6 +6,7 @@ import CompanyReducer from './company_reducer';
 import CampaignState from './campaign_reducer';
 import AlertGlobalState from './alert_reducer';
 import AdminState from './admin_reducer';
+import WalletState from './wallet_reducer';
 
 const rootReducer = combineReducers({
 	router: routerStateReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
 	CompanyState: CompanyReducer,
 	CampaignState: CampaignState,
 	AlertGlobalState: AlertGlobalState,
-	AdminState: AdminState
+	AdminState: AdminState,
+	WalletState: WalletState
 });
 
 export default rootReducer;

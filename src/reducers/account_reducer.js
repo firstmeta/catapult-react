@@ -9,6 +9,8 @@ export default function(state = {
   signupShowed: false,
   loginShowed: false,
   pwdResetShowed: false,
+  walletAddress:'',
+  walletPrikeys:[],
   error: ''
 }, action) {
   switch (action.type) {

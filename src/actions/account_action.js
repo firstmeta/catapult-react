@@ -1,6 +1,7 @@
 import request from 'superagent';
 import { push } from 'redux-router';
-import { ROOT_URL } from '../config';
+
+import { ROOT_URL, BTC_NETWORK } from '../config';
 import { AlertGlobal, AlertLocal, ALERT_SUCCESS, ALERT_ERROR } from './alert_action';
 
 // Refactor: combine auth_action into account_action
