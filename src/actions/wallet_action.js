@@ -1,6 +1,8 @@
 import request from 'superagent';
 import { push } from 'redux-router';
 import { AUTH_TOKEN } from './auth_action';
+import { ROOT_URL, BTC_NETWORK } from '../config';
+import { AlertGlobal, AlertLocal, ALERT_SUCCESS, ALERT_ERROR } from './alert_action';
 
 var bitcoin = require('bitcoinjs-lib');
 var script = bitcoin.script;
@@ -8,8 +10,6 @@ var address = bitcoin.address;
 
 var CryptoJS = require("crypto-js");
 
-import { ROOT_URL, BTC_NETWORK } from '../config';
-import { AlertGlobal, AlertLocal, ALERT_SUCCESS, ALERT_ERROR } from './alert_action';
 
 export const WALLET_FETCH_SUCCESS = 'WALLET_FETCH_SUCCESS';
 export const WALLET_FETCH_FAILURE = 'WALLET_FETCH_FAILURE';
@@ -54,7 +54,7 @@ export function PreGenerateWallet(pwd) {
   }
 }
 
-export function GenerateWallet(pwd) {
+export function GenerateMultisigWallet(pwd) {
 
 	return dispatch => {
     var keyPair1 = bitcoin.ECPair.makeRandom({network: BTC_NETWORK});
@@ -80,6 +80,44 @@ export function GenerateWallet(pwd) {
         dispatch({
           type: WALLET_GENERATE_SUCCESS,
           data: {address: res.body.Address, prikeys:[keyPair1.toWIF(), keyPair2.toWIF()]}
+        });
+			}
+			else {
+				dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+			}
+		})
+	}
+}
+
+export function GenerateClientWallet(pwd) {
+  return dispatch => {
+    var keyPair = bitcoin.ECPair.makeRandom({network: BTC_NETWORK});
+
+    var address = keyPair.getAddress();
+    var scriptPubKey = bitcoin.address.toOutputScript(address, BTC_NETWORK);
+    var asm = bitcoin.script.toASM(scriptPubKey);
+
+    var encryptedPrikey = CryptoJS.AES.encrypt(keyPair.toWIF(), pwd).toString();
+
+    //var decrypted = CryptoJS.AES.decrypt(encrypted, pwd).toString(CryptoJS.enc.Utf8);
+    var req = request
+                .post(`${ROOT_URL}/api/secure/wallet/save_client_generated_wallet`)
+                .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+                .set('Content-Type', 'application/json')
+                .accept('application/json')
+                .send({
+                    "address": address,
+                    "encrypted_prikey": encryptedPrikey,
+                    "redeem_script": scriptPubKey.toString('hex'),
+                    "script_pubkey": scriptPubKey.toString('hex'),
+                    "asm": asm
+                 });
+
+		return req.end((err, res) => {
+			if(res.status === 200) {
+        dispatch({
+          type: WALLET_GENERATE_SUCCESS,
+          data: {prikey:keyPair.toWIF(), wallet: res.body}
         });
 			}
 			else {

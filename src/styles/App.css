@@ -60,6 +60,12 @@ label {
   font-weight: 300;
   font-size: 14px;
 }
+input {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
 .bold-600 {
   font-weight: 600;
 }
@@ -524,6 +530,66 @@ body:before {
   line-height: 115%;
 }
 
+.assets {
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+.assets .header {
+  border-bottom: 1px solid #dcdedd;
+}
+
+.asset-issuance-form {
+  margin-top: 40px;
+}
+.asset-issuance-form .segment{
+  padding-top: 20px;
+}
+.asset-issuance-form .dropdown button, .asset-issuance-form .dropdown ul {
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.asset-issuance-form .segment input, .asset-issuance-form .segment textarea{
+  width: 100%;
+  margin-bottom: 10px;
+}
+.asset-issuance-form button {
+  margin-top: 10px;
+}
+
+.asset-issuance-confirm-spinner {
+  margin-top: 40px;
+  text-align: center;
+}
+.asset-issuance-confirm {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.asset-issuance-confirm .segment{
+  padding-top: 20px;
+}
+.asset-issuance-confirm .segment .panel {
+  padding: 15px;
+}
+.asset-issuance-confirm .segment .panel label {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.asset-issuance-confirm .segment .panel p {
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.asset-issuance-confirm .segment .panel hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-top: 1px solid #888888;
+  width: 50%;
+}
+.asset-issuance-confirm .segment input, .asset-issuance-confirm .segment textarea{
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .settings {
   margin-top: 80px;
   margin-bottom: 40px;
@@ -541,7 +607,7 @@ body:before {
 }
 .settings-wallet .wallet-address label {
   font-size: 16px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   text-decoration: underline;
 }
 .settings-wallet .wallet-address p {
