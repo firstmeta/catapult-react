@@ -16,6 +16,7 @@ export const ASSET_ISSUE_SUCCESS = 'ASSET_ISSUE_SUCCESS';
 export const ASSET_ISSUE_FAILURE = 'ASSET_ISSUE_FAILURE';
 
 export function RedirectAssetConfirmation(assetData) {
+  console.log(assetData);
   return dispatch => {
     dispatch({
       type: REDIRECT_ASSET_CONFIRMATION,
@@ -25,7 +26,7 @@ export function RedirectAssetConfirmation(assetData) {
   }
 }
 
-export function PrepareIssueAsset({name, amount, imageUrl, desc, wallet}) {
+export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address, city, country, wallet}) {
 
   var addr = wallet.Address;
   var req = request
@@ -46,18 +47,29 @@ export function PrepareIssueAsset({name, amount, imageUrl, desc, wallet}) {
 
         if(!financeUtxo) {
             console.log('Unsufficent fund!!!');
-            return
+            return;
         }
-        var issueTx = prepareAssetIssuanceTransaction(
-            name,
-            amount,
-            imageUrl,
-            desc,
-            wallet,
-            financeUtxo.txid,
-            financeUtxo.satoshis,
-            financeUtxo.vout
-        );
+
+        //TO DO: Adding random character to prevent collision
+        var code = name.toUpperCase().replace(/\s/g, '').slice(0, 4);
+
+        var issueTx = prepareAssetIssuanceTransaction({
+            issuer: issuer,
+            code: code,
+            name: name,
+            amount: amount,
+            imageUrl: imageUrl,
+            desc: desc,
+            address: address,
+            country: country,
+            city: city,
+            wallet: wallet,
+            financeOutputTxid: financeUtxo.txid,
+            financeOutputAmount: financeUtxo.satoshis,
+            vout: financeUtxo.vout
+        });
+
+        console.log(issueTx);
 
         var assetPrepareReq = request
                                 .post(`${ROOT_URL}/api/asset/preparetx`)
@@ -68,11 +80,71 @@ export function PrepareIssueAsset({name, amount, imageUrl, desc, wallet}) {
           if(res.status === 200) {
             var data = JSON.parse(res.text);
             if(data.txHex) {
+              data.assetAddressRandID = wallet.RandID;
+              data.assetAddress = wallet.Address;
+              data.code = code;
               data.name = name;
               data.amount = amount;
               data.imageUrl = imageUrl;
               data.desc = desc;
+              data.metadata = issueTx.metadata;
               dispatch({type: ASSET_ISSUE_SUCCESS, data: data});
+
+  //             id serial primary key,
+	// code text not null,
+	// name text not null,
+	// blockchain_asset_id text not null,
+	// blockchaintxs_id integer not null,
+	// issued_amount integer not null,
+	// issuer_id integer not null,
+	// metadata text,
+	// reissueable boolean not null default false,
+	// colored_output_index integer not null,
+	// colored_output_indexes jsonb not null,
+
+  // id serial primary key,
+	// tx_id text not null default '404',
+	// from_addr text not null,
+	// from_rand_id text not null,
+	// to_addrs jsonb not null,
+	// partial_signed_tx text not null,
+	// signed_tx text,
+	// tx_status blockchaintxs_status not null default 'PARTIAL_SIGNED',
+	// created_on timestamp not null,
+	// sended_on timestamp,
+	// confirmed_on timestamp,
+	// multisig_outputs jsonb,
+	// colored_output_index integer not null,
+	// colored_output_indexes jsonb not null,
+
+  // reate table assettxs (
+  // 	id serial primary key,
+  // 	txid text not null,
+  // 	group_txid text not null,
+  // 	blockchaintxs_id integer not null,
+  // 	blockchaintx_hash text,
+  // 	tx_type assettxs_type not null,
+  // 	asset_id integer not null,
+  // 	from_acct_id integer not null,
+  // 	to_acct_id integer not null,
+  // 	amount integer not null,
+  // 	satoshi_fee integer not null,
+  // 	tx_status assettxs_status not null default 'PROCESSING',
+  // 	colored_output_index integer not null,
+  // 	colored_output_indexes jsonb not null,
+  // 	initiated_on timestamp not null,
+  // 	ended_on timestamp,
+
+  // create table assetbalances (
+  // 	id serial primary key,
+  // 	account_id integer not null,
+  // 	asset_id integer not null,
+  // 	asset_code text not null,
+  // 	asset_address_id integer not null,
+  // 	amount integer not null default 0,
+  // 	locked_amount integer not null default 0,
+  // 	assettx_id integer not null,
+
             }
             else {
               dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
@@ -99,23 +171,29 @@ export function ProceedAssetIssuance({
   encryptedPrikey, pwd
 }) {
   var prikey = CryptoJS.AES.decrypt(encryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
-  var keyPair = bitcoin.ECPair.fromWIF(prikey, network);
+  var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
   var tx =  bitcoin.Transaction.fromHex(unsignedtx);
-  var signedtx = tx.sign(0, keyPair);
+  var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
+      txb.sign(0, keyPair);
+  var signedtx = txb.build().toHex();
+  
 
-  var req = request
-              .post(`${ROOT_URL}/api/secure/asset/issue_asset`)
-              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
-              .set('Content-Type', 'application/json')
-              .accept('application/json')
-              .send({
-                "name": name,
-                "amount": amount,
-
-              })
+  // var req = request
+  //             .post(`${ROOT_URL}/api/secure/asset/issue_asset`)
+  //             .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+  //             .set('Content-Type', 'application/json')
+  //             .accept('application/json')
+  //             .send({
+  //               "name": name,
+  //               "amount": amount,
+  //
+  //             })
 }
 
-function prepareAssetIssuanceTransaction(name, amount, imageUrl, desc, wallet, financeOutputTxid, financeOutputAmount, vout) {
+function prepareAssetIssuanceTransaction({
+  issuer, code, name, amount, imageUrl, desc, address, city, country,
+  wallet, financeOutputTxid, financeOutputAmount, vout
+}) {
   return {
     'issueAddress': wallet.Address,
     'amount': amount,
@@ -137,17 +215,15 @@ function prepareAssetIssuanceTransaction(name, amount, imageUrl, desc, wallet, f
     	'amount': amount
     }],
     'metadata': {
-        'assetId': '1',
+        'assetCode': code,
         'assetName': name,
-        'issuer': 'Cata Pte Ltd',
-        'description': 'My Description',
+        'issuer': issuer,
+        'description': name,
         'urls': [{name:'icon', url: imageUrl, mimeType: 'image/png', dataHash: ''}],
         'userData': {
             'meta' : [
-                {key: 'Item ID', value: 2, type: 'Number'},
-                {key: 'Item Name', value: 'Item Name', type: 'String'},
-                {key: 'Company', value: 'My Company', type: 'String'},
-                {key: 'Address', value: 'San Francisco, CA', type: 'String'}
+                {key: 'Code', value: code, type: 'String'},
+                {key: 'Address', value: address + ', ' + city + ', ' + country, type: 'String'}
             ]
         }
     }

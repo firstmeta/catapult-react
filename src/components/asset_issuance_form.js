@@ -3,14 +3,44 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RedirectAssetConfirmation } from '../actions/asset_action';
 import { FetchAllMyCompanies } from '../actions/company_action';
+import { ROOT_IMAGE_URL } from '../config';
 
 class AssetIssuanceForm extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {company: '', name: '', amount: '', imageUrl: '', desc: ''};
+
+    this.renderCompanyList = this.renderCompanyList.bind(this);
   }
 
   componentWillMount() {
     this.props.FetchAllMyCompanies()
+  }
+
+  renderCompanyList() {
+    return this.props.companies.map(c => {
+      return (
+        <li
+          key={c.RandID}
+          onClick={() => {
+            console.log(c);
+            this.setState({
+              company: c,
+              name: c.CompanyName + ' Equity',
+              imageUrl: ROOT_IMAGE_URL + '/' + c.ListingImage,
+              desc: c.DescriptionShort
+            });
+          }}>
+          <a>{c.CompanyName}</a>
+        </li>
+      )
+    });
+
+  }
+
+  onInputChange(content) {
+    this.setState(content);
   }
 
   render() {
@@ -34,15 +64,15 @@ class AssetIssuanceForm extends Component {
                     type="button"
                     id="regCountry"
                     ref="regCountry"
-                    value={companies[0].CompanyName}
+                    value={this.state.company ? this.state.company : ''}
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="true">
-                     {companies[0].CompanyName} &nbsp;
+                     {this.state.company ? this.state.company.CompanyName : 'Select a company to issue equity'} &nbsp;
                     <span className="caret"></span>
                   </button>
                   <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-
+                    {this.renderCompanyList()}
                   </ul>
                 </div>
 
@@ -50,35 +80,46 @@ class AssetIssuanceForm extends Component {
                 <input
                   type="text"
                   ref="name"
-                  defaultValue={companies[0].CompanyName + " Equity"}/>
+                  value={this.state.name}
+                  onChange={event => this.onInputChange({name: event.target.value})}>
+                </input>
 
-                  <label>Issue Amount</label>
+                  <label>Issue amount</label>
                   <input
                     type="text"
                     ref="amount"
-                    placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."/>
+                    value={this.state.amount}
+                    placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."
+                    onChange={event => this.onInputChange({amount: event.target.value})}/>
 
                   <label>Image</label>
                   <input
                     type="text"
                     ref="imageUrl"
-                    defaultValue={companies[0].ListingImage}/>
+                    value={this.state.imageUrl}
+                    onChange={event => this.onInputChange({imageUrl: event.target.value})}/>
 
                   <label>Description</label>
                   <textarea
                     className="form-control"
                     rows="4"
-                    ref="desc" />
+                    ref="desc"
+                    value={this.state.desc}
+                    onChange={event => this.onInputChange({desc: event.target.value})} />
 
                   <div>
                     <button
                       className="btn btn-primary btn-green btn-green-primary full-width"
                       onClick={() => {
                         this.props.RedirectAssetConfirmation({
-                          name: this.refs.name.value,
-                          amount: this.refs.amount.value,
-                          imageUrl: this.refs.imageUrl.value,
-                          desc: this.refs.desc.value,
+                          issuer: this.state.company.CompanyName,
+                          name: this.state.name,
+                          amount: this.state.amount,
+                          imageUrl: this.state.imageUrl,
+                          desc: this.state.desc,
+                          address: this.state.company.Address,
+                          city: this.state.company.City,
+                          country: this.state.company.Country,
                           wallet: wallet
                         });
                       }}>

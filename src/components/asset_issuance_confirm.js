@@ -13,7 +13,7 @@ class AssetIssuanceConfirm extends Component {
 
   render() {
 
-    const { IssuingAsset } = this.props;
+    const { IssuingAsset, wallet } = this.props;
 
     if(!IssuingAsset.txHex) {
       return (
@@ -69,7 +69,19 @@ class AssetIssuanceConfirm extends Component {
                   ref="pwd" />
                   <button
                     className="btn btn-primary btn-green btn-green-primary full-width"
-                    >
+                    onClick={() => this.props.ProceedAssetIssuance({
+                      assetAddressRandID: IssuingAsset.assetAddressRandID,
+                      assetAddress: IssuingAsset.assetAddress,
+                      code: IssuingAsset.code,
+                      name: IssuingAsset.name,
+                      imageUrl: IssuingAsset.imageUrl,
+                      desc: IssuingAsset.desc,
+                      blockchainAssetId: IssuingAsset.assetId,
+                      unsignedtx: IssuingAsset.txHex,
+                      coloredOutputIndexes: IssuingAsset.coloredOutputIndexes,
+                      encryptedPrikey: wallet.EncryptedPrikey,
+                      pwd: this.refs.pwd.value
+                    })}>
                     Issue Asset
                   </button>
               </div>
@@ -83,6 +95,7 @@ class AssetIssuanceConfirm extends Component {
 
 function mapStateToProps(state) {
   return {
+    wallet: state.WalletState.wallet,
     IssuingAsset: state.AssetState.IssuingAsset
   }
 }
