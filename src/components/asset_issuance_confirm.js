@@ -70,14 +70,15 @@ class AssetIssuanceConfirm extends Component {
                   <button
                     className="btn btn-primary btn-green btn-green-primary full-width"
                     onClick={() => this.props.ProceedAssetIssuance({
-                      assetAddressRandID: IssuingAsset.assetAddressRandID,
-                      assetAddress: IssuingAsset.assetAddress,
+                      issuedAddressID: wallet.ID,
+                      issuedAddressRandID: IssuingAsset.assetAddressRandID,
+                      issuedAddress: IssuingAsset.assetAddress,
                       code: IssuingAsset.code,
                       name: IssuingAsset.name,
                       imageUrl: IssuingAsset.imageUrl,
                       desc: IssuingAsset.desc,
                       blockchainAssetId: IssuingAsset.assetId,
-                      unsignedtx: IssuingAsset.txHex,
+                      unsignedtxhex: IssuingAsset.txHex,
                       coloredOutputIndexes: IssuingAsset.coloredOutputIndexes,
                       encryptedPrikey: wallet.EncryptedPrikey,
                       pwd: this.refs.pwd.value

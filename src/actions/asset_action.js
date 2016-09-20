@@ -88,63 +88,8 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
               data.imageUrl = imageUrl;
               data.desc = desc;
               data.metadata = issueTx.metadata;
+
               dispatch({type: ASSET_ISSUE_SUCCESS, data: data});
-
-  //             id serial primary key,
-	// code text not null,
-	// name text not null,
-	// blockchain_asset_id text not null,
-	// blockchaintxs_id integer not null,
-	// issued_amount integer not null,
-	// issuer_id integer not null,
-	// metadata text,
-	// reissueable boolean not null default false,
-	// colored_output_index integer not null,
-	// colored_output_indexes jsonb not null,
-
-  // id serial primary key,
-	// tx_id text not null default '404',
-	// from_addr text not null,
-	// from_rand_id text not null,
-	// to_addrs jsonb not null,
-	// partial_signed_tx text not null,
-	// signed_tx text,
-	// tx_status blockchaintxs_status not null default 'PARTIAL_SIGNED',
-	// created_on timestamp not null,
-	// sended_on timestamp,
-	// confirmed_on timestamp,
-	// multisig_outputs jsonb,
-	// colored_output_index integer not null,
-	// colored_output_indexes jsonb not null,
-
-  // reate table assettxs (
-  // 	id serial primary key,
-  // 	txid text not null,
-  // 	group_txid text not null,
-  // 	blockchaintxs_id integer not null,
-  // 	blockchaintx_hash text,
-  // 	tx_type assettxs_type not null,
-  // 	asset_id integer not null,
-  // 	from_acct_id integer not null,
-  // 	to_acct_id integer not null,
-  // 	amount integer not null,
-  // 	satoshi_fee integer not null,
-  // 	tx_status assettxs_status not null default 'PROCESSING',
-  // 	colored_output_index integer not null,
-  // 	colored_output_indexes jsonb not null,
-  // 	initiated_on timestamp not null,
-  // 	ended_on timestamp,
-
-  // create table assetbalances (
-  // 	id serial primary key,
-  // 	account_id integer not null,
-  // 	asset_id integer not null,
-  // 	asset_code text not null,
-  // 	asset_address_id integer not null,
-  // 	amount integer not null default 0,
-  // 	locked_amount integer not null default 0,
-  // 	assettx_id integer not null,
-
             }
             else {
               dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
@@ -165,30 +110,102 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
 }
 
 export function ProceedAssetIssuance({
-  name, amount, imageUrl,
+  code, name, amount, imageUrl,
   desc, blockchainAssetId,
-  unsignedtx, coloredOutputIndexes,
+  issuedAddress,issuedAddressID, issuedAddressRandID,
+  unsignedtxhex, coloredOutputIndexes,
   encryptedPrikey, pwd
 }) {
   var prikey = CryptoJS.AES.decrypt(encryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
   var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
-  var tx =  bitcoin.Transaction.fromHex(unsignedtx);
+  var tx =  bitcoin.Transaction.fromHex(unsignedtxhex);
   var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
       txb.sign(0, keyPair);
-  var signedtx = txb.build().toHex();
-  
 
-  // var req = request
-  //             .post(`${ROOT_URL}/api/secure/asset/issue_asset`)
-  //             .set('Authorization', localStorage.getItem(AUTH_TOKEN))
-  //             .set('Content-Type', 'application/json')
-  //             .accept('application/json')
-  //             .send({
-  //               "name": name,
-  //               "amount": amount,
-  //
-  //             })
+  var signedtx = txb.build();
+  var signedtxhash = signedtx.getId();
+  var signedtxhex = signedtx.toHex();
+
+  var req = request
+              .post(`${ROOT_URL}/api/secure/asset/issue_asset`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .set('Content-Type', 'application/json')
+              .accept('application/json')
+              .send({
+                code: code,
+                name: name,
+                amount: amount,
+                blockchain_asset_id: blockchainAssetId,
+                blockchaintx_hash: signedtxhash,
+                blockchaintx_hex: signedtxhex,
+                issued_address: issuedAddress,
+                issued_address_id: issuedAddressID,
+                issued_address_rand_id: issuedAddressRandID,
+                colored_output_indexes: coloredOutputIndexes
+              });
+  return dispatch => {
+    return req.end((err, res) => {
+      console.log(res);
+    })
+  }
 }
+
+
+//             id serial primary key,
+// code text not null,
+// name text not null,
+// blockchain_asset_id text not null,
+// blockchaintxs_id integer not null,
+// issued_amount integer not null,
+// issuer_id integer not null,
+// metadata text,
+// reissueable boolean not null default false,
+// colored_output_index integer not null,
+// colored_output_indexes jsonb not null,
+
+// id serial primary key,
+// tx_id text not null default '404',
+// from_addr text not null,
+// from_rand_id text not null,
+// to_addrs jsonb not null,
+// partial_signed_tx text not null,
+// signed_tx text,
+// tx_status blockchaintxs_status not null default 'PARTIAL_SIGNED',
+// created_on timestamp not null,
+// sended_on timestamp,
+// confirmed_on timestamp,
+// multisig_outputs jsonb,
+// colored_output_index integer not null,
+// colored_output_indexes jsonb not null,
+
+// reate table assettxs (
+// 	id serial primary key,
+// 	txid text not null,
+// 	group_txid text not null,
+// 	blockchaintxs_id integer not null,
+// 	blockchaintx_hash text,
+// 	tx_type assettxs_type not null,
+// 	asset_id integer not null,
+// 	from_acct_id integer not null,
+// 	to_acct_id integer not null,
+// 	amount integer not null,
+// 	satoshi_fee integer not null,
+// 	tx_status assettxs_status not null default 'PROCESSING',
+// 	colored_output_index integer not null,
+// 	colored_output_indexes jsonb not null,
+// 	initiated_on timestamp not null,
+// 	ended_on timestamp,
+
+// create table assetbalances (
+// 	id serial primary key,
+// 	account_id integer not null,
+// 	asset_id integer not null,
+// 	asset_code text not null,
+// 	asset_address_id integer not null,
+// 	amount integer not null default 0,
+// 	locked_amount integer not null default 0,
+// 	assettx_id integer not null,
+
 
 function prepareAssetIssuanceTransaction({
   issuer, code, name, amount, imageUrl, desc, address, city, country,
