@@ -14,7 +14,6 @@ export default function(state = {
   }, action) {
   switch (action.type) {
     case WALLET_FETCH_SUCCESS:
-      console.log(action.data);
       return Object.assign({}, state, {
         wallet: action.data,
         fetched: true
@@ -24,7 +23,6 @@ export default function(state = {
         pwd: action.data.pwd
       });
     case WALLET_GENERATE_SUCCESS:
-      console.log(action.data);
       return Object.assign({}, state, {
         address: action.data.address,
         //prikeys: action.data.prikeys,

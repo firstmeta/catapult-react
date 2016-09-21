@@ -75,6 +75,7 @@ class AssetIssuanceConfirm extends Component {
                       issuedAddress: IssuingAsset.assetAddress,
                       code: IssuingAsset.code,
                       name: IssuingAsset.name,
+                      issuedAmount: IssuingAsset.amount,
                       imageUrl: IssuingAsset.imageUrl,
                       desc: IssuingAsset.desc,
                       blockchainAssetId: IssuingAsset.assetId,
