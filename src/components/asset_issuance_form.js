@@ -84,7 +84,7 @@ class AssetIssuanceForm extends Component {
                   onChange={event => this.onInputChange({name: event.target.value})}>
                 </input>
 
-                  <label>Issue amount</label>
+                  <label>Issuing amount</label>
                   <input
                     type="text"
                     ref="amount"
@@ -92,7 +92,7 @@ class AssetIssuanceForm extends Component {
                     placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."
                     onChange={event => this.onInputChange({amount: event.target.value})}/>
 
-                  <label>Image</label>
+                  <label>Logo</label>
                   <input
                     type="text"
                     ref="imageUrl"

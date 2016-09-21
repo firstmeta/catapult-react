@@ -590,6 +590,45 @@ body:before {
   margin-bottom: 10px;
 }
 
+.asset-issuance-result-spinner {
+  margin-top: 40px;
+  text-align: center;
+}
+.asset-issuance-result {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.asset-issuance-result .segment{
+  padding-top: 20px;
+}
+.asset-issuance-result .segment .panel {
+  padding: 15px;
+}
+.asset-issuance-result .segment .panel label {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.asset-issuance-result .segment .panel p {
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.asset-issuance-result .segment .panel hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-top: 1px solid #888888;
+  width: 50%;
+}
+.asset-issuance-result .segment .panel img {
+  max-width: 150px;
+  max-height: 150px
+}
+.asset-issuance-result .segment .panel a {
+  text-decoration: underline;
+}
+.asset-issuance-result .segment .panel button {
+  margin-top: 30px;
+}
+
 .settings {
   margin-top: 80px;
   margin-bottom: 40px;

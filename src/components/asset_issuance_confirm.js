@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import Spinner from './spinner';
-import { PrepareIssueAsset ,ProceedAssetIssuance } from '../actions/asset_action';
+import { PrepareIssueAsset, RedirectAssetIssuanceResult } from '../actions/asset_action';
 
 class AssetIssuanceConfirm extends Component {
 
@@ -23,8 +23,6 @@ class AssetIssuanceConfirm extends Component {
       )
     }
 
-    console.log(IssuingAsset);
-
     return (
       <div className="asset-issuance-confirm">
         <div className="container-fluid">
@@ -35,13 +33,13 @@ class AssetIssuanceConfirm extends Component {
                   Please check your asset details, then enter your decryption password to proceed.
                 </p>
 
-                <label>Asset Name</label>
+                <label>Equity Name</label>
                 <p>{IssuingAsset.name}</p>
 
-                <label>Issue Amount</label>
+                <label>Issuing Amount</label>
                 <p>{IssuingAsset.amount}</p>
 
-                <label>Image</label>
+                <label>Logo</label>
                 <p>{IssuingAsset.imageUrl}</p>
 
                 <label>Description</label>
@@ -69,7 +67,7 @@ class AssetIssuanceConfirm extends Component {
                   ref="pwd" />
                   <button
                     className="btn btn-primary btn-green btn-green-primary full-width"
-                    onClick={() => this.props.ProceedAssetIssuance({
+                    onClick={() => this.props.RedirectAssetIssuanceResult({
                       issuedAddressID: wallet.ID,
                       issuedAddressRandID: IssuingAsset.assetAddressRandID,
                       issuedAddress: IssuingAsset.assetAddress,
@@ -84,7 +82,7 @@ class AssetIssuanceConfirm extends Component {
                       encryptedPrikey: wallet.EncryptedPrikey,
                       pwd: this.refs.pwd.value
                     })}>
-                    Issue Asset
+                    Proceed to issue {IssuingAsset.name}!
                   </button>
               </div>
             </div>
@@ -104,7 +102,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     PrepareIssueAsset: PrepareIssueAsset,
-    ProceedAssetIssuance: ProceedAssetIssuance
+    RedirectAssetIssuanceResult: RedirectAssetIssuanceResult
   }, dispatch);
 }
 

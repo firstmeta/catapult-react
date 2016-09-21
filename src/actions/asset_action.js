@@ -11,18 +11,30 @@ var address = bitcoin.address;
 var CryptoJS = require("crypto-js");
 
 export const REDIRECT_ASSET_CONFIRMATION = 'REDIRECT_ASSET_CONFIRMATION';
+export const REDIRECT_ASSET_ISSUANCE_RESULT = 'REDIRECT_ASSET_ISSUANCE_RESULT';
+
+export const PREPARE_ASSET_ISSUE_SUCCESS = 'PREPARE_ASSET_ISSUE_SUCCESS';
 
 export const ASSET_ISSUE_SUCCESS = 'ASSET_ISSUE_SUCCESS';
 export const ASSET_ISSUE_FAILURE = 'ASSET_ISSUE_FAILURE';
 
 export function RedirectAssetConfirmation(assetData) {
-  console.log(assetData);
   return dispatch => {
     dispatch({
       type: REDIRECT_ASSET_CONFIRMATION,
       data: assetData
     });
     dispatch(push('/assets/issuance?step=confirmation'));
+  }
+}
+
+export function RedirectAssetIssuanceResult(issuingAsset) {
+  return dispatch => {
+    dispatch({
+      type: REDIRECT_ASSET_ISSUANCE_RESULT,
+      data: issuingAsset
+    });
+    dispatch(push('/assets/issuance?step=result'));
   }
 }
 
@@ -87,7 +99,7 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
               data.desc = desc;
               data.metadata = issueTx.metadata;
 
-              dispatch({type: ASSET_ISSUE_SUCCESS, data: data});
+              dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
             }
             else {
               dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
@@ -110,7 +122,7 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
 export function ProceedAssetIssuance({
   code, name, issuedAmount, imageUrl,
   desc, blockchainAssetId,
-  issuedAddress,issuedAddressID, issuedAddressRandID,
+  issuedAddress, issuedAddressID, issuedAddressRandID,
   unsignedtxhex, coloredOutputIndexes,
   encryptedPrikey, pwd
 }) {
@@ -144,8 +156,24 @@ export function ProceedAssetIssuance({
               });
   return dispatch => {
     return req.end((err, res) => {
-      console.log(res);
-    })
+      if (res.status === 200) {
+        console.log(res.body);
+        dispatch({
+          type: ASSET_ISSUE_SUCCESS,
+          data: {
+            name: name,
+            amount: issuedAmount,
+            imageUrl: imageUrl,
+            desc: desc,
+            assetId: blockchainAssetId,
+            status: 'SUCCESS - Pending confirmation on blockchain.'
+          }
+        });
+      }
+      else {
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
+    });
   }
 }
 
