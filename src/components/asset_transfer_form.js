@@ -5,7 +5,7 @@ import { RedirectAssetConfirmation } from '../actions/asset_action';
 import { FetchAllMyCompanies } from '../actions/company_action';
 import { ROOT_IMAGE_URL } from '../config';
 
-class AssetIssuanceForm extends Component {
+class AssetTransferForm extends Component {
   constructor(props) {
     super(props);
 
@@ -136,14 +136,12 @@ class AssetIssuanceForm extends Component {
 }
 function mapStateToProps(state) {
   return {
-    companies: state.CompanyState.allMyCompanies,
     wallet: state.WalletState.wallet
   }
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    FetchAllMyCompanies: FetchAllMyCompanies,
     RedirectAssetConfirmation: RedirectAssetConfirmation
   }, dispatch);
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AssetIssuanceForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AssetTransferForm);

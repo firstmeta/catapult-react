@@ -36,7 +36,7 @@ class AssetIssuanceResult extends Component {
                 </h2>
 
                 <label>Asset Name</label>
-                <p>{IssuedAsset.name}</p>
+                <p className="asset-name">{IssuedAsset.name}</p>
 
                 <label>Issued Amount</label>
                 <p>{IssuedAsset.amount}</p>

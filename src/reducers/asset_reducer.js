@@ -1,5 +1,5 @@
 import {
-  REDIRECT_ASSET_CONFIRMATION, REDIRECT_ASSET_ISSUANCE_RESULT,
+  REDIRECT_ASSET_ISSUANCE_CONFIRMATION, REDIRECT_ASSET_ISSUANCE_RESULT,
   PREPARE_ASSET_ISSUE_SUCCESS,
   ASSET_ISSUE_SUCCESS, ASSET_ISSUE_FAILURE
 } from '../actions/asset_action';
@@ -7,11 +7,12 @@ import {
 export default function(
   state = {
     IssuingAsset: {},
-    IssuedAsset: {}
+    IssuedAsset: {},
+    MyAssets: {}
   },
   action) {
   switch(action.type) {
-    case REDIRECT_ASSET_CONFIRMATION:
+    case REDIRECT_ASSET_ISSUANCE_CONFIRMATION:
       return Object.assign({}, state, {
         IssuingAsset: action.data
       });

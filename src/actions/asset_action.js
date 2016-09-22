@@ -1,7 +1,7 @@
 import request from 'superagent';
 import { push } from 'redux-router';
 import { AUTH_TOKEN } from './auth_action';
-import { ROOT_URL, BTC_NETWORK } from '../config';
+import { ROOT_URL, BTC_NETWORK, BTC_API_URL, ASSET_ISSUANCE_FEE, ASSET_TRANSFER_FEE } from '../config';
 import { AlertGlobal, AlertLocal, ALERT_SUCCESS, ALERT_ERROR } from './alert_action';
 
 var bitcoin = require('bitcoinjs-lib');
@@ -10,18 +10,45 @@ var address = bitcoin.address;
 
 var CryptoJS = require("crypto-js");
 
-export const REDIRECT_ASSET_CONFIRMATION = 'REDIRECT_ASSET_CONFIRMATION';
-export const REDIRECT_ASSET_ISSUANCE_RESULT = 'REDIRECT_ASSET_ISSUANCE_RESULT';
+export const FETCH_MY_ASSETS = 'FETCH_MY_ASSETS';
 
+export const REDIRECT_ASSET_ISSUANCE_CONFIRMATION = 'REDIRECT_ASSET_ISSUANCE_CONFIRMATION';
 export const PREPARE_ASSET_ISSUE_SUCCESS = 'PREPARE_ASSET_ISSUE_SUCCESS';
-
+export const REDIRECT_ASSET_ISSUANCE_RESULT = 'REDIRECT_ASSET_ISSUANCE_RESULT';
 export const ASSET_ISSUE_SUCCESS = 'ASSET_ISSUE_SUCCESS';
 export const ASSET_ISSUE_FAILURE = 'ASSET_ISSUE_FAILURE';
+
+export const REDIRECT_ASSET_TRANSFER_CONFIRMATION = 'REDIRECT_ASSET_TRANSFER_CONFIRMATION';
+export const PREPARE_ASSET_TRANSFER_SUCCESS = 'PREPARE_ASSET_TRANSFER_SUCCESS';
+export const REDIRECT_ASSET_TRANSFER_RESULT = 'REDIRECT_ASSET_TRANSFER_RESULT';
+export const ASSET_TRANSFER_SUCCESS = 'ASSET_TRANSFER_SUCCESS';
+export const ASSET_TRANSFER_FAILURE = 'ASSET_TRANSFER_FAILURE';
+
+
+export function FetchMyAssets() {
+  var req = request
+              .get(`${ROOT_URL}/api/asset/fetch_my_assets`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .accept('application/json');
+  return dispatch => {
+    return req.end((err, res) => {
+      if (res.status === 200) {
+        dispatch({
+          type: FETCH_MY_ASSETS,
+          data: res.body
+        });
+      }
+      else {
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
+    });
+  }
+}
 
 export function RedirectAssetConfirmation(assetData) {
   return dispatch => {
     dispatch({
-      type: REDIRECT_ASSET_CONFIRMATION,
+      type: REDIRECT_ASSET_ISSUANCE_CONFIRMATION,
       data: assetData
     });
     dispatch(push('/assets/issuance?step=confirmation'));
@@ -38,11 +65,35 @@ export function RedirectAssetIssuanceResult(issuingAsset) {
   }
 }
 
+export function RedirectAssetTransferConfirmation(transferringData) {
+  return dispatch => {
+    dispatch({
+      type: REDIRECT_ASSET_TRANSFER_CONFIRMATION,
+      data: transferringData
+    });
+    dispatch(push('/assets/transfer?step=confirmation'));
+  }
+}
+
+export function RedirectAssetTransferResult(transferringData) {
+  return dispatch => {
+    dispatch({
+      type: REDIRECT_ASSET_TRANSFER_RESULT,
+      data: transferringData
+    });
+    dispatch(push('/assets/transfer?step=result'));
+  }
+}
+
+export function FetchMyAssets() {
+
+}
+
 export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address, city, country, wallet}) {
 
   var addr = wallet.Address;
   var req = request
-              .get(`https://test-insight.bitpay.com/api/addr/${addr}/utxo`)
+              .get(`${BTC_API_URL}/addr/${addr}/utxo`)
               .accept('application/json');
   return dispatch => {
     return req.end((err, res) => {
@@ -177,6 +228,73 @@ export function ProceedAssetIssuance({
   }
 }
 
+export function PrepareTransferAsset({
+  wallet, blockchainAssetId, amount, toAddr
+}) {
+  var addr = wallet.Address;
+  var req = request
+              .get(`${BTC_API_URL}/addr/${addr}/utxo`)
+              .accept('application/json');
+  return dispatch => {
+    return req.end((err, res) => {
+      if(res.status === 200) {
+        var utxos = res.body;
+        var financeUtxo;
+        for(var i = 0; i < utxos.length; i++) {
+          var utxo = utxos[i];
+          if(utxo.satoshis >= 5000) {
+            financeUtxo = utxo;
+            break;
+          }
+        }
+
+        if(!financeUtxo) {
+            //console.log('Unsufficent fund!!!');
+            dispatch(AlertGlobal({content: 'Unsufficent fund!!!', type: ALERT_ERROR}));
+            return;
+        }
+
+        var transferTx = prepareAssetTransferTx({
+          wallet: wallet,
+          toAddr: toAddr,
+          blockchainAssetId: blockchainAssetId,
+          amount: amount,
+          financeOutputTxid: financeUtxo.txid,
+          financeOutputAmount: financeUtxo.satoshis,
+          vout: financeUtxo.vout
+        });
+
+        var transferPrepareReq = request
+                                .post(`${ROOT_URL}/api/asset/preparetx`)
+                                .accept('application/json')
+                                .field('json_tx', JSON.stringify(issueTx));
+        transferPrepareReq.end((err, res) => {
+          if(res.status === 200) {
+            var data = JSON.parse(res.text);
+            if(data.txHex) {
+              data.amount = amount;
+              data.toAddr = toAddr;
+
+              dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
+            }
+            else {
+              dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+            }
+          }
+          else {
+            dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+          }
+
+        });
+
+      }
+      else {
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
+    });
+  }
+}
+
 function prepareAssetIssuanceTransaction({
   issuer, code, name, amount, imageUrl, desc, address, city, country,
   wallet, financeOutputTxid, financeOutputAmount, vout
@@ -185,7 +303,7 @@ function prepareAssetIssuanceTransaction({
     'issueAddress': wallet.Address,
     'amount': amount,
     'divisibility': 0,
-    'fee': 5000,
+    'fee': ASSET_ISSUANCE_FEE,
     'reissueable':false,
     'financeOutput': {
         value: financeOutputAmount,
@@ -215,4 +333,29 @@ function prepareAssetIssuanceTransaction({
         }
     }
   }
+}
+
+function prepareAssetTransferTx({
+  wallet, toAddr, blockchainAssetId, amount,
+  financeOutputTxid, financeOutputAmount, vout
+}) {
+    return {
+      'fee': ASSET_TRANSFER_FEE,
+      'from': [wallet.Address],
+      'financeOutput': {
+          value: financeOutputAmount,
+          n: vout,
+          scriptPubKey: {
+            asm: wallet.ASM,
+            hex: wallet.ScriptPubkey,
+            type: 'scripthash'
+          }
+      },
+      'financeOutputTxid': financeOutputTxid,
+      'to': [{
+      	'address': toAddr,
+      	'amount': amount,
+          'assetId': blockchainAssetId
+      }]
+    }
 }

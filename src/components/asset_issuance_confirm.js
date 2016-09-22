@@ -33,7 +33,7 @@ class AssetIssuanceConfirm extends Component {
                   Please check your asset details, then enter your decryption password to proceed.
                 </p>
 
-                <label>Equity Name</label>
+                <label>Asset Name</label>
                 <p>{IssuingAsset.name}</p>
 
                 <label>Issuing Amount</label>

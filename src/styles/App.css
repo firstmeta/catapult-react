@@ -604,13 +604,25 @@ body:before {
 .asset-issuance-result .segment .panel {
   padding: 15px;
 }
+.asset-issuance-result .segment .panel h2 {
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 35px;
+}
 .asset-issuance-result .segment .panel label {
   font-weight: 600;
   margin-bottom: 2px;
+  width: 100%;
+  text-align: center;
 }
 .asset-issuance-result .segment .panel p {
   font-style: italic;
   margin-bottom: 12px;
+  text-align: center;
+}
+.asset-issuance-result .segment .asset-name{
+  font-size: 25px;
+  margin-bottom: 35px;
 }
 .asset-issuance-result .segment .panel hr {
   margin-top: 20px;
