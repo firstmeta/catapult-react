@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import AssetIssuance from './asset_issuance';
+import AssetTransfer from './asset_transfer';
 import { FetchWallet } from '../actions/wallet_action';
 
 class Assets extends Component {
@@ -46,6 +47,7 @@ class Assets extends Component {
         </div>
 
         {urlRef === 'issuance' && <AssetIssuance />}
+        {urlRef === 'transfer' && <AssetTransfer />}
       </div>
     )
   }

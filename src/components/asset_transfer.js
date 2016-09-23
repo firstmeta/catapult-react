@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { FetchAssetBalances } from '../actions/asset_action';
 // import AssetIssuanceForm from './asset_issuance_form';
 // import AssetIssuanceConfirm from './asset_issuance_confirm';
 // import AssetIssuanceResult from './asset_issuance_result';
@@ -10,12 +11,16 @@ class AssetTransfer extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.props.FetchAssetBalances();
+  }
+
   render() {
     const { step, Processing } = this.props;
 
     return (
       <div className="asset-transfer">
-        
+
       </div>
     )
   }
@@ -27,7 +32,13 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(AssetTransfer);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    FetchAssetBalances: FetchAssetBalances
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssetTransfer);
 
 // {!step && <AssetIssuanceForm />}
 // {step === 'confirmation' && <AssetIssuanceConfirm />}

@@ -25,13 +25,14 @@ export const ASSET_TRANSFER_SUCCESS = 'ASSET_TRANSFER_SUCCESS';
 export const ASSET_TRANSFER_FAILURE = 'ASSET_TRANSFER_FAILURE';
 
 
-export function FetchMyAssets() {
+export function FetchAssetBalances() {
   var req = request
-              .get(`${ROOT_URL}/api/asset/fetch_my_assets`)
+              .get(`${ROOT_URL}/api/secure/asset/fetch_asset_balances`)
               .set('Authorization', localStorage.getItem(AUTH_TOKEN))
               .accept('application/json');
   return dispatch => {
     return req.end((err, res) => {
+      console.log(res);
       if (res.status === 200) {
         dispatch({
           type: FETCH_MY_ASSETS,
