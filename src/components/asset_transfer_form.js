@@ -1,38 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { RedirectAssetConfirmation } from '../actions/asset_action';
-import { FetchAllMyCompanies } from '../actions/company_action';
+import { RedirectAssetTransferConfirmation } from '../actions/asset_action';
 import { ROOT_IMAGE_URL } from '../config';
 
 class AssetTransferForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {company: '', name: '', amount: '', imageUrl: '', desc: ''};
+    this.state = {assetID: '', assetCode: '', assetName: '', assetDesc: '', blockchainAssetID: '', toAddr: '', amount: ''};
 
-    this.renderCompanyList = this.renderCompanyList.bind(this);
+    this.renderAssetBalancesList = this.renderAssetBalancesList.bind(this);
   }
 
-  componentWillMount() {
-    this.props.FetchAllMyCompanies()
-  }
-
-  renderCompanyList() {
-    return this.props.companies.map(c => {
+  renderAssetBalancesList() {
+    return this.props.Balances.map(a => {
       return (
         <li
-          key={c.RandID}
+          key={a.AssetID}
           onClick={() => {
-            console.log(c);
             this.setState({
-              company: c,
-              name: c.CompanyName + ' Equity',
-              imageUrl: ROOT_IMAGE_URL + '/' + c.ListingImage,
-              desc: c.DescriptionShort
+              assetID: a.AssetID,
+              assetCode: a.AssetCode,
+              assetName: a.AssetName,
+              blockchainAssetID: a.BlockchainAssetID,
+              assetDesc: a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + a.Amount
             });
           }}>
-          <a>{c.CompanyName}</a>
+          <a>{a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + a.Amount}</a>
         </li>
       )
     });
@@ -44,9 +39,9 @@ class AssetTransferForm extends Component {
   }
 
   render() {
-    const { companies, wallet } = this.props;
+    const { Balances, wallet } = this.props;
 
-    if (companies.length <= 0) {
+    if (Object.keys(Balances).length <= 0) {
       return <div></div>
     }
 
@@ -57,75 +52,55 @@ class AssetTransferForm extends Component {
             <div className="panel panel-default">
               <div className="panel-body">
 
-                <label for="regCountry">Issue equity for company</label>
+                <label>Transfer your asset: </label>
                 <div className="dropdown">
                   <button
                     className="btn btn-default dropdown-toggle"
                     type="button"
                     id="regCountry"
                     ref="regCountry"
-                    value={this.state.company ? this.state.company : ''}
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="true">
-                     {this.state.company ? this.state.company.CompanyName : 'Select a company to issue equity'} &nbsp;
+                     {this.state.assetDesc ? this.state.assetDesc : 'Select an asset balance to transfer'} &nbsp;
                     <span className="caret"></span>
                   </button>
                   <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    {this.renderCompanyList()}
+                    {this.renderAssetBalancesList()}
                   </ul>
                 </div>
 
-                <label>Asset name</label>
+                <label>Transfer Amount</label>
                 <input
                   type="text"
-                  ref="name"
-                  value={this.state.name}
-                  onChange={event => this.onInputChange({name: event.target.value})}>
-                </input>
+                  ref="amount"
+                  value={this.state.amount}
+                  onChange={event => this.onInputChange({amount: event.target.value})}/>
 
-                  <label>Issuing amount</label>
-                  <input
-                    type="text"
-                    ref="amount"
-                    value={this.state.amount}
-                    placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."
-                    onChange={event => this.onInputChange({amount: event.target.value})}/>
+                <label>To this address:</label>
+                <input
+                  type="text"
+                  ref="toAddr"
+                  value={this.state.toAddr}
+                  onChange={event => this.onInputChange({toAddr: event.target.value})}/>
 
-                  <label>Logo</label>
-                  <input
-                    type="text"
-                    ref="imageUrl"
-                    value={this.state.imageUrl}
-                    onChange={event => this.onInputChange({imageUrl: event.target.value})}/>
-
-                  <label>Description</label>
-                  <textarea
-                    className="form-control"
-                    rows="4"
-                    ref="desc"
-                    value={this.state.desc}
-                    onChange={event => this.onInputChange({desc: event.target.value})} />
-
-                  <div>
-                    <button
-                      className="btn btn-primary btn-green btn-green-primary full-width"
-                      onClick={() => {
-                        this.props.RedirectAssetConfirmation({
-                          issuer: this.state.company.CompanyName,
-                          name: this.state.name,
-                          amount: this.state.amount,
-                          imageUrl: this.state.imageUrl,
-                          desc: this.state.desc,
-                          address: this.state.company.Address,
-                          city: this.state.company.City,
-                          country: this.state.company.Country,
-                          wallet: wallet
-                        });
-                      }}>
-                      Next
-                    </button>
-                  </div>
+                <div>
+                  <button
+                    className="btn btn-primary btn-green btn-green-primary full-width"
+                    onClick={() => {
+                      this.props.RedirectAssetTransferConfirmation({
+                        blockchainAssetID: this.state.blockchainAssetID,
+                        assetID: this.state.assetID,
+                        assetCode: this.state.assetCode,
+                        assetName: this.state.assetName,
+                        toAddr: this.state.toAddr,
+                        amount: this.state.amount,
+                        wallet: wallet
+                      });
+                    }}>
+                    Next
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -136,12 +111,13 @@ class AssetTransferForm extends Component {
 }
 function mapStateToProps(state) {
   return {
+    Balances: state.AssetState.AssetBalances,
     wallet: state.WalletState.wallet
   }
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    RedirectAssetConfirmation: RedirectAssetConfirmation
+    RedirectAssetTransferConfirmation: RedirectAssetTransferConfirmation
   }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AssetTransferForm);

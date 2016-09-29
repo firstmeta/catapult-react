@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FetchAssetBalances } from '../actions/asset_action';
-// import AssetIssuanceForm from './asset_issuance_form';
-// import AssetIssuanceConfirm from './asset_issuance_confirm';
-// import AssetIssuanceResult from './asset_issuance_result';
+import AssetTransferForm from './asset_transfer_form';
+import AssetTransferConfirm from './asset_transfer_confirm';
+import AssetTransferResult from './asset_transfer_result';
 
 class AssetTransfer extends Component {
   constructor(props) {
@@ -16,11 +16,13 @@ class AssetTransfer extends Component {
   }
 
   render() {
-    const { step, Processing } = this.props;
+    const { step } = this.props;
 
     return (
       <div className="asset-transfer">
-
+        {!step && <AssetTransferForm />}
+        {step === 'confirmation' && <AssetTransferConfirm />}
+        {step === 'result' && <AssetTransferResult />}
       </div>
     )
   }
@@ -39,7 +41,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetTransfer);
-
-// {!step && <AssetIssuanceForm />}
-// {step === 'confirmation' && <AssetIssuanceConfirm />}
-// {step === 'result' && <AssetIssuanceResult />}

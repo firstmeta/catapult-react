@@ -11,7 +11,7 @@ class AssetIssuance extends Component {
   }
 
   render() {
-    const { step, Processing } = this.props;
+    const { step } = this.props;
 
     return (
       <div className="asset-issuance">

@@ -641,6 +641,26 @@ body:before {
   margin-top: 30px;
 }
 
+.asset-transfer-form {
+  margin-top: 40px;
+}
+.asset-transfer-form .segment{
+  padding-top: 20px;
+}
+.asset-transfer-form .dropdown button, .asset-transfer-form .dropdown ul {
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.asset-transfer-form .segment input, .asset-transfer-form .segment textarea{
+  width: 100%;
+  margin-bottom: 10px;
+}
+.asset-transfer-form button {
+  margin-top: 10px;
+}
+
+
 .settings {
   margin-top: 80px;
   margin-bottom: 40px;
