@@ -186,7 +186,10 @@ export function ProceedAssetIssuance({
   var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
   var tx =  bitcoin.Transaction.fromHex(unsignedtxhex);
   var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
-      txb.sign(0, keyPair);
+      //txb.sign(0, keyPair);
+      txb.tx.ins.forEach(function(input, i) {
+        txb.sign(i, keyPair);
+      });
 
   var signedtx = txb.build();
   var signedtxhash = signedtx.getId();
@@ -314,28 +317,14 @@ export function ProceedAssetTransfer({
   var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
   var tx =  bitcoin.Transaction.fromHex(unsignedtxhex);
   var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
-  //    txb.sign(0, keyPair);
-
-  txb.tx.ins.forEach(function(input, i) {
-    txb.sign(i, keyPair);
-  });
+      txb.tx.ins.forEach(function(input, i) {
+        txb.sign(i, keyPair);
+      });
 
 
   var signedtx = txb.build();
   var signedtxhash = signedtx.getId();
   var signedtxhex = signedtx.toHex();
-
-  // var prikey = CryptoJS.AES.decrypt(encryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
-  // var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
-  // var tx =  bitcoin.Transaction.fromHex(unsignedtxhex);
-  // var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
-  //     txb.sign(0, keyPair);
-  //
-  // var signedtx = txb.build();
-  // var signedtxhash = signedtx.getId();
-  // var signedtxhex = signedtx.toHex();
-
-
 
   var req = request
               .post(`${ROOT_URL}/api/secure/asset/transfer_asset`)
@@ -348,6 +337,7 @@ export function ProceedAssetTransfer({
                 amount: parseInt(amount),
                 blockchain_asset_id: blockchainAssetID,
                 from_addr_id: wallet.ID,
+                from_addr_rand_id: wallet.RandID,
                 from_addr: wallet.Address,
                 to_addr: toAddr,
                 blockchaintx_hash: signedtxhash,
@@ -361,11 +351,11 @@ export function ProceedAssetTransfer({
         dispatch({
           type: ASSET_TRANSFER_SUCCESS,
           data: {
-            name: assetName,
-            code: code,
-            amount: amount,
+            assetName: assetName,
+            assetCode: assetCode,
+            amount: parseInt(amount),
             fromAddress: wallet.Address,
-            toAddress: toAddress,
+            toAddress: toAddr,
             signedtxhash: signedtxhash,
             completed: true,
             status: 'SUCCESS - Pending confirmation on blockchain.'

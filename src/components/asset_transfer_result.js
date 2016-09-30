@@ -23,7 +23,7 @@ class AssetTransferResult extends Component {
       )
     }
 
-    console.log(TransferringAsset);
+    console.log(tfrAsset);
 
     return (
       <div className="asset-issuance-result">
