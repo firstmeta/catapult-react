@@ -17,9 +17,7 @@ class WalletSettingsGenerateResult extends Component {
   }
 
   render() {
-    const { address, prikey, ClearPrikeysCache} = this.props;
-
-    console.log(address);
+    const { address, mnemonic, ClearPrikeysCache} = this.props;
 
     if(!address) {
       return (
@@ -40,15 +38,15 @@ class WalletSettingsGenerateResult extends Component {
               </div>
 
               {
-                prikey &&
+                mnemonic &&
                 <div className="panel panel-default">
                   <div className="panel-body">
                     <p>
-                      Please <strong>WRITE DOWN</strong> the following private key and keep it in a safe place.
+                      Please <strong>WRITE DOWN</strong> the following <strong>WORD PHRASE</strong> and keep it in a safe place.
                     </p>
 
-                    <label><strong>Your private key:</strong></label>
-                    <p>{prikey}</p>
+                    <label><u>Your word phrase:</u></label>
+                    <p className="mnemonic"><strong>{mnemonic}</strong></p>
 
 
                     <br />
@@ -57,9 +55,9 @@ class WalletSettingsGenerateResult extends Component {
                         <span>Notes:</span>
                         <p>- For your convenience, we will ENCRYPT your private key with your provided password and store it securely.</p>
                         <p>- Please DO NOT forget your password. We do not store your password so we CANNOT help you recover it.</p>
-                        <p>- If you lose your password and your private key, you will lose all the assets in this wallet forever. </p>
+                        <p><strong>- If you lose your password and your word phrase, you will lose all your assets in this wallet forever. </strong> </p>
                         <p>- Please DO NOT use this wallet address outside of Catapult.Asia, as this will result in losing access to all of your assets permanently. </p>
-                        <p>- When you close this panel, you will not see the above private key again. </p>
+                        <p>- When you close this panel, you will not see the above word phrase again. </p>
                     </div>
 
                     <div>
@@ -86,7 +84,7 @@ function mapStateToProps(state) {
   return {
     pwd: state.WalletState.pwd,
     address: state.WalletState.wallet.address,
-    prikey: state.WalletState.prikey
+    mnemonic: state.WalletState.mnemonic
   }
 }
 function mapDispatchToProps(dispatch) {

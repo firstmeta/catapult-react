@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import AssetIssuance from './asset_issuance';
 import AssetTransfer from './asset_transfer';
 import { FetchWallet } from '../actions/wallet_action';
+import Alert from './global_alert';
 
 class Assets extends Component {
   constructor(props) {
@@ -45,6 +46,8 @@ class Assets extends Component {
             </div>
           </div>
         </div>
+        
+        <Alert />
 
         {urlRef === 'issuance' && <AssetIssuance />}
         {urlRef === 'transfer' && <AssetTransfer />}

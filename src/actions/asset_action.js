@@ -141,9 +141,8 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
                                 .field('json_tx', JSON.stringify(issueTx))
                                 .field('end_point', 'issue');
         assetPrepareReq.end((err, res) => {
-
+          var data = JSON.parse(res.text);
           if(res.status === 200) {
-            var data = JSON.parse(res.text);
             if(data.txHex) {
               data.assetAddressRandID = wallet.RandID;
               data.assetAddress = wallet.Address;
@@ -157,7 +156,10 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
               dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
             }
             else {
-              dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+              dispatch(AlertGlobal({
+                content: data.message + ', ' + data.explanation,
+                type: ALERT_ERROR
+              }));
             }
           }
           else {
@@ -215,7 +217,6 @@ export function ProceedAssetIssuance({
   return dispatch => {
     return req.end((err, res) => {
       if (res.status === 200) {
-        console.log(res.body);
         dispatch({
           type: ASSET_ISSUE_SUCCESS,
           data: {
@@ -276,8 +277,8 @@ export function PrepareTransferAsset({
                                 .field('json_tx', JSON.stringify(transferTx))
                                 .field('end_point', 'sendasset');
         transferPrepareReq.end((err, res) => {
+          var data = JSON.parse(res.text);
           if(res.status === 200) {
-            var data = JSON.parse(res.text);
             if(data.txHex) {
               data.assetID = assetID;
               data.blockchainAssetID = blockchainAssetID;
@@ -289,7 +290,10 @@ export function PrepareTransferAsset({
               dispatch({type: PREPARE_ASSET_TRANSFER_SUCCESS, data: data});
             }
             else {
-              dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+              dispatch(AlertGlobal({
+                content: data.message + ', asset: ' + data.asset,
+                type: ALERT_ERROR
+              }));
             }
           }
           else {

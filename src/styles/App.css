@@ -723,6 +723,9 @@ body:before {
 .settings-wallet-generate-result .segment label strong {
   font-weight: 600;
 }
+.settings-wallet-generate-result .segment .mnemonic {
+  font-weight: 600;
+}
 .settings-wallet-generate-result .segment .panel {
   padding: 10px;
 }
@@ -730,7 +733,7 @@ body:before {
   width: 100%;
   margin-bottom: 10px;
 }
-.settings-wallet-generate-result.segment .note {
+.settings-wallet-generate-result .segment .note {
   margin-top: 20px;
 }
 .settings-wallet-generate-result .segment .note span {

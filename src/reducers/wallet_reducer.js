@@ -6,6 +6,7 @@ import {
 
 export default function(state = {
     address:'',
+    mnemonic:'',
     prikeys:[],
     prikey:'',
     pwd: '',
@@ -25,15 +26,16 @@ export default function(state = {
     case WALLET_GENERATE_SUCCESS:
       return Object.assign({}, state, {
         address: action.data.address,
-        //prikeys: action.data.prikeys,
-        prikey: action.data.prikey,
+        //prikey: action.data.prikey,
+        mnemonic: action.data.mnemonic,
         wallet: action.data.wallet,
         pwd: ''
       });
     case CLEAR_PRIKEYS_CACHE:
       return Object.assign({}, state, {
         prikeys:[],
-        prikey: ''
+        prikey: '',
+        mnemonic:''
       });
     default:
       return state;

@@ -9,7 +9,8 @@ var script = bitcoin.script;
 var address = bitcoin.address;
 
 var CryptoJS = require("crypto-js");
-
+var CryptoNative = require('crypto');
+var Bip39 = require('bip39')
 
 export const WALLET_FETCH_SUCCESS = 'WALLET_FETCH_SUCCESS';
 export const WALLET_FETCH_FAILURE = 'WALLET_FETCH_FAILURE';
@@ -64,7 +65,7 @@ export function GenerateMultisigWallet(pwd) {
   	var pubkey2 = keyPair2.getPublicKeyBuffer().toString('hex');
 
     var encryptedPrikey = CryptoJS.AES.encrypt(keyPair1.toWIF(), pwd).toString();
-    //var decrypted = CryptoJS.AES.decrypt(encrypted, pwd).toString(CryptoJS.enc.Utf8);
+    
     var req = request
                 .post(`${ROOT_URL}/api/secure/wallet/generate_multisig_wallet`)
                 .set('Authorization', localStorage.getItem(AUTH_TOKEN))
@@ -91,7 +92,16 @@ export function GenerateMultisigWallet(pwd) {
 
 export function GenerateClientWallet(pwd) {
   return dispatch => {
-    var keyPair = bitcoin.ECPair.makeRandom({network: BTC_NETWORK});
+
+    var randomBytes = CryptoNative.randomBytes(16);
+    var mnemonic = Bip39.entropyToMnemonic(randomBytes.toString('hex'));
+    var seed = Bip39.mnemonicToSeed(mnemonic);
+
+    var hdMaster = bitcoin.HDNode.fromSeedBuffer(seed, BTC_NETWORK);
+
+    //var keyPair = bitcoin.ECPair.makeRandom({network: BTC_NETWORK});
+    var key =  hdMaster.derivePath("m/0'/0'/4");
+    var keyPair = key.keyPair;
 
     var address = keyPair.getAddress();
     var scriptPubKey = bitcoin.address.toOutputScript(address, BTC_NETWORK);
@@ -99,7 +109,6 @@ export function GenerateClientWallet(pwd) {
 
     var encryptedPrikey = CryptoJS.AES.encrypt(keyPair.toWIF(), pwd).toString();
 
-    //var decrypted = CryptoJS.AES.decrypt(encrypted, pwd).toString(CryptoJS.enc.Utf8);
     var req = request
                 .post(`${ROOT_URL}/api/secure/wallet/save_client_generated_wallet`)
                 .set('Authorization', localStorage.getItem(AUTH_TOKEN))
@@ -117,7 +126,7 @@ export function GenerateClientWallet(pwd) {
 			if(res.status === 200) {
         dispatch({
           type: WALLET_GENERATE_SUCCESS,
-          data: {prikey:keyPair.toWIF(), wallet: res.body}
+          data: {mnemonic: mnemonic, wallet: res.body}
         });
 			}
 			else {
