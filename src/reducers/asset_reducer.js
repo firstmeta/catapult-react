@@ -47,7 +47,6 @@ export default function(
         TransferringAsset: action.data
       });
     case REDIRECT_ASSET_TRANSFER_RESULT:
-    console.log(action.data);
       return Object.assign({}, state, {
         TransferringAsset: action.data
       });

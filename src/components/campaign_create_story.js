@@ -52,8 +52,6 @@ class CampaignCreateStory extends Component {
       return <div>Loading...</div>;
     }
 
-    console.log(story);
-
     return (
       <div className="campaign-create-story">
 

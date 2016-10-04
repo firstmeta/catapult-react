@@ -23,8 +23,6 @@ class AssetTransferResult extends Component {
       )
     }
 
-    console.log(tfrAsset);
-
     return (
       <div className="main-panel">
         <div className="container-fluid">

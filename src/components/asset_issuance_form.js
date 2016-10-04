@@ -24,7 +24,6 @@ class AssetIssuanceForm extends Component {
         <li
           key={c.RandID}
           onClick={() => {
-            console.log(c);
             this.setState({
               company: c,
               name: c.CompanyName + ' Equity',

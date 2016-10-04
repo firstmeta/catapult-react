@@ -32,7 +32,6 @@ export function FetchAssetBalances() {
               .accept('application/json');
   return dispatch => {
     return req.end((err, res) => {
-      console.log(res);
       if (res.status === 200) {
         dispatch({
           type: FETCH_ASSET_BALANCES,
@@ -67,7 +66,6 @@ export function RedirectAssetIssuanceResult(issuingAsset) {
 }
 
 export function RedirectAssetTransferConfirmation(transferringAsset) {
-  console.log(transferringAsset);
   return dispatch => {
     dispatch({
       type: REDIRECT_ASSET_TRANSFER_CONFIRMATION,
@@ -78,7 +76,6 @@ export function RedirectAssetTransferConfirmation(transferringAsset) {
 }
 
 export function RedirectAssetTransferResult(transferringAsset) {
-  console.log(transferringAsset);
   return dispatch => {
     dispatch({
       type: REDIRECT_ASSET_TRANSFER_RESULT,

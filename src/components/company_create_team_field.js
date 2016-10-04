@@ -47,7 +47,6 @@ class CompanyCreateTeamField extends Component {
   }
 
   render() {
-    //console.log(this.state.teamMemberPhoto);
     return (
       <div className="panel panel-default">
         <div className="panel-body team-field">
