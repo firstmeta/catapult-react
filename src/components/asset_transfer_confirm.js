@@ -17,15 +17,14 @@ class AssetTransferConfirm extends Component {
 
     if(!tfrAsset.txHex) {
       return (
-        <div className="asset-issuance-confirm-spinner">
+        <div className="main-panel-spinner">
           <Spinner />
         </div>
       )
     }
 
-    console.log(tfrAsset);
     return (
-      <div className="asset-issuance-confirm">
+      <div className="main-panel">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-6 col-md-offset-3 segment">
@@ -61,7 +60,7 @@ class AssetTransferConfirm extends Component {
                   type="password"
                   ref="pwd" />
                   <button
-                    className="btn btn-primary btn-green btn-green-primary full-width"
+                    className="btn btn-primary btn-green btn-green-primary full-width btn-last"
                     onClick={() => this.props.RedirectAssetTransferResult({
                       blockchainAssetID: tfrAsset.blockchainAssetID,
                       assetID: tfrAsset.assetID,

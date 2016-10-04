@@ -17,7 +17,7 @@ class AssetTransferResult extends Component {
 
     if(!tfrAsset.completed) {
       return (
-        <div className="asset-issuance-result-spinner">
+        <div className="main-panel-spinner">
           <Spinner />
         </div>
       )
@@ -26,7 +26,7 @@ class AssetTransferResult extends Component {
     console.log(tfrAsset);
 
     return (
-      <div className="asset-issuance-result">
+      <div className="main-panel">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-6 col-md-offset-3 segment">
@@ -41,7 +41,7 @@ class AssetTransferResult extends Component {
                 <label>Transfer amount</label>
                 <p>{tfrAsset.amount}</p>
 
-                <label>Fromm address</label>
+                <label>From address</label>
                 <p>{tfrAsset.fromAddress}</p>
 
                 <label>To this address</label>
@@ -62,7 +62,7 @@ class AssetTransferResult extends Component {
 
                   <Link to="/assets/summary">
                     <button
-                      className="btn btn-primary btn-green btn-green-primary full-width">
+                      className="btn btn-primary btn-green btn-green-primary full-width btn-last">
                       Close
                     </button>
                   </Link>

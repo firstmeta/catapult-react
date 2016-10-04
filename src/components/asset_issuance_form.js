@@ -51,82 +51,77 @@ class AssetIssuanceForm extends Component {
     }
 
     return (
-      <div className="asset-issuance-form">
+      <div className="main-panel">
         <div className="row">
           <div className="col-md-6 col-md-offset-3 segment">
             <div className="panel panel-default">
-              <div className="panel-body">
+              <label>Issue equity for company</label>
+              <div className="dropdown">
+                <button
+                  className="btn btn-default dropdown-toggle"
+                  type="button"
+                  value={this.state.company ? this.state.company : ''}
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="true">
+                   {this.state.company ? this.state.company.CompanyName : 'Select a company to issue equity'} &nbsp;
+                  <span className="caret"></span>
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  {this.renderCompanyList()}
+                </ul>
+              </div>
 
-                <label for="regCountry">Issue equity for company</label>
-                <div className="dropdown">
-                  <button
-                    className="btn btn-default dropdown-toggle"
-                    type="button"
-                    id="regCountry"
-                    ref="regCountry"
-                    value={this.state.company ? this.state.company : ''}
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="true">
-                     {this.state.company ? this.state.company.CompanyName : 'Select a company to issue equity'} &nbsp;
-                    <span className="caret"></span>
-                  </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    {this.renderCompanyList()}
-                  </ul>
-                </div>
+              <label>Asset name</label>
+              <input
+                type="text"
+                ref="name"
+                value={this.state.name}
+                onChange={event => this.onInputChange({name: event.target.value})}>
+              </input>
 
-                <label>Asset name</label>
+                <label>Issuing amount</label>
                 <input
                   type="text"
-                  ref="name"
-                  value={this.state.name}
-                  onChange={event => this.onInputChange({name: event.target.value})}>
-                </input>
+                  ref="amount"
+                  value={this.state.amount}
+                  placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."
+                  onChange={event => this.onInputChange({amount: event.target.value})}/>
 
-                  <label>Issuing amount</label>
-                  <input
-                    type="text"
-                    ref="amount"
-                    value={this.state.amount}
-                    placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."
-                    onChange={event => this.onInputChange({amount: event.target.value})}/>
+                <label>Logo</label>
+                <input
+                  type="text"
+                  ref="imageUrl"
+                  value={this.state.imageUrl}
+                  onChange={event => this.onInputChange({imageUrl: event.target.value})}/>
 
-                  <label>Logo</label>
-                  <input
-                    type="text"
-                    ref="imageUrl"
-                    value={this.state.imageUrl}
-                    onChange={event => this.onInputChange({imageUrl: event.target.value})}/>
+                <label>Description</label>
+                <textarea
+                  className="form-control"
+                  rows="4"
+                  ref="desc"
+                  value={this.state.desc}
+                  onChange={event => this.onInputChange({desc: event.target.value})} />
 
-                  <label>Description</label>
-                  <textarea
-                    className="form-control"
-                    rows="4"
-                    ref="desc"
-                    value={this.state.desc}
-                    onChange={event => this.onInputChange({desc: event.target.value})} />
-
-                  <div>
-                    <button
-                      className="btn btn-primary btn-green btn-green-primary full-width"
-                      onClick={() => {
-                        this.props.RedirectAssetConfirmation({
-                          issuer: this.state.company.CompanyName,
-                          name: this.state.name,
-                          amount: this.state.amount,
-                          imageUrl: this.state.imageUrl,
-                          desc: this.state.desc,
-                          address: this.state.company.Address,
-                          city: this.state.company.City,
-                          country: this.state.company.Country,
-                          wallet: wallet
-                        });
-                      }}>
-                      Next
-                    </button>
-                  </div>
-              </div>
+                <div>
+                  <button
+                    className="btn btn-primary btn-green btn-green-primary full-width"
+                    onClick={() => {
+                      this.props.RedirectAssetConfirmation({
+                        issuer: this.state.company.CompanyName,
+                        name: this.state.name,
+                        amount: this.state.amount,
+                        imageUrl: this.state.imageUrl,
+                        desc: this.state.desc,
+                        address: this.state.company.Address,
+                        city: this.state.company.City,
+                        country: this.state.company.Country,
+                        wallet: wallet
+                      });
+                    }}>
+                    Next
+                  </button>
+                </div>
             </div>
           </div>
         </div>

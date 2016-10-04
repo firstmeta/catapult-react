@@ -13,10 +13,9 @@ class WalletSettings extends Component {
 
   componentWillMount() {
     if(!this.props.fetched) {
-      //this.props.FetchWallet();
+      this.props.FetchWallet();
     }
   }
-
 
   render() {
     const { step, fetched, address } = this.props;
@@ -52,8 +51,8 @@ function mapStateToProps(state) {
   return {
     step: state.router.location.query.step,
     address: state.WalletState.address,
-    //fetched: state.WalletState.fetched
-    fetched: true
+    fetched: state.WalletState.fetched
+    //fetched: true
   }
 }
 function mapDispatchToProps(dispatch) {

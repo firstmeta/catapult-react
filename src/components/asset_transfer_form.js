@@ -46,61 +46,58 @@ class AssetTransferForm extends Component {
     }
 
     return (
-      <div className="asset-issuance-form">
+      <div className="main-panel">
         <div className="row">
           <div className="col-md-6 col-md-offset-3 segment">
             <div className="panel panel-default">
-              <div className="panel-body">
+              <label>Transfer your asset </label>
+              <div className="dropdown">
+                <button
+                  className="btn btn-default dropdown-toggle"
+                  type="button"
+                  id="regCountry"
+                  ref="regCountry"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="true">
+                   {this.state.assetDesc ? this.state.assetDesc : 'Select an asset balance to transfer'} &nbsp;
+                  <span className="caret"></span>
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  {this.renderAssetBalancesList()}
+                </ul>
+              </div>
 
-                <label>Transfer your asset: </label>
-                <div className="dropdown">
-                  <button
-                    className="btn btn-default dropdown-toggle"
-                    type="button"
-                    id="regCountry"
-                    ref="regCountry"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="true">
-                     {this.state.assetDesc ? this.state.assetDesc : 'Select an asset balance to transfer'} &nbsp;
-                    <span className="caret"></span>
-                  </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    {this.renderAssetBalancesList()}
-                  </ul>
-                </div>
+              <label>Transfer amount</label>
+              <input
+                type="text"
+                ref="amount"
+                value={this.state.amount}
+                onChange={event => this.onInputChange({amount: event.target.value})}/>
 
-                <label>Transfer Amount</label>
-                <input
-                  type="text"
-                  ref="amount"
-                  value={this.state.amount}
-                  onChange={event => this.onInputChange({amount: event.target.value})}/>
+              <label>To this address</label>
+              <input
+                type="text"
+                ref="toAddr"
+                value={this.state.toAddr}
+                onChange={event => this.onInputChange({toAddr: event.target.value})}/>
 
-                <label>To this address:</label>
-                <input
-                  type="text"
-                  ref="toAddr"
-                  value={this.state.toAddr}
-                  onChange={event => this.onInputChange({toAddr: event.target.value})}/>
-
-                <div>
-                  <button
-                    className="btn btn-primary btn-green btn-green-primary full-width"
-                    onClick={() => {
-                      this.props.RedirectAssetTransferConfirmation({
-                        blockchainAssetID: this.state.blockchainAssetID,
-                        assetID: this.state.assetID,
-                        assetCode: this.state.assetCode,
-                        assetName: this.state.assetName,
-                        toAddr: this.state.toAddr,
-                        amount: this.state.amount,
-                        wallet: wallet
-                      });
-                    }}>
-                    Next
-                  </button>
-                </div>
+              <div>
+                <button
+                  className="btn btn-primary btn-green btn-green-primary full-width"
+                  onClick={() => {
+                    this.props.RedirectAssetTransferConfirmation({
+                      blockchainAssetID: this.state.blockchainAssetID,
+                      assetID: this.state.assetID,
+                      assetCode: this.state.assetCode,
+                      assetName: this.state.assetName,
+                      toAddr: this.state.toAddr,
+                      amount: this.state.amount,
+                      wallet: wallet
+                    });
+                  }}>
+                  Next
+                </button>
               </div>
             </div>
           </div>

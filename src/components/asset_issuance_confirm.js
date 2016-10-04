@@ -17,14 +17,14 @@ class AssetIssuanceConfirm extends Component {
 
     if(!IssuingAsset.txHex) {
       return (
-        <div className="asset-issuance-confirm-spinner">
+        <div className="main-panel-spinner">
           <Spinner />
         </div>
       )
     }
 
     return (
-      <div className="asset-issuance-confirm">
+      <div className="main-panel">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-6 col-md-offset-3 segment">
@@ -40,7 +40,7 @@ class AssetIssuanceConfirm extends Component {
                 <p>{IssuingAsset.amount}</p>
 
                 <label>Logo</label>
-                <p>{IssuingAsset.imageUrl}</p>
+                <p><img src={IssuingAsset.imageUrl} /></p>
 
                 <label>Description</label>
                 <p>{IssuingAsset.desc}</p>

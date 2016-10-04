@@ -88,10 +88,6 @@ export function RedirectAssetTransferResult(transferringAsset) {
   }
 }
 
-export function FetchMyAssets() {
-
-}
-
 export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address, city, country, wallet}) {
 
   var addr = wallet.Address;
@@ -112,8 +108,11 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
         }
 
         if(!financeUtxo) {
-            console.log('Unsufficent fund!!!');
-            return;
+          dispatch(AlertGlobal({
+            content: 'Unsufficent bitcoin to issue asset!!!',
+            type: ALERT_ERROR
+          }));
+          return;
         }
 
         //TO DO: Adding random character to prevent collision
@@ -257,8 +256,11 @@ export function PrepareTransferAsset({
         }
 
         if(!financeUtxo) {
-            dispatch(AlertGlobal({content: 'Unsufficent fund!!!', type: ALERT_ERROR}));
-            return;
+          dispatch(AlertGlobal({
+            content: 'Unsufficent bitcoin to issue asset!!!',
+            type: ALERT_ERROR
+          }));
+          return;
         }
 
         var transferTx = prepareAssetTransferTx({
@@ -299,9 +301,7 @@ export function PrepareTransferAsset({
           else {
             dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
           }
-
         });
-
       }
       else {
         dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
@@ -317,7 +317,6 @@ export function ProceedAssetTransfer({
 }) {
 
   var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
-  console.log(prikey);
   var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
   var tx =  bitcoin.Transaction.fromHex(unsignedtxhex);
   var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
@@ -351,7 +350,6 @@ export function ProceedAssetTransfer({
   return dispatch => {
     return req.end((err, res) => {
       if (res.status === 200) {
-        console.log(res.body);
         dispatch({
           type: ASSET_TRANSFER_SUCCESS,
           data: {

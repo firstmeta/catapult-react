@@ -538,126 +538,112 @@ body:before {
   border-bottom: 1px solid #dcdedd;
 }
 
-.asset-issuance-form {
-  margin-top: 40px;
-}
-.asset-issuance-form .segment{
-  padding-top: 20px;
-}
-.asset-issuance-form .dropdown button, .asset-issuance-form .dropdown ul {
-  width: 100%;
-  margin-top: 0px;
-  margin-bottom: 10px;
-}
-.asset-issuance-form .segment input, .asset-issuance-form .segment textarea{
-  width: 100%;
-  margin-bottom: 10px;
-}
-.asset-issuance-form button {
-  margin-top: 10px;
-}
-
-.asset-issuance-confirm-spinner {
+.main-panel-spinner {
   margin-top: 40px;
   text-align: center;
 }
-.asset-issuance-confirm {
+.main-panel {
   margin-top: 40px;
   margin-bottom: 40px;
 }
-.asset-issuance-confirm .segment{
+.main-panel .segment{
   padding-top: 20px;
 }
-.asset-issuance-confirm .segment .panel {
+.main-panel .segment .panel {
   padding: 15px;
 }
-.asset-issuance-confirm .segment .panel label {
-  font-weight: 600;
-  margin-bottom: 2px;
+.main-panel .segment .panel h2 {
+  font-weight: 400;
+  margin-bottom: 35px;
 }
-.asset-issuance-confirm .segment .panel p {
+.main-panel .segment .panel label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  width: 100%;
+}
+.main-panel .panel p {
   font-style: italic;
   margin-bottom: 12px;
 }
-.asset-issuance-confirm .segment .panel hr {
+.main-panel .panel .asset-name{
+  font-size: 25px;
+  margin-bottom: 35px;
+}
+.main-panel .panel hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border-top: 1px solid #888888;
   width: 50%;
 }
-.asset-issuance-confirm .segment input, .asset-issuance-confirm .segment textarea{
+.main-panel .panel img {
+  max-width: 150px;
+  max-height: 150px
+}
+.main-panel .panel a {
+  text-decoration: underline;
+}
+.main-panel .panel .btn-last {
+  margin-top: 30px;
+}
+.main-panel .panel input, .main-panel .panel textarea{
   width: 100%;
   margin-bottom: 10px;
 }
-
-.asset-issuance-result-spinner {
-  margin-top: 40px;
-  text-align: center;
+.main-panel .dropdown button, .main-panel .dropdown ul {
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
-.asset-issuance-result {
+.main-panel .dropdown ul>li>a {
+  text-decoration: none;
+}
+
+.asset-issuance-certificate {
   margin-top: 40px;
   margin-bottom: 40px;
 }
-.asset-issuance-result .segment{
+.asset-issuance-certificate .segment{
   padding-top: 20px;
 }
-.asset-issuance-result .segment .panel {
+.asset-issuance-certificate .segment .panel {
   padding: 15px;
 }
-.asset-issuance-result .segment .panel h2 {
+.asset-issuance-certificate .segment .panel h2 {
   text-align: center;
   font-weight: 400;
   margin-bottom: 35px;
 }
-.asset-issuance-result .segment .panel label {
+.asset-issuance-certificate .segment .panel label {
   font-weight: 600;
   margin-bottom: 2px;
   width: 100%;
   text-align: center;
 }
-.asset-issuance-result .segment .panel p {
+.asset-issuance-certificate .segment .panel p {
   font-style: italic;
   margin-bottom: 12px;
   text-align: center;
 }
-.asset-issuance-result .segment .asset-name{
+.asset-issuance-certificate .segment .asset-name{
   font-size: 25px;
   margin-bottom: 35px;
 }
-.asset-issuance-result .segment .panel hr {
+.asset-issuance-certificate .segment .panel hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border-top: 1px solid #888888;
   width: 50%;
 }
-.asset-issuance-result .segment .panel img {
+.asset-issuance-certificate .segment .panel img {
   max-width: 150px;
   max-height: 150px
 }
-.asset-issuance-result .segment .panel a {
+.asset-issuance-certificate .segment .panel a {
   text-decoration: underline;
 }
-.asset-issuance-result .segment .panel button {
+.asset-issuance-certificate .segment .panel button {
   margin-top: 30px;
-}
-
-.asset-transfer-form {
-  margin-top: 40px;
-}
-.asset-transfer-form .segment{
-  padding-top: 20px;
-}
-.asset-transfer-form .dropdown button, .asset-transfer-form .dropdown ul {
-  width: 100%;
-  margin-top: 0px;
-  margin-bottom: 10px;
-}
-.asset-transfer-form .segment input, .asset-transfer-form .segment textarea{
-  width: 100%;
-  margin-bottom: 10px;
-}
-.asset-transfer-form button {
-  margin-top: 10px;
 }
 
 

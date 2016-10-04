@@ -17,22 +17,20 @@ class AssetIssuanceResult extends Component {
 
     if(!IssuedAsset.assetId) {
       return (
-        <div className="asset-issuance-result-spinner">
+        <div className="main-panel-spinner">
           <Spinner />
         </div>
       )
     }
 
-    console.log(IssuedAsset);
-
     return (
-      <div className="asset-issuance-result">
+      <div className="asset-issuance-certificate">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-6 col-md-offset-3 segment">
               <div className="panel panel-default">
                 <h2>
-                  Asset Issuance Result
+                  Asset Issuance Certification
                 </h2>
 
                 <label>Asset Name</label>
