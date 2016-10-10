@@ -20,10 +20,6 @@ class WalletSettings extends Component {
   render() {
     const { step, fetched, address } = this.props;
 
-    console.log(step);
-    console.log(fetched);
-    console.log(address);
-
     return (
       <div className="settings-wallet">
         {!step && fetched && !address && <WalletSettingsPwdForm />}
@@ -56,7 +52,6 @@ function mapStateToProps(state) {
     step: state.router.location.query.step,
     address: state.WalletState.wallet.Address,
     fetched: state.WalletState.fetched
-    //fetched: true
   }
 }
 function mapDispatchToProps(dispatch) {
