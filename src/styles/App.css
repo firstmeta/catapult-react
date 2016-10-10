@@ -646,6 +646,33 @@ body:before {
   margin-top: 30px;
 }
 
+.asset-summary .table td{
+  font-size: 13px;
+}
+.asset-summary .table label {
+  font-weight: 500;
+  margin-bottom: 0px;
+}
+.asset-summary .panel {
+  max-width: 250px;
+  margin-top: 30px;
+  margin-right: 10px;
+}
+.asset-summary .panel .panel-heading {
+  font-size: 16px;
+  font-weight: 500;
+}
+.asset-summary .balances {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+.asset-summary .panel .row {
+  margin-bottom: 5px;
+}
 
 .settings {
   margin-top: 80px;

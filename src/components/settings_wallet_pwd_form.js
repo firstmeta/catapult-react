@@ -19,38 +19,36 @@ class WalletSettingsPwdForm extends Component {
       <div className="settings-wallet-pwd-form">
         <div className="row">
           <div className="col-md-4 col-md-offset-4 segment">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <label>
+                  Please enter a password to <strong><u>encrypt</u></strong> your wallet key.
+                </label>
+                <input
+                  type="password"
+                  ref="pwd" />
 
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <label>
-                Please enter a password to <strong><u>encrypt</u></strong> your wallet key.
-              </label>
-              <input
-                type="password"
-                ref="pwd" />
+                <label>
+                  Please re-enter your password.
+                </label>
+                <input
+                  type="password"
+                  ref="repwd" />
 
-              <label>
-                Please re-enter your password.
-              </label>
-              <input
-                type="password"
-                ref="repwd" />
+                  <div className="note">
+                    <span>Notes:</span>
+                    <p>- Please DO NOT forget your password. We DO NOT store your password so we CANNOT help you recover it.</p>
+                  </div>
 
-                <div className="note">
-                  <span>Notes:</span>
-                  <p>- Please DO NOT forget your password. We DO NOT store your password so we CANNOT help you recover it.</p>
-                </div>
-
-                <div>
-                  <button
-                    className="btn btn-primary btn-green btn-green-primary full-width"
-                    onClick={this.generateWallet}>
-                    Generate my wallet!
-                  </button>
-                </div>
+                  <div>
+                    <button
+                      className="btn btn-primary btn-green btn-green-primary full-width"
+                      onClick={this.generateWallet}>
+                      Generate my wallet!
+                    </button>
+                  </div>
+              </div>
             </div>
-          </div>
-
           </div>
         </div>
       </div>

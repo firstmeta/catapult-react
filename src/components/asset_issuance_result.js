@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import numeral from 'numeral';
 import Spinner from './spinner';
 import { ProceedAssetIssuance } from '../actions/asset_action';
 import { COLOREDCOINS_EXPLORER_URL } from '../config';
@@ -37,7 +38,7 @@ class AssetIssuanceResult extends Component {
                 <p className="asset-name">{IssuedAsset.name}</p>
 
                 <label>Issued Amount</label>
-                <p>{IssuedAsset.amount}</p>
+                <p>{numeral(IssuedAsset.amount).format('0,0')}</p>
 
                 <label>Logo</label>
                 <p><img src={IssuedAsset.imageUrl} /></p>

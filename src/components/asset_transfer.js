@@ -12,7 +12,7 @@ class AssetTransfer extends Component {
   }
 
   componentWillMount() {
-    this.props.FetchAssetBalances();
+    //this.props.FetchAssetBalances();
   }
 
   render() {

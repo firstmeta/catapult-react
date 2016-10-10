@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import numeral from 'numeral';
 import Spinner from './spinner';
 import { ProceedAssetTransfer } from '../actions/asset_action';
 import { COLOREDCOINS_EXPLORER_URL } from '../config';
@@ -37,7 +38,7 @@ class AssetTransferResult extends Component {
                 <p>{tfrAsset.assetCode + ' - ' + tfrAsset.assetName}</p>
 
                 <label>Transfer amount</label>
-                <p>{tfrAsset.amount}</p>
+                <p>{numeral(tfrAsset.amount).format('0,0')}</p>
 
                 <label>From address</label>
                 <p>{tfrAsset.fromAddress}</p>

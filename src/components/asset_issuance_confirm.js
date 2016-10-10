@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import numeral from 'numeral';
 import Spinner from './spinner';
 import { PrepareIssueAsset, RedirectAssetIssuanceResult } from '../actions/asset_action';
 
@@ -37,7 +38,7 @@ class AssetIssuanceConfirm extends Component {
                 <p>{IssuingAsset.name}</p>
 
                 <label>Issuing Amount</label>
-                <p>{IssuingAsset.amount}</p>
+                <p>{numeral(IssuingAsset.amount).format('0,0')}</p>
 
                 <label>Logo</label>
                 <p><img src={IssuingAsset.imageUrl} /></p>

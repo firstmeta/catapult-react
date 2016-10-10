@@ -11,6 +11,7 @@ var address = bitcoin.address;
 var CryptoJS = require("crypto-js");
 
 export const FETCH_ASSET_BALANCES = 'FETCH_ASSET_BALANCES';
+export const FETCH_ASSET_TXS = 'FETCH_ASSET_TXS';
 
 export const REDIRECT_ASSET_ISSUANCE_CONFIRMATION = 'REDIRECT_ASSET_ISSUANCE_CONFIRMATION';
 export const PREPARE_ASSET_ISSUE_SUCCESS = 'PREPARE_ASSET_ISSUE_SUCCESS';
@@ -42,6 +43,27 @@ export function FetchAssetBalances() {
         dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
       }
     });
+  }
+}
+
+export function FetchAssetTxs(assetAddressID) {
+  var req = request
+              .post(`${ROOT_URL}/api/secure/asset/fetch_asset_txs`)
+              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
+              .field('addr_id', assetAddressID)
+              .accept('application/json');
+  return dispatch => {
+    return req.end((err, res) => {
+      if(res.status === 200) {
+        dispatch({
+          type: FETCH_ASSET_TXS,
+          data: res.body
+        });
+      }
+      else {
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
+    })
   }
 }
 

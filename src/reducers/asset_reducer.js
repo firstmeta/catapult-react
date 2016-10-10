@@ -1,5 +1,5 @@
 import {
-  FETCH_ASSET_BALANCES,
+  FETCH_ASSET_BALANCES, FETCH_ASSET_TXS,
   REDIRECT_ASSET_ISSUANCE_CONFIRMATION, REDIRECT_ASSET_ISSUANCE_RESULT,
   PREPARE_ASSET_ISSUE_SUCCESS,
   ASSET_ISSUE_SUCCESS, ASSET_ISSUE_FAILURE,
@@ -12,14 +12,19 @@ export default function(
   state = {
     IssuingAsset: {},
     IssuedAsset: {},
-    AssetBalances: {},
-    TransferringAsset: {}
+    AssetBalances: '',
+    TransferringAsset: {},
+    AssetTXs: []
   },
   action) {
   switch(action.type) {
     case FETCH_ASSET_BALANCES:
       return Object.assign({}, state, {
         AssetBalances: action.data
+      });
+    case FETCH_ASSET_TXS:
+      return Object.assign({}, state, {
+        AssetTXs: action.data
       });
     case REDIRECT_ASSET_ISSUANCE_CONFIRMATION:
       return Object.assign({}, state, {

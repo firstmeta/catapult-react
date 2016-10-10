@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import AssetIssuance from './asset_issuance';
 import AssetTransfer from './asset_transfer';
+import AssetSummary from './asset_summary';
 import { FetchWallet } from '../actions/wallet_action';
+import { FetchAssetBalances } from '../actions/asset_action';
 import Alert from './global_alert';
 
 class Assets extends Component {
@@ -16,6 +18,7 @@ class Assets extends Component {
     if(!this.props.walletFetched) {
       this.props.FetchWallet();
     }
+    this.props.FetchAssetBalances();
   }
 
   render() {
@@ -46,9 +49,10 @@ class Assets extends Component {
             </div>
           </div>
         </div>
-        
+
         <Alert />
 
+        {urlRef === 'summary' && <AssetSummary />}
         {urlRef === 'issuance' && <AssetIssuance />}
         {urlRef === 'transfer' && <AssetTransfer />}
       </div>
@@ -64,7 +68,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    FetchWallet: FetchWallet
+    FetchWallet: FetchWallet,
+    FetchAssetBalances: FetchAssetBalances
   }, dispatch);
 }
 

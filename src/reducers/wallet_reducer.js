@@ -8,7 +8,7 @@ export default function(state = {
     address:'',
     mnemonic:'',
     pwd: '',
-    wallet: {RandID: '', Address: '', EncryptedPrikey:'', RedeemScript: '', ScriptPubkey: '', ASM: ''},
+    wallet: {ID: '', RandID: '', Address: '', EncryptedPrikey:'', RedeemScript: '', ScriptPubkey: '', ASM: ''},
     fetched: false
   }, action) {
   switch (action.type) {

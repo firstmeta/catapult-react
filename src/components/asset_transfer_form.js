@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import numeral from 'numeral';
 import { RedirectAssetTransferConfirmation } from '../actions/asset_action';
 import { ROOT_IMAGE_URL } from '../config';
 
@@ -24,10 +25,10 @@ class AssetTransferForm extends Component {
               assetCode: a.AssetCode,
               assetName: a.AssetName,
               blockchainAssetID: a.BlockchainAssetID,
-              assetDesc: a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + a.Amount
+              assetDesc: a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + numeral(a.Amount).format('0,0')
             });
           }}>
-          <a>{a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + a.Amount}</a>
+          <a>{a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + numeral(a.Amount).format('0,0')}</a>
         </li>
       )
     });
