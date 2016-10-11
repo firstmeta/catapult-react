@@ -135,7 +135,7 @@ class AssetSummary extends Component {
                         {this.renderBalances()}
                       </div>
                     </div>
-                  </div>          
+                  </div>
                 }
 
 
