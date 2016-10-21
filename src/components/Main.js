@@ -1,6 +1,7 @@
 // require('bootstrap/dist/css/bootstrap.min.css');
 require('normalize.css/normalize.css');
 require('styles/App.css');
+require('styles/landing.css')
 require('styles/animate.css');
 require('styles/alloy-editor-ocean-min.css');
 require('react-bootstrap-table/css/react-bootstrap-table-all.min.css')
