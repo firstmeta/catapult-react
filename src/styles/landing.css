@@ -1,3 +1,11 @@
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
 /* Landing */
 .landing {
     color: #333;
@@ -199,7 +207,6 @@
   margin-top: 30px;
 }
 .landing .crowdfunding .partnering {
-  height: 150px;
   margin-top: 40px;
 }
 .landing .crowdfunding .partnering hr {
@@ -207,10 +214,11 @@
   width: 50%;
 }
 .landing .crowdfunding .partnering img {
-
+	max-width: 100%;
+	max-height: 100%;
 }
 .landing .crowdfunding .partnering .paddingtop {
-  padding-top: 50px;
+  padding-top: 35px;
 }
 .landing .call-to-action {
   color: #FFF;

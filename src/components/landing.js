@@ -351,7 +351,7 @@ class Landing extends Component {
                     </div>
   	              </div>
   	            </div>
-
+								
                 <div className="row partnering">
                   <hr />
                   <h3>Partnering with</h3>
@@ -364,7 +364,7 @@ class Landing extends Component {
                   <div className="col-xs-4">
                     <img src="https://catapult.asia/imgs/lendwiselogo.png" />
                   </div>
-                </div>
+								</div>
 								
               </div>
            </div>
@@ -374,9 +374,12 @@ class Landing extends Component {
 
         <div className="container-fluid call-to-action">
         	<div className="row">
-        		<div className="col-md-6 col-md-offset-3">
-              <h2>Don't Miss the Growth Journeys of Asia's Most Exciting Startups!</h2>
-            </div>
+						<div className="col-md-12">
+							<div className="col-md-6 col-md-offset-3">
+
+              	<h2>Don't Miss the Growth Journeys of Asia's Most Exciting Startups!</h2>
+							</div>	
+						</div>
         	</div>
           {
             !isLogined &&
