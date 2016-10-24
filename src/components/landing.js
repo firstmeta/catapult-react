@@ -21,10 +21,10 @@ class Landing extends Component {
 				<div className="jumbotron">
 					<div className="container-fluid">
 					  	<div className="row">
-                  <div className="col-md-10 col-md-offset-1 intro-section">
+              	<div className="col-md-10 col-md-offset-1 intro-section">
                       <h1 className="intro">
-												Buy & Sell Securities. <br />
-												On Blockchain.
+                        Buy & Sell Securities. <br />
+                        On Blockchain.
 											</h1>
                       <p className="sub-heading">
                           Southeast Asia's startup & SME marketplace
@@ -32,10 +32,10 @@ class Landing extends Component {
                       {
                         !isLogined &&
                         <a
-  												className="btn btn-common animated wow bounceIn"
-  												onClick={() => this.props.OpenSignup()}>Get Started</a>
+                          className="btn btn-common animated wow bounceIn"
+                          onClick={() => this.props.OpenSignup()}>Get Started</a>
                       }
-                  </div>
+                </div>
               </div>
 					</div>
 		    </div>

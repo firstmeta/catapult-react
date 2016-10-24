@@ -7,7 +7,7 @@ export default class FooterNav extends Component {
       	<div className="container">
           	<p>
 							Catapult by <a href="http://firstmeta.com" title="Catapult - Equity Crowdfunding on Blockchain">First Meta Pte. Ltd. </a>© 2016
-							&nbsp; | &nbsp; <a href="/aboutus" target="_blank">About Us</a>
+							&nbsp; | &nbsp; <a href="http://blog.firstmeta.com/">Knowledge Base</a> &nbsp; | &nbsp; <a href="/aboutus" target="_blank">About Us</a>  
 						</p>
 						<hr />
 						<div className="disclaimer">This is a technology demonstration website. All of the data and functionalities displayed are for demonstration purposes only.
