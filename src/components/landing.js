@@ -355,17 +355,17 @@ class Landing extends Component {
                 <div className="row partnering">
                   <hr />
                   <h3>Partnering with</h3>
-                  <div className="col-sm-4">
+                  <div className="col-xs-4">
                     <img src="https://catapult.asia/imgs/smartlylogo.png" />
                   </div>
-                  <div className="col-sm-4 paddingtop">
+                  <div className="col-xs-4 paddingtop">
                     <img src="https://catapult.asia/imgs/changelogo.png" />
                   </div>
-                  <div className="col-sm-4">
+                  <div className="col-xs-4">
                     <img src="https://catapult.asia/imgs/lendwiselogo.png" />
                   </div>
                 </div>
-
+								
               </div>
            </div>
          </div>
