@@ -14,6 +14,10 @@
     font-weight: 400;
     margin-bottom: 0px;
 }
+.landing p, h3, h4 {
+	margin-left: 10px;
+	margin-right: 10px;
+}
 .landing .btn {
   font-size: 22px;
   font-family: 'Raleway', sans-serif;
@@ -85,8 +89,8 @@
   font-weight: 700;
 }
 .landing h2{
-    font-weight: 800;
-    font-size: 30px;
+  font-weight: 800;
+  font-size: 30px;
 }
 .landing h3 {
   margin-top: 10px;
@@ -198,6 +202,10 @@
 .landing .crowdfunding .overlay {
   padding-top: 30px;
   padding-bottom: 50px;
+}
+.landing .crowdfunding .toggle {
+	padding-left: 10px;
+	padding-right: 10px;
 }
 .landing .crowdfunding .decentralise {
   max-width: 350px;
