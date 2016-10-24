@@ -36,4 +36,4 @@ dist
 .npm
 
 # Vim .swp
-# .swp
+*.swp
