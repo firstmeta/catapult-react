@@ -147,7 +147,7 @@ input {
 .wrap { min-height: 100%; }
 .main {
     overflow: auto;
-    padding-bottom: 100px; /* must be same height as the footer */
+    padding-bottom: 80px; /* must be same height as the footer */
 }
 .footer {
     position: relative;
@@ -209,6 +209,7 @@ body:before {
 .header-nav .navbar-nav>li>a {
     padding-top: 18px !important;
     padding-bottom: 12px !important;
+		color: #333;
 }
 .header-nav .navbar-right {
     margin-right: 25px;
@@ -290,132 +291,6 @@ body:before {
 .pwd-reset .btn-green-primary {
   margin-top: 30px;
   min-width: 200px;
-}
-
-/* Landing */
-.landing {
-    color: #6f6f6f;
-    font-family: 'Raleway', sans-serif;
-}
-.landing .btn {
-  font-size: 22px;
-  font-family: 'Raleway', sans-serif;
-  padding: 15px 30px;
-  border: none;
-  -webkit-transition: all 0.2s linear;
-  -moz-transition: all 0.2s linear;
-  -o-transition: all 0.2s linear;
-  transition: all 0.2s linear;
-}
-.landing .btn-common {
-  color: #ffffff;
-  font-weight: 200;
-  background: rgba(231,76,60,0.9);
-}
-.landing .jumbotron {
-  background: url(../images/landing_bg.jpg);
-  -webkit-background-size: cover;
-  background-size: cover;
-  background-position: center center;
-  height: 700px;
-  margin-bottom: 0px;
-}
-.landing .jumbotron .row {
-  padding-top: 45px;
-}
-.landing .jumbotron .intro-section {
-  color: #ffffff;
-  text-align: center;
-  padding-top: 90px;
-}
-.landing .jumbotron .intro {
-  font-size: 50px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 25px;
-}
-.landing .jumbotron .sub-heading { margin-bottom: 25px; }
-.landing .main-features {
-  background-color: #FFF;
-  padding-top: 35px;
-}
-.landing .main-features .title {
-  text-align: center;
-}
-.landing .main-features .content {
-  margin-top: 50px;
-  padding-bottom: 70px;
-  background-color: #FFF;
-}
-.landing .main-features .content .feature-desc {
-  font-weight: 200;
-  font-size: 15px;
-}
-.landing .main-features img {
-    height: 80px;
-    width: 80px;
-}
-.landing h2{
-    color: #E74C3C;
-    font-weight: 800;
-    font-size: 50px;
-}
-.landing h3 {
-  color: #e74c3c;
-}
-.landing .fa-slideshare, .fa-line-chart, .fa-folder-open-o{
-    font-size: 80px;
-    color: rgba(231,76,60,1);
-}
-.landing .tech-features {
-    background-color: #FFF;
-    padding-bottom: 65px;
-}
-.landing .tech-features img {
-    padding-top: 75px;
-}
-.landing .tech-features .small-title {
-    font-size: 30px;
-    color: #E74C3C;
-    font-weight: 800;
-    padding-top: 65px;
-    padding-bottom: 5px;
-    line-height: 40px;
-}
-.landing .summary {
-    background-color: #ECF0F1;
-    text-align: center;
-    padding-top: 65px;
-    padding-bottom: 65px;
-}
-.landing .summary .call-to-action {
-    color: #000;
-}
-.landing .explain {
-  padding-top: 10px;
-  padding-bottom: 35px;
-  background-color: #fff;
-}
-.landing .explain .title {
-  text-align: center;
-}
-.landing .explain .title h3 {
-  font-size: 24px;
-}
-.landing .explain .title p {
-  font-size: 20px;
-  font-weight: 200;
-}
-.landing .explain .content{
-  font-size: 16px;
-  font-weight: 200;
-  margin-top: 15px;
-}
-.landing .explain .content .col {
-  padding-left: 70px;
-}
-.landing .explain .content ul {
-  padding-left: 25px;
 }
 
 .investors h2{

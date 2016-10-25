@@ -34,3 +34,7 @@ dist
 
 # Optional npm cache directory
 .npm
+
+# Vim swap files
+*.swp
+*.swo

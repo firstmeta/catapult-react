@@ -1,0 +1,245 @@
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+/* Landing */
+.landing {
+    color: #333;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+.landing p, h3, h4 {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.landing .btn {
+  font-size: 22px;
+  font-family: 'Raleway', sans-serif;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.landing .btn-common {
+  color: #ffffff;
+  font-weight: 200;
+  background: rgba(45,168,83,1);
+}
+.landing .toggle .btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  width: 100%;
+}
+.landing .hidden {
+  display: none;
+}
+.landing .jumbotron {
+  background: url(../images/landing_bg.jpg);
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  height: 700px;
+  margin-bottom: 0px;
+}
+.landing .jumbotron .row {
+  padding-top: 45px;
+}
+.landing .jumbotron .intro-section {
+  color: #ffffff;
+  text-align: center;
+  padding-top: 90px;
+}
+.landing .jumbotron .intro {
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+}
+.landing .jumbotron .sub-heading { margin-bottom: 25px; }
+.landing .main-features {
+  background-color: #FFF;
+  padding-top: 35px;
+}
+.landing .main-features .title {
+  text-align: center;
+}
+.landing .main-features .sub-desc {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.landing .main-features .content {
+  margin-top: 20px;
+  padding-bottom: 70px;
+  background-color: #FFF;
+}
+.landing .main-features img {
+  height: 80px;
+  width: 80px;
+  margin-bottom: 10px;
+}
+.landing h1 {
+  font-size: 3em;
+  font-weight: 700;
+}
+.landing h2{
+  font-weight: 800;
+  font-size: 30px;
+}
+.landing h3 {
+  margin-top: 10px;
+}
+.landing h4 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.landing .explain .subtitle h4 {
+  font-size: 20px;
+  font-weight: 300;
+  color: #333;
+}
+.landing .explain .subtitle .row {
+  padding-top: 0px;
+  padding-bottom: 15px;
+}
+.landing .explain p {
+  font-size: 20px;
+  font-weight: 300;
+  color: #333;
+}
+
+.landing .fa-slideshare, .fa-line-chart, .fa-folder-open-o{
+    font-size: 80px;
+    color: rgba(231,76,60,1);
+}
+.landing .tech-features {
+    background-color: #FFF;
+    padding-bottom: 65px;
+}
+.landing .tech-features img {
+    padding-top: 75px;
+}
+.landing .tech-features .small-title {
+    font-size: 30px;
+    color: #E74C3C;
+    font-weight: 800;
+    padding-top: 65px;
+    padding-bottom: 5px;
+    line-height: 40px;
+}
+.landing .summary {
+    background-color: #ECF0F1;
+    text-align: center;
+    padding-top: 65px;
+    padding-bottom: 65px;
+}
+.landing .summary .call-to-action {
+    color: #000;
+}
+.landing .explain {
+  padding: 0px;
+  background: url(https://catapult.asia/imgs/street.jpg) center center no-repeat fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+}
+.landing .overlay {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: .8;
+}
+.landing .explain .row {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.landing .explain .title h3 {
+  font-size: 24px;
+}
+.landing .explain .title p {
+  font-size: 20px;
+  font-weight: 200;
+}
+.landing .explain .content{
+  font-size: 16px;
+  font-weight: 200;
+  margin-top: 15px;
+}``
+.landing .explain .content .col {
+  padding-left: 70px;
+}
+.landing .explain .content ul {
+  padding-left: 25px;
+}
+.landing .marketplace {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+}
+.landing .marketplace img {
+  height: 80px;
+  width: 80px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
+.landing .crowdfunding {
+  padding: 0px;
+  background: url(https://catapult.asia/imgs/code-screen.jpeg) center center no-repeat fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+}
+.landing .crowdfunding .overlay {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+.landing .crowdfunding .toggle {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.landing .crowdfunding .decentralise {
+  max-width: 350px;
+}
+.landing .crowdfunding .bitcoin-pro img{
+  height: 90px;
+  margin-top: 30px;
+}
+.landing .crowdfunding .partnering {
+  margin-top: 40px;
+}
+.landing .crowdfunding .partnering hr {
+  border-top: 1px solid #000;
+  width: 50%;
+}
+.landing .crowdfunding .partnering img {
+	max-width: 100%;
+	max-height: 100%;
+}
+.landing .crowdfunding .partnering .paddingtop {
+  padding-top: 35px;
+}
+.landing .call-to-action {
+  color: #FFF;
+  text-align: center;
+  background: url(https://catapult.asia/imgs/crowdbw.jpg) center center no-repeat fixed;
+  padding-top: 60px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 350px;
+}
+.landing .call-to-action h2 {
+  color: #FFF;
+  margin-bottom: 20px;
+}
