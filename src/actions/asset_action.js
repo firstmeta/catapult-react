@@ -106,8 +106,53 @@ export function RedirectAssetTransferResult(transferringAsset) {
     dispatch(push('/assets/transfer?step=result'));
   }
 }
+export function PrepareIssueAsset({
+	issuer, name, code, amount, logoUrl, desc, address, city, country, wallet}) {
 
-export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address, city, country, wallet}) {
+	var assetPrepareReq = request
+			.post(`${ROOT_URL}/api/secure/asset/prepare_asset_issuance_tx`)
+				.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+        .set('Content-Type', 'application/json')
+   		 	.accept('application/json')
+				.send({
+					asset_code: code,
+					asset_name: name,
+					issuer: issuer,
+					desc: desc,
+					logo_url: logoUrl,
+					amount: amount
+				});
+
+	return dispatch => {
+		return assetPrepareReq.end((err, res) => {
+			var data = res.body;
+    	if(res.status === 200) {
+				if(data.txHex) {
+       		data.assetAddressRandID = wallet.RandID;
+          data.assetAddress = wallet.Address;
+          data.code = code;
+          data.name = name;
+          data.amount = amount;
+          data.logoUrl = logoUrl;
+					data.desc = desc;
+					//data.metadata = issueTx.metadata;
+
+           dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
+        }
+        else {
+          dispatch(AlertGlobal({
+            content: data.message + ', ' + data.explanation,
+            type: ALERT_ERROR
+          }));
+        }
+			}
+			else {
+      	dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+			}
+		});	
+	}
+}
+export function PrepareIssueAsset2({issuer, name, amount, imageUrl, desc, address, city, country, wallet}) {
 
   var addr = wallet.Address;
   var req = request
@@ -195,10 +240,10 @@ export function PrepareIssueAsset({issuer, name, amount, imageUrl, desc, address
 }
 
 export function ProceedAssetIssuance({
-  code, name, issuedAmount, imageUrl,
+  code, name, issuedAmount, iconUrl,
   desc, blockchainAssetId,
   issuedAddress, issuedAddressID, issuedAddressRandID,
-  unsignedtxhex, coloredOutputIndexes,
+  unsignedtxhex, coloredOutputIndexes, fundingAddrRandId,
   encryptedPrikey, pwd
 }) {
 
@@ -230,7 +275,8 @@ export function ProceedAssetIssuance({
                 issued_address: issuedAddress,
                 issued_address_id: issuedAddressID,
                 issued_address_rand_id: issuedAddressRandID,
-                colored_output_indexes: coloredOutputIndexes
+								colored_output_indexes: coloredOutputIndexes,
+								funding_addr_rand_id: fundingAddrRandId
               });
   return dispatch => {
     return req.end((err, res) => {
@@ -240,7 +286,7 @@ export function ProceedAssetIssuance({
           data: {
             name: name,
             amount: issuedAmount,
-            imageUrl: imageUrl,
+            iconUrl: iconUrl,
             desc: desc,
             assetId: blockchainAssetId,
             status: 'SUCCESS - Pending confirmation on blockchain.'

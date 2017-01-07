@@ -24,6 +24,7 @@ import CampaignCreate from './components/campaign_create';
 import Investors from './components/investors';
 import AboutUs from './components/aboutus';
 import Assets from './components/assets';
+import AssetOrder from './components/asset_order';
 import Settings from './components/settings';
 import WalletGenerateResult from './components/settings_wallet_generate_result';
 import PasswordReset from './components/account_pwd_reset';
@@ -49,6 +50,7 @@ render(
 				<Route path="/account/wallet_generate_result" component={WalletGenerateResult} />
 				<Route path="/account/reset_pwd" component={PasswordReset} />
 				<Route path="/assets/:urlRef" component={Assets} />
+				<Route path="/asset/order" component={AssetOrder} />
 				<Route path="/company/browse" component={CompanyBrowse} />
 				<Route path="/company/start" component={CompanyStart} />
 				<Route path="/company/:randID/edit" component={CompanyCreate} />

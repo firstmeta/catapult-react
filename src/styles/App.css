@@ -549,6 +549,11 @@ body:before {
   margin-bottom: 5px;
 }
 
+.asset-order {
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+
 .settings {
   margin-top: 80px;
   margin-bottom: 40px;

@@ -36,12 +36,15 @@ class AssetIssuanceConfirm extends Component {
 
                 <label>Asset Name</label>
                 <p>{IssuingAsset.name}</p>
+								
+								<label>Asset Code</label>
+                <p>{IssuingAsset.code}</p>
 
                 <label>Issuing Amount</label>
                 <p>{numeral(IssuingAsset.amount).format('0,0')}</p>
 
                 <label>Logo</label>
-                <p><img src={IssuingAsset.imageUrl} /></p>
+                <p><img src={IssuingAsset.logoUrl} /></p>
 
                 <label>Description</label>
                 <p>{IssuingAsset.desc}</p>
@@ -75,11 +78,12 @@ class AssetIssuanceConfirm extends Component {
                       code: IssuingAsset.code,
                       name: IssuingAsset.name,
                       issuedAmount: IssuingAsset.amount,
-                      imageUrl: IssuingAsset.imageUrl,
+                      logoUrl: IssuingAsset.logoUrl,
                       desc: IssuingAsset.desc,
                       blockchainAssetId: IssuingAsset.assetId,
                       unsignedtxhex: IssuingAsset.txHex,
-                      coloredOutputIndexes: IssuingAsset.coloredOutputIndexes,
+											coloredOutputIndexes: IssuingAsset.coloredOutputIndexes,
+											fundingAddrRandId: IssuingAsset.fundingAddrRandId,
                       encryptedPrikey: wallet.EncryptedPrikey,
                       pwd: this.refs.pwd.value
                     })}>

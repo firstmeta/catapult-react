@@ -9,7 +9,7 @@ class AssetIssuanceForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {company: '', name: '', amount: '', imageUrl: '', desc: ''};
+    this.state = {company: '', name: '', code: '', amount: '', logoUrl: '', desc: ''};
 
     this.renderCompanyList = this.renderCompanyList.bind(this);
   }
@@ -27,7 +27,7 @@ class AssetIssuanceForm extends Component {
             this.setState({
               company: c,
               name: c.CompanyName + ' Equity',
-              imageUrl: ROOT_IMAGE_URL + '/' + c.ListingImage,
+              logoUrl: ROOT_IMAGE_URL + '/' + c.ListingImage,
               desc: c.DescriptionShort
             });
           }}>
@@ -78,6 +78,14 @@ class AssetIssuanceForm extends Component {
                 value={this.state.name}
                 onChange={event => this.onInputChange({name: event.target.value})}>
               </input>
+							
+							<label>Asset code</label>
+              <input
+                type="text"
+                ref="code"
+                value={this.state.code}
+                onChange={event => this.onInputChange({code: event.target.value})}>
+              </input>
 
                 <label>Issuing amount</label>
                 <input
@@ -85,14 +93,14 @@ class AssetIssuanceForm extends Component {
                   ref="amount"
                   value={this.state.amount}
                   placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."
-                  onChange={event => this.onInputChange({amount: event.target.value})}/>
+                  onChange={event => this.onInputChange({amount: parseInt(event.target.value)})}/>
 
                 <label>Logo</label>
                 <input
                   type="text"
                   ref="imageUrl"
-                  value={this.state.imageUrl}
-                  onChange={event => this.onInputChange({imageUrl: event.target.value})}/>
+                  value={this.state.logoUrl}
+                  onChange={event => this.onInputChange({logoUrl: event.target.value})}/>
 
                 <label>Description</label>
                 <textarea
@@ -108,9 +116,10 @@ class AssetIssuanceForm extends Component {
                     onClick={() => {
                       this.props.RedirectAssetConfirmation({
                         issuer: this.state.company.CompanyName,
-                        name: this.state.name,
+												name: this.state.name,
+												code: this.state.code,
                         amount: this.state.amount,
-                        imageUrl: this.state.imageUrl,
+                        logoUrl: this.state.logoUrl,
                         desc: this.state.desc,
                         address: this.state.company.Address,
                         city: this.state.company.City,
