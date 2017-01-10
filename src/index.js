@@ -50,7 +50,7 @@ render(
 				<Route path="/account/wallet_generate_result" component={WalletGenerateResult} />
 				<Route path="/account/reset_pwd" component={PasswordReset} />
 				<Route path="/assets/:urlRef" component={Assets} />
-				<Route path="/asset/order" component={AssetOrder} />
+				<Route path="/asset/order/:orderExt" component={AssetOrder} />
 				<Route path="/company/browse" component={CompanyBrowse} />
 				<Route path="/company/start" component={CompanyStart} />
 				<Route path="/company/:randID/edit" component={CompanyCreate} />

@@ -2,50 +2,50 @@
   list-style-type: none;
   display: flex;
   align-items: center;
-  justify-content: center;
+/*  justify-content: center; */
 }
 
-.li {
+.timeline .li {
   transition: all 200ms ease-in;
 }
 
-.task-upper {
+.timeline .task-upper {
 	min-height: 50px;	
   margin-bottom: 0px;
-  padding: 0px 5px;
+/*  padding: 0px 2px; */
   display: flex;
   flex-direction: column;
   align-items: center;
   font-weight: 100;
 }
-.task-upper h4 {
+.timeline .task-upper h4 {
 	font-size: 13px;
   font-weight: 500;
-	max-width: 70px;
+	max-width: 75px;
 	line-height: 17px;
 }
-.li.complete .task-upper h4 {
+.timeline .li.complete .task-upper h4 {
   color: #2d6fd8;
 }
 
-.task-below {
+.timeline .task-below {
 	min-height: 60px;
-  padding: 0px 5px;
+/*  padding: 0px 2px; */
   display: flex;
   justify-content: center;
   border-top: 2px solid #D6DCE0;
   position: relative;
   transition: all 200ms ease-in;
 }
-.task-below h4 {
+.timeline .task-below h4 {
 	font-size: 13px;
   font-weight: 500;
 	margin-top: 20px;
-	max-width: 70px;
+	max-width: 75px;
 	line-height: 17px;
 
 }
-.task-below:before {
+.timeline .task-below:before {
   content: "";
   width: 15px;
   height: 15px;
@@ -58,15 +58,15 @@
   transition: all 200ms ease-in;
 }
 
-.li.complete .task-below {
+.timeline .li.complete .task-below {
   border-top: 2px solid #2d6fd8;
 }
-.li.complete .task-below:before {
+.timeline .li.complete .task-below:before {
   background-color: #2d6fd8;
   border: none;
   transition: all 200ms ease-in;
 }
-.li.complete .task-below h4 {
+.timeline .li.complete .task-below h4 {
   color: #2d6fd8;
 }
 
@@ -76,48 +76,21 @@
     display: block;
   }
 
-  .li {
+  .timeline .li {
     transition: all 200ms ease-in;
     display: flex;
     width: inherit;
   }
 
-  .timestamp {
+  .timeline .timestamp {
     width: 100px;
   }
 
-  .task-below:before {
+  .timeline .task-below:before {
     left: -8%;
     top: 30%;
     transition: all 200ms ease-in;
   }
 	
 }
-html, body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  font-family: "Titillium Web", sans serif;
-  color: #758D96;
-}
 
-button {
-  position: absolute;
-  width: 100px;
-  min-width: 100px;
-  padding: 20px;
-  margin: 20px;
-  font-family: "Titillium Web", sans serif;
-  border: none;
-  color: white;
-  font-size: 16px;
-  text-align: center;
-}
-
-#toggleButton {
-  position: absolute;
-  left: 50px;
-  top: 20px;
-  background-color: #75C7F6;
-}

@@ -1,10 +1,8 @@
 import React from 'react';
 
 const Timeline = ({milestones}) => {
-	var count = 0;
-	var milestoneLis = milestones.map((ms, index) =>{
-		console.log(index % 2 === 0);
-		return <li className={"li " + ms.status}>
+	var milestoneLis = milestones.map((ms, index) =>
+		<li className={"li " + ms.status}>
     	<div className="task-upper">
 				<h4><center>{index % 2 === 0 ? '' : ms.task}</center></h4>
     	</div>
@@ -12,7 +10,7 @@ const Timeline = ({milestones}) => {
 				<h4><center>{index % 2 === 0 ? ms.task : ''}</center></h4>
     	</div>
 		</li>
-	});
+	);
 	return (
 		<ul className="timeline" id="timeline">
 			{milestoneLis}
