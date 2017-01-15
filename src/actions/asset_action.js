@@ -11,6 +11,7 @@ var address = bitcoin.address;
 var CryptoJS = require("crypto-js");
 
 export const FETCH_ASSET_BALANCES = 'FETCH_ASSET_BALANCES';
+export const FETCH_ALL_ASSETS = 'FETCH_ALL_ASSETS';
 export const FETCH_ASSET_TXS = 'FETCH_ASSET_TXS';
 
 export const REDIRECT_ASSET_ISSUANCE_CONFIRMATION = 'REDIRECT_ASSET_ISSUANCE_CONFIRMATION';
@@ -25,6 +26,24 @@ export const REDIRECT_ASSET_TRANSFER_RESULT = 'REDIRECT_ASSET_TRANSFER_RESULT';
 export const ASSET_TRANSFER_SUCCESS = 'ASSET_TRANSFER_SUCCESS';
 export const ASSET_TRANSFER_FAILURE = 'ASSET_TRANSFER_FAILURE';
 
+export function FetchAllAssets() {
+  var req = request
+              .get(`${ROOT_URL}/api/asset/fetch_all_assets`)
+              .accept('application/json');
+  return dispatch => {
+    return req.end((err, res) => {
+      if (res.status === 200) {
+        dispatch({
+          type: FETCH_ALL_ASSETS,
+          data: res.body
+        });
+      }
+      else {
+        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+      }
+    });
+  }
+}
 
 export function FetchAssetBalances() {
   var req = request

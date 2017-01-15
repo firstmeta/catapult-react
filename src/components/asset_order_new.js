@@ -4,11 +4,13 @@ import numeral from 'numeral';
 const AssetOrderNew = ({
 	type,
 	assetCode,
+	assetName,
 	assetDesc,
 	logoUrl,
 	amount,
 	price,
 	total,
+	moneyCode,
 	buyingAssets, 
 	sellingAssets, 
 	onInputChange
@@ -19,6 +21,7 @@ const AssetOrderNew = ({
 			onClick={
 				() => onInputChange({
 					assetCode: a.AssetCode,
+					assetName: a.AssetName,
 					assetDesc: a.AssetCode + ' - ' + numeral(a.Amount).format('0,0'),
 					logoUrl: a.LogoUrl
 				})
@@ -29,6 +32,25 @@ const AssetOrderNew = ({
 			</a>	
 		</li>	
 	); 
+	
+	var buyingAssetLis =	buyingAssets.map(a => 
+		<li
+			key={a.AssetID}
+			onClick={
+				() => onInputChange({
+					assetCode: a.Code,
+					assetName: a.Name,
+					assetDesc: a.Name,
+					logoUrl: a.LogoUrl
+				})
+			}>
+			<a>
+				<img src={a.LogoUrl} className="img-circle"/> &nbsp;
+				{a.Code}
+			</a>	
+		</li>	
+	); 
+
 	return (
 		<div className="asset-order-new">
 			<div className="container-fluid">
@@ -40,13 +62,13 @@ const AssetOrderNew = ({
 								Type	
 							</div>
 							<div className="col-sm-4">
-								Company	
+								Token	
 							</div>
 							<div className="col-sm-2">
-								Token Amount	
+								Amount	
 							</div>
 							<div className="col-sm-2">
-								Token Price	
+								Price	
 							</div>
 							<div className="col-sm-1">
 								$	
@@ -63,17 +85,16 @@ const AssetOrderNew = ({
 									<button
                  	 className="btn btn-default dropdown-toggle"
                  	 type="button"
-                 	 id="regCountry"
                  	 data-toggle="dropdown"
                  	 aria-haspopup="true"
                  	 aria-expanded="true">
-									 Sell 
+									 {type === 'sell' ? 'SELL' : 'BUY'} 
 									 <span className="caret"></span>
                 	</button>
 
 									<ul className="dropdown-menu">
-										<li>Sell</li>	
-										<li>Buy</li>
+										<li onClick={() => onInputChange({type: 'sell'})}><a>SELL</a></li>	
+										<li onClick={() => onInputChange({type: 'buy'})}><a>BUY</a></li>
 									</ul>
 								</div>
 
@@ -81,15 +102,14 @@ const AssetOrderNew = ({
 							<div className="col-sm-4">
 								<div className="dropdown">
 									<button
-                 	 className="btn btn-default dropdown-toggle"
+                 	 className="btn btn-default dropdown-toggle asset-desc"
                  	 type="button"
-                 	 id="regCountry"
                  	 data-toggle="dropdown"
                  	 aria-haspopup="true"
 									 aria-expanded="true">
 									 {assetDesc ? 
 											 <span>
-												 <img src={logoUrl} className="img-circle"/> &nbsp;
+												 <img src={logoUrl} className="img-circle"/>
 												 {assetDesc}
 											 </span> 
 											 : 'Select an Asset'} &nbsp;
@@ -97,7 +117,7 @@ const AssetOrderNew = ({
                 	</button>
 
 									<ul className="dropdown-menu">
-										{sellingAssetLis}
+										{type === 'sell' ? sellingAssetLis : buyingAssetLis}
 									</ul>
 								</div>
 							</div>
@@ -105,7 +125,15 @@ const AssetOrderNew = ({
 								<input
                 type="text"
 								value={amount}
-								onChange={event => onInputChange({amount: event.target.value})}
+								onChange={event => {
+									var total = '';
+									var amount = event.target.value;
+									if (price) {
+										total = numeral(amount * price).format('0,0.00');	
+									}
+
+									onInputChange({amount: amount, total: total})
+								}}
                 />
 
 							</div>
@@ -113,16 +141,40 @@ const AssetOrderNew = ({
 								<input
                 type="text"
 								value={price}
-								onChange={event => onInputChange({price: event.target.value})}
+								onChange={event => {
+									var total = '';
+									var price = event.target.value;
+									if (amount) {
+										total = numeral(amount * price).format('0,0.00');	
+									}
+									onInputChange({price: price, total: total});
+								}}
                 />
 							
 							</div>
 							<div className="col-sm-1">
-								SGD	
+								<div className="dropdown">
+									<button
+                 	 className="btn btn-default dropdown-toggle"
+                 	 type="button"
+                 	 data-toggle="dropdown"
+                 	 aria-haspopup="true"
+                 	 aria-expanded="true">
+									 {moneyCode} 
+									 <span className="caret"></span>
+                	</button>
+
+									<ul className="dropdown-menu">
+										<li onClick={() => onInputChange({moneyCode: 'SGD'})}><a>SGD</a></li>	
+									</ul>
+								</div>
+
 							</div>
 
 							<div className="col-sm-2">
-
+								<div className="total">
+									<span>&asymp; {total}</span>
+								</div>
 							</div>
 						</div>
 
