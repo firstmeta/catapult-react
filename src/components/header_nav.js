@@ -31,7 +31,12 @@ class HeaderNav extends Component {
               <ul className="nav navbar-nav">
                 <li>
                     <Link to="/company/browse">Browse Companies<span className="sr-only">(current)</span></Link>
+							  </li>
+							
+								<li>
+                	<Link to="/market">Market Place</Link>
                 </li>
+
                 <li className="dropdown">
 									<a
 										className="dropdown-toggle"
@@ -55,10 +60,19 @@ class HeaderNav extends Component {
                 </li>
                 <li>
                 	<Link to="/investors">Investors</Link>
-                </li>
+								</li>
+								<li>
+                	<Link to="/partners">Partners</Link>
+								</li>
+
               </ul>
 
-              <ul className="nav navbar-nav navbar-right">
+							<ul className="nav navbar-nav navbar-right">
+								<li>
+									<a>
+										{isLogined && <Link to="/transaction-summary/trades">My Transactions</Link>}	
+									</a>	
+								</li>
                 <li>
                   <a>
                     {!isLogined && <Login />}

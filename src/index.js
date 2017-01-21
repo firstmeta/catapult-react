@@ -25,6 +25,7 @@ import Investors from './components/investors';
 import AboutUs from './components/aboutus';
 import Assets from './components/assets';
 import AssetOrder from './components/asset_order';
+import TransactionSummary from './components/tx_summary';
 import Settings from './components/settings';
 import WalletGenerateResult from './components/settings_wallet_generate_result';
 import PasswordReset from './components/account_pwd_reset';
@@ -57,6 +58,7 @@ render(
 				<Route path="/company/view/:randID" component={CompanyView} />
 				<Route path="/companies-campaigns-mine" component={CompaniesAndCampaignsMine} />
 				<Route path="/campaign/:campaignRandID/edit" component={CampaignCreate} />
+				<Route path="/transaction-summary/:urlRef" component={TransactionSummary} />	
 				<Route path="/investors" component={Investors} />
 				<Route path="/aboutus" component={AboutUs} />
 				<Route path="/policy" component={Policy} />

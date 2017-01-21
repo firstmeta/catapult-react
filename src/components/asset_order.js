@@ -9,7 +9,7 @@ import AssetOrderSuccess from './asset_order_success';
 import { FetchAllAssets, FetchAssetBalances } from '../actions/asset_action';
 import { OpenOrder } from '../actions/trading_action';
 import Alert from './global_alert';
-import InputModal from './asset_order_confirm_password';
+import InputModal from './input_modal';
 
 class AssetOrder extends Component {
 	
