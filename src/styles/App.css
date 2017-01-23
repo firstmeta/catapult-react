@@ -797,6 +797,54 @@ body:before {
 	text-align: justify
 }
 
+.market-open-orders {
+	margin-top: 80px;
+	margin-bottom: 60px;
+}
+.market-open-orders .img-circle {
+	border-radius: 50%;
+	height: 60px;
+	width: 60px;
+}
+.market-open-orders .market-company {
+	font-size: 13px;
+	background-color: #fff;
+	padding: 15px 15px;
+	border-radius: 5px;
+}
+.market-open-orders .market-company .title{
+	font-size: 17px;
+	font-weight: 300;
+	margin-bottom: 2px;
+}
+.market-open-orders .market-company p {
+	margin-bottom: 0px;
+}
+.market-open-orders table {
+	border: none !important;
+	font-size: 12px;
+}
+.market-open-orders .react-bs-table-container {
+	background-color: #fff;
+	border-radius: 5px;
+}
+.market-open-orders thead tr th {
+	border: none !important;
+}
+.market-open-orders tbody tr td {
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 1px solid #ddd;
+	background-color: #fff;
+}
+.market-open-orders table button {
+	max-height: 26px;
+	width: 90px;
+	font-size: 12px;
+	padding: 2px 6px;
+}
+
 .settings {
   margin-top: 80px;
   margin-bottom: 40px;

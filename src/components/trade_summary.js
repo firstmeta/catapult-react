@@ -48,7 +48,7 @@ class TradeSummary extends Component {
 			);
 			o.AssetAmount = order.AssetAmount;
 			o.MoneyCode = order.MoneyCode;
-			o.MoneyNet = numeral(order.MoneyNet).format('0,0');
+			o.MoneyNet = numeral(order.MoneyNet).format('0,0.00');
 			o.OrderStatus = (order.OrderStatus === 'BLKCONFIRMING' ? 'CONFIRMING' : order.OrderStatus);
 			o.CreatedOn = dateformat(order.CreatedOn, 'mmm d, yyyy HH:MM:ss');
 			
@@ -61,23 +61,28 @@ class TradeSummary extends Component {
 				);
 			}
 			if(order.OrderType === 'SELLASSET' && order.OrderStatus === 'DEALING') {
-				o.Btn = (
-					<button
-						className="btn btn-primary btn-yellow btn-yellow-primary"
-						onClick={() => {
-							self.setState({showModal: true});
-							self.props.AcceptBuyAssetOffer({orderid: order.OrderId});	
-						}}>
-         			SIGN & SEND  
-					</button>
-				)
+				if(order.IsCreator) {
+					o.Btn = (
+						<button
+								className="btn btn-primary btn-yellow btn-yellow-primary"
+								onClick={() => {
+									self.setState({showModal: true});
+									self.props.AcceptBuyAssetOffer({orderid: order.OrderId});	
+								}}>
+      		   			SIGN & SEND  
+							</button>
+					)
+				}
+				else {
+					o.Btn = <i>Wait for transfer...</i>
+				}
 			}
 			if(order.OrderStatus === 'BLKCONFIRMING') {
 				o.Btn = (
 					<a 
 						target="_blank" 
 						href={COLOREDCOINS_EXPLORER_URL + '/tx/' + order.BlockchainTxHash}>
-					<button
+						<button
 						className="btn btn-primary btn-blue btn-blue-primary">
          			EXPLORE  
 						</button>
@@ -89,16 +94,19 @@ class TradeSummary extends Component {
 	}
 
 	render() {
-		const { OpenOrders, DealingOrder, AssetTransferPrep, Wallet  } = this.props;
+		const { OpenOrders, DealingOrders, AssetTransferPrep, Wallet  } = this.props;
 
-    if (!OpenOrders || !OpenOrders.length > 0) {
+		if (!OpenOrders && !DealingOrders){ 
+			console.log('dealing orders')
+			console.log(DealingOrders)
       return (
         <div className="main-panel-spinner">
           <Spinner />
         </div>
       );
     }
-
+		console.log('dealing orders');
+		console.log(DealingOrders);
     return (
       <div className="trade-summary">
 				<div className="container-fluid">
@@ -137,7 +145,7 @@ class TradeSummary extends Component {
 						}}
 					/>
 
-					{DealingOrder && DealingOrder.length > 0 &&
+					{DealingOrders && DealingOrders.length > 0 &&
 							(<div>
 					<div className="row">
 						<div className="col-md-10 col-md-offset-1">
@@ -150,13 +158,13 @@ class TradeSummary extends Component {
 
 
 								<BootstrapTable 
-									data={this.formatOrders(DealingOrder)} 
+									data={this.formatOrders(DealingOrders)} 
 									striped={true} hover={true} 
 									className="table" 
 									pagination={true} 
 									options={{sizePerPage: 5}}
 									tableStyle={{border: 'none'}}>
-                  <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
+                  <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">OrderId</TableHeaderColumn>
                   <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
                   <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
                   <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
@@ -173,7 +181,9 @@ class TradeSummary extends Component {
 					</div>
 				</div>
 					)}
-
+					
+					{OpenOrders && OpenOrders.length > 0 &&
+							(<div>
 					<div className="row">
 						<div className="col-md-10 col-md-offset-1">
 							<h4>OPENED ORDERS</h4>	
@@ -203,7 +213,8 @@ class TradeSummary extends Component {
                 </BootstrapTable>
               </div>
             </div>
-          </div>
+					</div>
+				</div>)}
         </div>
       </div>
     )
@@ -214,7 +225,7 @@ class TradeSummary extends Component {
 function mapStateToProps(state) {
 	return {
 		OpenOrders: state.TradingState.AllMyOpenOrders,
-		DealingOrder: state.TradingState.AllMyDealingOrders,
+		DealingOrders: state.TradingState.AllMyDealingOrders,
 		AssetTransferPrep: state.TradingState.OrderAssetTransferPrep,
     Wallet: state.WalletState.wallet
 	}

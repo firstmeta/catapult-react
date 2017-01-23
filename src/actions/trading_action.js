@@ -15,6 +15,8 @@ export const OPEN_ORDER_FAILURE = 'OPEN_ORDER_FAILURE';
 export const MY_OPEN_ORDER = 'MY_OPEN_ORDER';
 export const MY_DEALING_ORDER = 'MY_DEALING_ORDER';
 export const ORDER_ASSET_TRANSFER_PREP = 'ORDER_ASSET_TRANSFER_PREP';
+export const ALL_OPEN_SELL_ORDERS = 'ALL_OPEN_SELL_ORDERS';
+export const ALL_OPEN_BUY_ORDERS = 'ALL_OPEN_BUY_ORDERS';
 
 export function OpenOrder({type, assetCode, amount, price, total, moneyCode, pwd}) {
 	var params = {
@@ -57,7 +59,39 @@ export function OpenOrder({type, assetCode, amount, price, total, moneyCode, pwd
 		})
 	}
 }
+export function MakeBuyAssetOffer({orderid, pwd}) {
+	var params = {
+		orderid: orderid,
+		password: pwd
+	}
 
+	var req = request
+		.post(`${ROOT_URL}/api/secure/trading/makebuyassetoffer`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send(params);
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200) {
+				dispatch(AlertGlobal({
+					type: ALERT_SUCCESS,
+					content: res.body.Message
+				}));
+				dispatch(push('transaction-summary/trades'))
+
+			}
+			else {
+				dispatch(AlertGlobal({
+					type: ALERT_ERROR,
+					content: res.body.Message
+				}));
+			}
+		})
+	}
+
+}
 export function AcceptBuyAssetOffer({orderid}){
 	var params = {
 		order_id: orderid
@@ -193,6 +227,31 @@ export function FetchAllMyDealingOrder() {
 					content: data,
 					type: ALERT_ERROR
 				}))	
+			}
+		})
+	}
+}
+
+export function FetchAllOpenOrders(assetCode, orderType) {
+	var req = request
+		.post(`${ROOT_URL}/api/trading/fetchallopenorders`)
+    .set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send({asset_code: assetCode,  order_type: orderType})
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200) {
+				dispatch({
+					type: (orderType == 'sell' ?  ALL_OPEN_SELL_ORDERS : ALL_OPEN_BUY_ORDERS),
+					data: res.body
+				})
+			}
+			else {
+				dispatch(AlertGlobal({
+					content: res.body.Message,
+					type: ALERT_ERROR
+				}))
 			}
 		})
 	}
