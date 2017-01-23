@@ -137,6 +137,17 @@ export function FetchCompanyByRandID(randID) {
     })
   }
 }
+export function FetchCompanyByAssetCode(assetCode) {
+  var req = request
+              .get(`${ROOT_URL}/api/company/fetch_by_asset_code/${assetCode}`)
+              .accept('application/json');
+
+  return dispatch => {
+    return req.end((err, res) => {
+      dispatch(fetchCompanyResult(res.body));
+    })
+  }
+}
 
 export function SaveCompanyBasics(content) {
   var req = request
