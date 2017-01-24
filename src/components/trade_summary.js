@@ -147,74 +147,73 @@ class TradeSummary extends Component {
 
 					{DealingOrders && DealingOrders.length > 0 &&
 							(<div>
-					<div className="row">
-						<div className="col-md-10 col-md-offset-1">
-							<h4>DEALING ORDERS</h4>	
-						</div>
-					</div>
-					<div className="row">
-            <div className="col-md-10 col-md-offset-1">
-              <div>
+								<div className="row">
+									<div className="col-md-10 col-md-offset-1">
+										<h4>DEALING ORDERS</h4>	
+									</div>
+								</div>
+								<div className="row">
+        			    <div className="col-md-10 col-md-offset-1">
+        			      <div>
 
 
-								<BootstrapTable 
-									data={this.formatOrders(DealingOrders)} 
-									striped={true} hover={true} 
-									className="table" 
-									pagination={true} 
-									options={{sizePerPage: 5}}
-									tableStyle={{border: 'none'}}>
-                  <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">OrderId</TableHeaderColumn>
-                  <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
-                  <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
-                  <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
-                  <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
-                  <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
-                  <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
-									<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
-									<TableHeaderColumn 
-										dataField="Btn"
-										width="100"></TableHeaderColumn>
-                </BootstrapTable>
-              </div>
-            </div>
-					</div>
-				</div>
-					)}
-					
+											<BootstrapTable 
+												data={this.formatOrders(DealingOrders)} 
+												striped={true} hover={true} 
+												className="table" 
+												pagination={true} 
+												options={{sizePerPage: 5}}
+												tableStyle={{border: 'none'}}>
+        			          <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">OrderId</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
+												<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
+												<TableHeaderColumn 
+													dataField="Btn"
+													width="100"></TableHeaderColumn>
+        			        </BootstrapTable>
+        			      </div>
+        			    </div>
+								</div>
+							</div>)}
+
+					<br /> 
+
 					{OpenOrders && OpenOrders.length > 0 &&
-							(<div>
-					<div className="row">
-						<div className="col-md-10 col-md-offset-1">
-							<h4>OPENED ORDERS</h4>	
+						(<div>
+							<div className="row">
+								<div className="col-md-10 col-md-offset-1">
+									<h4>OPENED ORDERS</h4>	
+								</div>
+							</div>
+        		  <div className="row">
+        		    <div className="col-md-10 col-md-offset-1">
+        		      <div>
+										<BootstrapTable 
+											data={this.formatOrders(OpenOrders)} 
+											striped={true} hover={true} 
+											className="table" 
+											pagination={true} 
+											options={{sizePerPage: 5}}
+											tableStyle={{border: 'none'}}>
+        		          <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
+											<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
+											<TableHeaderColumn dataField="Cancel" width="100"></TableHeaderColumn>
+									</BootstrapTable>
+        		     </div>
+        		   </div>
 						</div>
-					</div>
-          <div className="row">
-            <div className="col-md-10 col-md-offset-1">
-              <div>
-
-
-								<BootstrapTable 
-									data={this.formatOrders(OpenOrders)} 
-									striped={true} hover={true} 
-									className="table" 
-									pagination={true} 
-									options={{sizePerPage: 5}}
-									tableStyle={{border: 'none'}}>
-                  <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
-                  <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
-                  <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
-                  <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
-                  <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
-                  <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
-                  <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
-									<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
-									<TableHeaderColumn dataField="Cancel" width="100"></TableHeaderColumn>
-                </BootstrapTable>
-              </div>
-            </div>
-					</div>
-				</div>)}
+					</div>)}
         </div>
       </div>
     )

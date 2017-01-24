@@ -111,9 +111,8 @@ class MarketOpenOrders extends Component {
 				<div className="container-fluid">
 					<Alert />
 					<div className="row">
-						<div className="col-md-10 col-md-offset-1">
-							<div className="row">
-								<div className="col-md-6 market-company">
+						<div className="col-md-6">
+							<div className="market-company">
 									<div className="row">
 										<div className="col-sm-3">
 											<center>
@@ -134,13 +133,11 @@ class MarketOpenOrders extends Component {
 									</div>		
 								</div>
 								<div className="col-md-6">
-								
 								</div>
-
-							</div>
 						</div>
 					</div>
 					<br /><br />
+					
 					<div className="row">
 						<div className="col-md-6">
 							<div className="row row-centered">
@@ -158,7 +155,7 @@ class MarketOpenOrders extends Component {
 										pagination={true} 
 										options={{sizePerPage: 5}}
 										tableStyle={{border: 'none'}}>
-              		    <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="100px"></TableHeaderColumn>
+              		    <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="50px"></TableHeaderColumn>
               		  <TableHeaderColumn dataField="AssetAmount" dataAlign="center" dataSort={true} width="55px">Amount</TableHeaderColumn>
               		  <TableHeaderColumn dataField="Price" width="55px">Price</TableHeaderColumn>
               		  <TableHeaderColumn dataField="MoneyTotal" width="55px">Total $</TableHeaderColumn>
@@ -167,7 +164,9 @@ class MarketOpenOrders extends Component {
 												width="100"></TableHeaderColumn>
 									</BootstrapTable>
 									:
-									<div><br /><center><i>No order yet...</i></center></div>
+									<div className="no-order">
+										<br /><center><i>No order yet...</i></center>
+									</div>
 
 							}
 							
@@ -187,9 +186,9 @@ class MarketOpenOrders extends Component {
 										pagination={true} 
 										options={{sizePerPage: 5}}
 										tableStyle={{border: 'none'}}>
-              		    <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="100px"></TableHeaderColumn>
-              		  <TableHeaderColumn dataField="AssetAmount" dataAlign="center" dataSort={true} width="55px">Amount</TableHeaderColumn>
-              		  <TableHeaderColumn dataField="Price" width="55px">Price</TableHeaderColumn>
+              		    <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="50px"></TableHeaderColumn>
+              		  <TableHeaderColumn dataField="AssetAmount" dataAlign="center" width="55px">Amount</TableHeaderColumn>
+              		  <TableHeaderColumn dataField="Price" width="45px">Price</TableHeaderColumn>
               		  <TableHeaderColumn dataField="MoneyTotal" width="55px">Total $</TableHeaderColumn>
 										<TableHeaderColumn 
 												dataField="Btn"
