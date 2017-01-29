@@ -19,6 +19,7 @@ export const COMPANY_SUBMIT_REVIEW_FAILURE = 'COMPANY_SUBMIT_REVIEW_FAILURE';
 export const FETCH_COMPANY = 'FETCH_COMPANY';
 export const FETCH_ALL_ACTIVE_COMPANIES = 'FETCH_ALL_COMPANIES';
 export const FETCH_ALL_MY_COMPANIES = 'FETCH_ALL_MY_COMPANIES';
+export const ALL_LISTING_COMPANIES = 'ALL_LISTING_COMPANIES';
 
 function startCompanySuccess(company) {
   return {
@@ -305,4 +306,27 @@ export function FetchAllMyCompanies() {
       dispatch(fetchAllMyCompaniesResult(res.body));
     })
   }
+}
+
+export function FetchAllListingCompanies() {
+	var req = request
+		.get(`${ROOT_URL}/api/company/fetch_all_listing_companies`)
+		.accept('application/json');
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200) {
+				dispatch({
+					type: ALL_LISTING_COMPANIES,
+					data: res.body
+				})
+			}
+			else {
+				dispatch(AlertGlobal({
+					type: ALERT_ERROR,
+					content: res.body.Message
+				}))
+			}
+		})
+	}
 }
