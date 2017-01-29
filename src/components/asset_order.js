@@ -173,7 +173,7 @@ class AssetOrder extends Component {
 								}	
 								{
 									ext === 'success' &&
-										<Link to={"/mytransaction/trade"}>
+										<Link to={"/transaction-summary/trades"}>
               	 			<button
 												className="
 												btn btn-primary btn-light-green 
