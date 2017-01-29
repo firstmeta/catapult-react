@@ -97,16 +97,12 @@ class TradeSummary extends Component {
 		const { OpenOrders, DealingOrders, AssetTransferPrep, Wallet  } = this.props;
 
 		if (!OpenOrders && !DealingOrders){ 
-			console.log('dealing orders')
-			console.log(DealingOrders)
       return (
         <div className="main-panel-spinner">
           <Spinner />
         </div>
       );
     }
-		console.log('dealing orders');
-		console.log(DealingOrders);
     return (
       <div className="trade-summary">
 				<div className="container-fluid">
