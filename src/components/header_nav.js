@@ -34,7 +34,7 @@ class HeaderNav extends Component {
 							  </li>
 							
 								<li>
-                	<Link to="/market">Market Place</Link>
+									<Link to="/market/companylisting">Market Place</Link>
                 </li>
 
                 <li className="dropdown">
