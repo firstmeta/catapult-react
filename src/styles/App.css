@@ -882,6 +882,47 @@ body:before {
 	margin-top: 5px;
 }
 
+.market-company-listing {
+	margin-top: 80px;
+	margin-bottom: 60px;
+}
+.market-company-listing .img-circle {
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+}
+.market-company-listing table {
+	border: none !important;
+	font-size: 12px;
+}
+.market-company-listing .react-bs-table-container {
+	background-color: #fff;
+	border-radius: 5px;
+	padding-top: 15px;
+}
+.market-company-listing thead tr th {
+	border: none !important;
+	text-align: center !important;
+}
+.market-company-listing tbody tr td {
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 1px solid #ddd;
+	background-color: #fff;
+	text-align: center !important;
+}
+.market-company-listing table button {
+	max-height: 26px;
+	width: 90px;
+	font-size: 12px;
+	padding: 2px 6px;
+}
+.market-company-listing .company-name {
+	text-align: left;
+}
+
+
 .settings {
   margin-top: 80px;
   margin-bottom: 40px;
