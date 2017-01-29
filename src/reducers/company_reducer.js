@@ -2,14 +2,16 @@ import {
   COMPANY_START_SUCCESS,
   FETCH_COMPANY, FETCH_ALL_ACTIVE_COMPANIES, FETCH_ALL_MY_COMPANIES,
   COMPANY_SAVE_BASICS_SUCCESS, COMPANY_SAVE_BASICS_FAILURE,
-  COMPANY_SAVE_OVERVIEW_SUCCESS
+	COMPANY_SAVE_OVERVIEW_SUCCESS,
+	ALL_LISTING_COMPANIES
 } from '../actions/company_action';
 
 export default function(state = {
   msg: '',
   companyDetails: '',
   allCompanies: '',
-  allMyCompanies: ''
+	allMyCompanies: '',
+	allListingCompanies: ''
 }, action) {
   switch (action.type) {
     case COMPANY_START_SUCCESS:
@@ -40,7 +42,11 @@ export default function(state = {
       return Object.assign({}, state, {
         msg: action.msg,
         companyDetails: ''
-      });
+			});
+		case ALL_LISTING_COMPANIES: 
+			return Object.assign({}, state, {
+				allListingCompanies: action.data
+			})
     default:
       return state;
   }
