@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import AssetSummary from './asset_summary';
 import TradeSummary from './trade_summary';
+import { FetchWallet } from '../actions/wallet_action';
+import { FetchAssetBalances } from '../actions/asset_action';
+
 import Spinner from './spinner';
 
 class TransactionSummary extends Component {
 	constructor(props) {
 		super(props);
 	}
+	
+	componentWillMount() {
+    if(!this.props.walletFetched) {
+      this.props.FetchWallet();
+    }
+    this.props.FetchAssetBalances();
+  }
 
 	render() {
     const { urlRef } = this.props;
@@ -41,6 +52,7 @@ class TransactionSummary extends Component {
 				</div>
 
 				{urlRef === 'trades' && <TradeSummary />}
+        {urlRef === 'assets' && <AssetSummary />}
 			</div>
 		)
 	}
@@ -51,4 +63,11 @@ function mapStateToProps(state) {
 		urlRef: state.router.params.urlRef
 	}
 }
-export default connect(mapStateToProps)(TransactionSummary);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    FetchWallet: FetchWallet,
+    FetchAssetBalances: FetchAssetBalances
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionSummary);
