@@ -798,6 +798,7 @@ body:before {
 	border-left: none !important;
 	border-right: none !important;
 	border-bottom: 1px solid #ddd;
+	padding: 8px 4px !important;
 }
 .tx-summary table button {
 	max-height: 26px;
@@ -920,6 +921,13 @@ body:before {
 }
 .market-company-listing .company-name {
 	text-align: left;
+}
+
+.finance-summary {
+	margin-bottom: 60px;
+}
+.finance-summary .font-small{
+	font-size: 11px;
 }
 
 

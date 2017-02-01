@@ -9,6 +9,7 @@ import AdminState from './admin_reducer';
 import AssetState from './asset_reducer';
 import WalletState from './wallet_reducer';
 import TradingState from './trading_reducer';
+import FinanceState from './finance_reducer';
 
 const rootReducer = combineReducers({
 	router: routerStateReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
 	AdminState: AdminState,
 	AssetState: AssetState,
 	WalletState: WalletState,
-	TradingState: TradingState
+	TradingState: TradingState,
+	FinanceState: FinanceState
 });
 
 export default rootReducer;

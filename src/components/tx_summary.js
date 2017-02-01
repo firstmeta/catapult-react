@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import AssetSummary from './asset_summary';
 import TradeSummary from './trade_summary';
+import FinanceSummary from './finance_summary';
 import { FetchWallet } from '../actions/wallet_action';
 import { FetchAssetBalances } from '../actions/asset_action';
 
@@ -42,7 +43,7 @@ class TransactionSummary extends Component {
                 </li>
                 <li
 									role="presentation"
-                  className={(urlRef === 'transfer') ? "active" : ""}>
+                  className={(urlRef === 'finance') ? "active" : ""}>
                   <Link to="/transaction-summary/finance">Finance</Link>
                 </li>
               </ul>
@@ -52,7 +53,8 @@ class TransactionSummary extends Component {
 				</div>
 
 				{urlRef === 'trades' && <TradeSummary />}
-        {urlRef === 'assets' && <AssetSummary />}
+				{urlRef === 'assets' && <AssetSummary />}
+				{urlRef === 'finance' && <FinanceSummary />}
 			</div>
 		)
 	}
