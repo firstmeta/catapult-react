@@ -782,9 +782,12 @@ body:before {
 	margin-top: 80px;
   margin-bottom: 40px;
 }
+.tx-summary h1 {
+	margin-bottom: 0px;
+}
 .tx-summary .header {
   border-bottom: 1px solid #dcdedd;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 .tx-summary table {
 	border: none !important;
@@ -792,6 +795,7 @@ body:before {
 }
 .tx-summary thead tr th {
 	border: none !important;
+	text-align: center !important;
 }
 .tx-summary tbody tr td {
 	border-top: none !important;
@@ -799,6 +803,7 @@ body:before {
 	border-right: none !important;
 	border-bottom: 1px solid #ddd;
 	padding: 8px 4px !important;
+	text-align: center !important;
 }
 .tx-summary table button {
 	max-height: 26px;
@@ -818,6 +823,41 @@ body:before {
 }
 .tx-summary-input-modal .msg {
 	text-align: justify
+}
+.tx-summary .panel {
+  width: 300px;
+  margin-top: 30px;
+  margin-right: 10px;
+}
+.tx-summary .panel .panel-body {
+	height: 105px;
+	overflow-y: scroll;
+}
+.tx-summary .panel .panel-heading {
+  font-size: 16px;
+  font-weight: 500;
+}
+.tx-summary .balance-container {
+	display:flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin-bottom: 20px;
+}
+.tx-summary .balances {
+	align-self: auto;
+	height: 100%;
+}
+.tx-summary .panel .row {
+  margin-bottom: 5px;
+}
+.tx-summary ::-webkit-scrollbar {
+	width: 3px;
+}
+.tx-summary ::-webkit-scrollbar-track {
+   background-color: #f5f5f5;
+}
+.tx-summary ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); 
 }
 
 .market-open-orders {
@@ -929,7 +969,18 @@ body:before {
 .finance-summary .font-small{
 	font-size: 11px;
 }
-
+.finance-summary thead tr th {
+	border-bottom: 1px solid #a0a0a0 !important;
+	margin-bottom: 10px;
+}
+.finance-summary .status-success {
+	color: #0aca40;
+	font-size: 18px;
+}
+.finance-summary .status-fail {
+	color: #de420f;
+	font-size: 18px;
+}
 
 .settings {
   margin-top: 80px;

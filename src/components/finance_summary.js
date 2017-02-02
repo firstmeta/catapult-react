@@ -24,24 +24,39 @@ class FinanceSummary extends Component {
 			t.TxId = tx.TxId;
 			t.MoneyCode = tx.AssetMoneyCode;
 			if (tx.TxType === 'MAKEORDEROFFERIPG'){
-				t.Type = 'BUY OFFER';
-				t.AmountHold = tx.AmountGross;
+				t.Action = (
+					<div>
+						<p>BUY OFFER</p>
+						{
+							tx.TxStatus === 'SUCCESSFUL' ? 
+								<center><span className="fa fa-check status-success" ></span></center>
+								:
+								<center><span className="fa fa-close status-fail" ></span></center>
+						}
+					</div>
+				);
+				t.AmountHold = (tx.TxStatus === 'SUCCESSFUL' ? tx.AmountGross : '');
 				t.Details = (
 					<div>
 						<p>
 							<span>Make buy offer for order: </span> <br />
 							<span><strong>{tx.OrderId}</strong></span> 
 						</p>
-						<span>{tx.IpgName}:</span> <br />
-						<span className="font-small"><strong>{tx.IpgTxid}</strong></span> <br />
+						{
+							tx.TxStatus === 'SUCCESSFUL' &&
+								<div>
+									<span>{tx.IpgName}:</span> <br />
+									<span className="font-small"><strong>{tx.IpgTxid}</strong></span> <br />
+								</div>	
+						}
 					</div>
 				)
 			}
 			else if(tx.TxType === 'FILLORDERBUYER') {
-				t.Type = (
+				t.Action = (
 					<div>
 						<p>BUY FILLED</p>
-						<center><span className="fa fa-check" style={{"color": "#91e2a8"}}></span></center>
+						<center><span className="fa fa-check status-success"></span></center>
 					</div>
 				);
 				t.Debit = numeral(-(+tx.AmountGross)).format('0,0.00');
@@ -50,18 +65,29 @@ class FinanceSummary extends Component {
 						<p><span>Order filled: <br /> <strong>{tx.OrderId} </strong></span></p>
 						<span>Fund released to seller.</span>
 					</div>
-				)	
+				);	
 			}
 			else if(tx.TxType === 'FILLORDERSELLER') {
-				t.Type = 'SELL FILLED';
+				t.Action = (
+					<div>
+						<p>SELL FILLED</p>
+						<center><span className="fa fa-check status-success" ></span></center>
+					</div>
+				);
 				t.Credit = numeral(+tx.AmountGross).format('0,0.00');
+				t.Details = (
+					<div>
+						<p><span>Order filled: <br /> <strong>{tx.OrderId} </strong></span></p>
+						<span>Fund credited to your account.</span>
+					</div>
+				);
 			}
 			else if(tx.TxType === 'DEPOSIT'){
-				t.Type = 'DEPOSIT';
+				t.Action = 'DEPOSIT';
 				t.Credit = numeral(+tx.AmountNet).format('0,0.00');
 			}
 			else if(tx.TxType === 'WITHDRAW') {
-				t.Type = 'WITHDRAW';
+				t.Action = 'WITHDRAW';
 				t.Debit = numeral(-(+tx.AmountGross)).format('0,0.00');
 			}
 			t.Timestamp = (
@@ -85,7 +111,7 @@ class FinanceSummary extends Component {
 		if (!MyFinanceTXs) {
 			return (
 				<div className="finance-summary">
-					<Spinner />	
+					<center><Spinner /></center>
 				</div>
 			)
 		}
@@ -107,7 +133,7 @@ class FinanceSummary extends Component {
 									tableStyle={{border: 'none'}}>
                   <TableHeaderColumn dataField="TxId" isKey={true} dataAlign="center" dataSort={true} width="130px">TxId</TableHeaderColumn>
                   <TableHeaderColumn dataField="Details" width="200px">Details</TableHeaderColumn>
-                  <TableHeaderColumn dataField="Type" width="100px">Type</TableHeaderColumn>
+									<TableHeaderColumn dataField="Action" width="100px">Action/Status</TableHeaderColumn>
                   <TableHeaderColumn dataField="MoneyCode" width="42px">$</TableHeaderColumn>
                   <TableHeaderColumn dataField="Credit" width="70px">Credit</TableHeaderColumn>
                   <TableHeaderColumn dataField="Debit" width="70px">Debit</TableHeaderColumn>
