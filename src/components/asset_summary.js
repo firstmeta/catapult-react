@@ -124,19 +124,6 @@ class AssetSummary extends Component {
             <div className="col-md-10 col-md-offset-1">
               <div className="asset-summary">
 
-                {
-                  this.props.Balances &&
-                  <div className="balances">
-                    <div className="panel panel-default">
-                      <div className="panel-heading">
-                        Asset Balances
-                      </div>
-                      <div className="panel-body">
-                        {this.renderBalances()}
-                      </div>
-                    </div>
-                  </div>
-                }
 
 
                 <BootstrapTable data={formattedTXs} striped={true} hover={true} className="table" pagination={true}>
@@ -160,7 +147,6 @@ class AssetSummary extends Component {
 function mapStateToProps(state) {
   return {
     wallet: state.WalletState.wallet,
-    Balances: state.AssetState.AssetBalances,
     TXs: state.AssetState.AssetTXs
   }
 }
