@@ -38,3 +38,5 @@ dist
 # Vim swap files
 *.swp
 *.swo
+
+tags
