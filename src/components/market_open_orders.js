@@ -12,6 +12,10 @@ import { ROOT_IMAGE_URL } from '../config';
 import { CountryMap } from './countries';
 import { FetchAllOpenOrders, MakeBuyAssetOffer } from '../actions/trading_action';
 import { FetchCompanyByAssetCode } from '../actions/company_action';
+import { FetchWallet } from '../actions/wallet_action';
+import {
+	SignAndTransferTokenForOrder
+} from '../actions/trading_action';
 
 class MarketOpenOrders extends Component {
 	constructor(props){
@@ -19,13 +23,22 @@ class MarketOpenOrders extends Component {
 
 		this.formatOrders = this.formatOrders.bind(this);
 		
-		this.state = { showModal: false, pwd: '', selectedOrderId: '' };
+		this.state = { 
+			showModal: false, 
+			pwd: '', 
+			selectedOrderId: '', 
+			selectedOrderType: '' 
+		};
 	}
 
 	componentWillMount() {
 		this.props.FetchCompany(this.props.AssetCode);
 		this.props.FetchAllOpenOrders(this.props.AssetCode, 'sell');
 		this.props.FetchAllOpenOrders(this.props.AssetCode, 'buy');
+		if(!this.props.Wallet.ID) {
+      this.props.FetchWallet();
+    }
+
 	}
 
 	formatOrders(orders) {
@@ -41,7 +54,11 @@ class MarketOpenOrders extends Component {
 					<button
 						className="btn btn-primary btn-light-green btn-light-green-primary"
 						onClick={() => {
-							self.setState({selectedOrderId: order.OrderId, showModal: true})
+							self.setState({
+								selectedOrderId: order.OrderId,
+								selectedOrderType: 'sell',
+								showModal: true
+							})
 						}}>
          		BUY  
 					</button>
@@ -52,9 +69,13 @@ class MarketOpenOrders extends Component {
 					<button
 						className="btn btn-primary btn-blue btn-blue-primary"
 						onClick={() => {
-							self.setState({selectedOrderId: order.OrderId, showModal: true})
+							self.setState({
+								selectedOrderId: order.OrderId, 
+								selectedOrderType: 'buy',
+								showModal: true
+							})
 						}}>
-         		BUY  
+         		SELL  
 					</button>
 				) 
 			}
@@ -64,7 +85,7 @@ class MarketOpenOrders extends Component {
 	}
 
 	render() {
-		const { Company, SellOrders, BuyOrders } = this.props;
+		const { Company, SellOrders, BuyOrders, Wallet } = this.props;
 		
 		if(!SellOrders && !BuyOrders) {
 			return (
@@ -91,10 +112,20 @@ class MarketOpenOrders extends Component {
         </div>
 				
 				<InputModal
-					title="Asset Transfer Signing"
-					msg="You are about to sign and transfer your asset. 
-					Please make sure the details is correct."
-					inputLabel="Please enter your decryption password to proceed."
+					title={
+						this.state.selectedOrderType === 'sell' ? 
+							'Payment' :  'Asset Transfer Signing'
+					}
+					msg={
+						this.state.selectedOrderType === 'sell' ? 
+							"You are about to make payment for this order. Please make sure the details are correct."
+							: "You are about to sign and transfer your asset. Please make sure the details are correct." 
+					}
+					inputLabel={
+						this.state.selectedOrderType === 'sell' ? 
+							<span>Please enter your <strong><i>login</i></strong> password to proceed.</span>
+							: <span>Please enter your <strong><i>decryption</i></strong> password to proceed.</span>
+					}
 					value={this.state.pwd}
 					inputCapture={pwd => this.setState({pwd: pwd})}
 					show={this.state.showModal} 
@@ -102,9 +133,19 @@ class MarketOpenOrders extends Component {
 					close={() => this.setState({showModal: false})}
 					styleName={'tx-summary-input-modal'}
 					btnFun={() => {
-						this.props.MakeBuyAssetOffer({
-							orderid: this.state.selectedOrderId, 
-							pwd:this.state.pwd});
+						if (this.state.selectedOrderType === 'sell'){
+							this.props.MakeBuyAssetOffer({
+								orderid: this.state.selectedOrderId, 
+								pwd:this.state.pwd
+							});
+						}
+						else {
+							this.props.SignAndTransferToken({
+								orderid: this.state.selectedOrderId, 
+								wallet: Wallet, 
+								pwd: this.state.pwd
+							});
+						}
 					}}
 				/>
 				<br /><br />
@@ -246,7 +287,8 @@ function mapStateToProps(state) {
 		AssetCode: state.router.params.assetCode,
 		SellOrders: state.TradingState.AllOpenSellOrders,
 		BuyOrders: state.TradingState.AllOpenBuyOrders,
-    Company: state.CompanyState.companyDetails
+    Company: state.CompanyState.companyDetails,
+    Wallet: state.WalletState.wallet
 	}
 }
 
@@ -254,7 +296,9 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
 		FetchAllOpenOrders: FetchAllOpenOrders,
 		MakeBuyAssetOffer: MakeBuyAssetOffer,
-		FetchCompany: FetchCompanyByAssetCode
+		FetchCompany: FetchCompanyByAssetCode,
+		SignAndTransferToken: SignAndTransferTokenForOrder,
+		FetchWallet: FetchWallet
 	}, dispatch);
 }
 
