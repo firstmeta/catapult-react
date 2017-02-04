@@ -11,10 +11,9 @@ import Alert from './global_alert';
 import { COLOREDCOINS_EXPLORER_URL } from '../config';
 import { FetchWallet } from '../actions/wallet_action';
 import {
-	AcceptBuyAssetOffer,
 	FetchAllMyOpenOrder, 
 	FetchAllMyDealingOrder ,
-	TransferTokenForAssetOrder
+	SignAndTransferTokenForOrder
 } from '../actions/trading_action';
 
 class TradeSummary extends Component {
@@ -23,7 +22,7 @@ class TradeSummary extends Component {
 
 		this.formatOrders = this.formatOrders.bind(this);
 
-		this.state = { showModal: false, showModalSpinner: true, pwd: '' };
+		this.state = { showModal: false, showModalSpinner: false, pwd: '', selectedOrderId: '' };
 	}
 
 	componentWillMount() {
@@ -50,8 +49,10 @@ class TradeSummary extends Component {
 			o.MoneyCode = order.MoneyCode;
 			o.MoneyNet = numeral(order.MoneyNet).format('0,0.00');
 			o.OrderStatus = (order.OrderStatus === 'BLKCONFIRMING' ? 'CONFIRMING' : order.OrderStatus);
-			o.CreatedOn = dateformat(order.CreatedOn, 'mmm d, yyyy HH:MM:ss');
-			
+
+			if (order.LastUpdatedOn) {
+				o.LastUpdatedOn = dateformat(order.DealingOn, 'mmm d, yyyy HH:MM:ss');
+			}
 			if (order.OrderStatus === 'OPENED') {
 				o.Cancel = (
 					<button
@@ -59,6 +60,7 @@ class TradeSummary extends Component {
          		CANCEL  
 					</button>
 				);
+				o.CreatedOn = dateformat(order.CreatedOn, 'mmm d, yyyy HH:MM:ss');
 			}
 			if(order.OrderType === 'SELLASSET' && order.OrderStatus === 'DEALING') {
 				if(order.IsCreator) {
@@ -66,8 +68,7 @@ class TradeSummary extends Component {
 						<button
 								className="btn btn-primary btn-yellow btn-yellow-primary"
 								onClick={() => {
-									self.setState({showModal: true});
-									self.props.AcceptBuyAssetOffer({orderid: order.OrderId});	
+									self.setState({showModal: true, selectedOrderId: order.OrderId});
 								}}>
       		   			SIGN & SEND  
 							</button>
@@ -94,7 +95,7 @@ class TradeSummary extends Component {
 	}
 
 	render() {
-		const { OpenOrders, DealingOrders, AssetTransferPrep, Wallet  } = this.props;
+		const { OpenOrders, DealingOrders, Wallet  } = this.props;
 
 		if (!OpenOrders && !DealingOrders){ 
       return (
@@ -115,29 +116,16 @@ class TradeSummary extends Component {
 						value={this.state.pwd}
 						inputCapture={pwd => this.setState({pwd: pwd})}
 						show={this.state.showModal} 
-						showSpinner={AssetTransferPrep ? false : true}
+						showSpinner={this.state.showModalSpinner}
 						close={() => this.setState({showModal: false})}
 						styleName={'tx-summary-input-modal'}
 						btnFun={() => {
-							var t = AssetTransferPrep;
-							this.props.TransferToken({
-								wallet: Wallet,
-								orderid: t.order_id,
-								amount: t.amount,
-								assetCode: t.asset_code,
-								assetId: t.asset_id,
-								blockchainAssetId: t.blockchain_asset_id,
-								fromAddr: t.from_addr,
-								fromAddrId: t.from_addr_id,
-								fromAddrRandId: t.from_addr_rand_id,
-								unsignedTxHex: t.prepared_tx,
-								coloredOutputIndexes: t.colored_output_indexes,
-								toAddr: t.to_addr,
-								toAddrId: t.to_addr_id,
-								toAddrRandId: t.to_addr_rand_id,
-								fundingAddrRandId: t.funding_addr_rand_id,
+							this.setState({showModalSpinner: true});
+							this.props.SignAndTransferToken({
+								orderid: this.state.selectedOrderId, 
+								wallet: Wallet, 
 								pwd: this.state.pwd
-							})
+							});
 						}}
 					/>
 
@@ -167,7 +155,7 @@ class TradeSummary extends Component {
         			          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
         			          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
         			          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
-												<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
+												<TableHeaderColumn dataField="LastUpdatedOn" width="125px">Last Update</TableHeaderColumn>
 												<TableHeaderColumn 
 													dataField="Btn"
 													width="100"></TableHeaderColumn>
@@ -227,11 +215,31 @@ function mapStateToProps(state) {
 } 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		AcceptBuyAssetOffer: AcceptBuyAssetOffer,
 		FetchAllMyOpenOrder: FetchAllMyOpenOrder,
 		FetchAllMyDealingOrder: FetchAllMyDealingOrder,
-		TransferToken: TransferTokenForAssetOrder,
+		SignAndTransferToken: SignAndTransferTokenForOrder,
 		FetchWallet: FetchWallet
 	}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TradeSummary);
+
+//self.props.AcceptBuyAssetOffer({orderid: order.OrderId});	
+//var t = AssetTransferPrep;
+//							this.props.TransferToken({
+//								wallet: Wallet,
+//								orderid: t.order_id,
+//								amount: t.amount,
+//								assetCode: t.asset_code,
+//								assetId: t.asset_id,
+//								blockchainAssetId: t.blockchain_asset_id,
+//								fromAddr: t.from_addr,
+//								fromAddrId: t.from_addr_id,
+//								fromAddrRandId: t.from_addr_rand_id,
+//								unsignedTxHex: t.prepared_tx,
+//								coloredOutputIndexes: t.colored_output_indexes,
+//								toAddr: t.to_addr,
+//								toAddrId: t.to_addr_id,
+//								toAddrRandId: t.to_addr_rand_id,
+//								fundingAddrRandId: t.funding_addr_rand_id,
+//								pwd: this.state.pwd
+

@@ -79,7 +79,7 @@ export function MakeBuyAssetOffer({orderid, pwd}) {
 					type: ALERT_SUCCESS,
 					content: res.body.Message
 				}));
-				dispatch(push('transaction-summary/trades'))
+				dispatch(push('/transaction-summary/trades'))
 
 			}
 			else {
@@ -176,10 +176,87 @@ export function TransferTokenForAssetOrder({
 
 			}
 		})
-	}
-
-
+	};
 }
+
+export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
+	var params = {
+		order_id: orderid
+	}
+	var req = request
+							.post(`${ROOT_URL}/api/secure/trading/acceptbuyassetoffer`)
+							.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+							.set('Content-Type', 'application/json')
+							.accept('application/json')
+							.send(params);
+	return dispatch => {	
+		return req.end((err, res) => {
+			if (res.status !== 200) {
+					dispatch(AlertGlobal({
+						content: data,
+						type: ALERT_ERROR
+					}));
+				return
+			}	
+			
+			var t = res.body;
+			var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
+	  	var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
+	  	var tx =  bitcoin.Transaction.fromHex(t.prepared_tx);
+	  	var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
+	  	    txb.tx.ins.forEach(function(input, i) {
+	  	      txb.sign(i, keyPair);
+	  	    });
+	
+	
+	  	var signedtx = txb.build();
+	  	var signedtxhash = signedtx.getId();
+			var signedtxhex = signedtx.toHex();
+	
+			var req2 = request
+				.post(`${ROOT_URL}/api/secure/trading/transfertokenforassetorder`)
+				.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+	  	  .set('Content-Type', 'application/json')
+				.accept('application/json')
+				.send({
+					"amount": t.amount,
+					"asset_code": t.asset_code,
+					"asset_id": t.asset_id,
+					"blockchain_asset_id": t.blockchain_asset_id, 
+					"from_addr": t.from_addr,
+					"from_addr_id": t.from_addr_id,
+					"from_addr_rand_id": t.from_addr_rand_id,
+					"funding_addr_rand_id": t.funding_addr_rand_id,
+					"order_id": orderid,
+					"blockchaintx_hex": signedtxhex,
+					"blockchaintx_hash": signedtxhash,
+					"colored_output_indexes": t.colored_output_indexes,
+					"to_addr": t.to_addr,
+					"to_addr_id": t.to_addr_id,
+					"to_addr_rand_id": t.to_addr_rand_id 
+				});
+			
+				return req2.end((err, res) => {
+					if(res.status === 200) {
+						dispatch(AlertGlobal({
+							type: ALERT_SUCCESS,
+							content: res.body.Message
+						}));	
+						dispatch(push('/transaction-summary/trades'))
+					}
+					else {
+						dispatch(AlertGlobal({
+							type: ALERT_ERROR,
+							content: res.text
+						}));	
+		
+					}
+				})
+			
+		});
+	}
+}
+
 export function FetchAllMyOpenOrder() {
 	var	url = `${ROOT_URL}/api/secure/trading/fetchallmyopenorders` 
 
