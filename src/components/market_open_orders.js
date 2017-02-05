@@ -87,20 +87,6 @@ class MarketOpenOrders extends Component {
 	render() {
 		const { Company, SellOrders, BuyOrders, Wallet } = this.props;
 		
-		if(!SellOrders && !BuyOrders) {
-			return (
-				<div className="market-open-orders">
-					<div className="container-fluid">
-        	  <div className="row row-centered">
-        	    <div className="col-lg-1 col-centered">
-        	   		<h1>{Company ? Company.CompanyName : ''} Trading</h1>
-							</div>
-							<Spinner />
-        	  </div>
-        	</div>
-				</div>	
-			)
-		}
 		return (
 			<div className="market-open-orders">
 				<div className="container-fluid">
