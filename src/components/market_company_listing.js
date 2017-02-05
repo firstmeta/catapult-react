@@ -28,7 +28,7 @@ class MarketCompanyListing extends Component {
 				</div>
 			);
 			c.AssetCode = company.AssetCode;
-			c.LastPrice = company.LastTradeMoneyCode + ' ' + numeral(company.LastPrice).format('0,0.00');
+			c.LastPrice = (company.LastTradeMoneyCode ? company.LastTradeMoneyCode + ' ' + numeral(company.LastPrice).format('0,0.00') : '-');
 			c.NumberOfSells = (company.NumberOfSells ? company.NumberOfSells : 0);
 			c.NumberOfBuys = (company.NumberOfBuys ? company.NumberOfBuys : 0);
 			c.Btn = (
