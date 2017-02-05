@@ -23,7 +23,8 @@ export function OpenOrder({type, assetCode, amount, price, total, moneyCode, pwd
 		asset_code: assetCode,
 		asset_amount: amount,
 		money_code: moneyCode,
-		money_net: total
+		money_net: total,
+		price_net: price
 	};
 	if (type === 'buy') {
 		params.password = pwd;
