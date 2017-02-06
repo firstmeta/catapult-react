@@ -34,7 +34,7 @@ class HeaderNav extends Component {
 							  </li>
 							
 								<li>
-									<Link to="/market/companylisting">Market Place</Link>
+									<Link to="/market/companylisting">Marketplace</Link>
                 </li>
 
                 <li className="dropdown">
@@ -45,7 +45,7 @@ class HeaderNav extends Component {
 										aria-expanded="false"
 										onClick={!isLogined && (() => this.props.OpenLogin())}>
 
-										Entrepreneurs
+										List your company		
 										<span className="caret"></span>
 									</a>
 									{
@@ -58,13 +58,7 @@ class HeaderNav extends Component {
 									}
 
                 </li>
-                <li>
-                	<Link to="/investors">Investors</Link>
-								</li>
-								<li>
-                	<Link to="/partners">Partners</Link>
-								</li>
-
+                								
               </ul>
 
 							<ul className="nav navbar-nav navbar-right">
