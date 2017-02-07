@@ -11,6 +11,8 @@ import { OpenOrder } from '../actions/trading_action';
 import Alert from './global_alert';
 import InputModal from './input_modal';
 
+import Spinner from './spinner';
+
 class AssetOrder extends Component {
 	
 	constructor(props) {
@@ -51,8 +53,12 @@ class AssetOrder extends Component {
 	render() {
 		const { ext, AllAssets, AssetBalances, OpenOrderResult } = this.props;
 
-		if (ext === 'new' && (!AssetBalances || !AllAssets)) {
-			return <div></div>
+		if (ext === 'new' && !AllAssets) {
+			return (
+				<div>
+					<Spinner />
+				</div>
+			)
 		}
 		return (
 			<div className="asset-order">
