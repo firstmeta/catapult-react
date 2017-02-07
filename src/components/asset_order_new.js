@@ -15,7 +15,7 @@ const AssetOrderNew = ({
 	sellingAssets, 
 	onInputChange
 }) => {
-	var sellingAssetLis =	sellingAssets.map(a => 
+	var sellingAssetLis =	!sellingAssets ? [] : sellingAssets.map(a => 
 		<li
 			key={a.AssetID}
 			onClick={
