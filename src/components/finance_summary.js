@@ -52,6 +52,36 @@ class FinanceSummary extends Component {
 					</div>
 				)
 			}
+			if (tx.TxType === 'MAKEORDER'){
+				t.Action = (
+					<div>
+						<p>BUY ORDER</p>
+						{
+							tx.TxStatus === 'SUCCESSFUL' ? 
+								<center><span className="fa fa-check status-success" ></span></center>
+								:
+								<center><span className="fa fa-close status-fail" ></span></center>
+						}
+					</div>
+				);
+				t.AmountHold = (tx.TxStatus === 'SUCCESSFUL' ? tx.AmountGross : '');
+				t.Details = (
+					<div>
+						<p>
+							<span>Create buy order: </span> <br />
+							<span><strong>{tx.OrderId}</strong></span> 
+						</p>
+						{
+							tx.TxStatus === 'SUCCESSFUL' &&
+								<div>
+									<span>{tx.IpgName}:</span> <br />
+									<span className="font-small"><strong>{tx.IpgTxid}</strong></span> <br />
+								</div>	
+						}
+					</div>
+				)
+			}
+
 			else if(tx.TxType === 'FILLORDERBUYER') {
 				t.Action = (
 					<div>
