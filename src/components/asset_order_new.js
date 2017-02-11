@@ -28,7 +28,7 @@ const AssetOrderNew = ({
 			}>
 			<a>
 				<img src={a.LogoUrl} className="img-circle"/> &nbsp;
-				{a.AssetCode + ' - ' + numeral(a.Amount).format('0,0')}
+				{a.AssetCode + '-' + a.AssetName + '-' + numeral(a.Amount).format('0,0')}
 			</a>	
 		</li>	
 	); 
@@ -46,7 +46,7 @@ const AssetOrderNew = ({
 			}>
 			<a>
 				<img src={a.LogoUrl} className="img-circle"/> &nbsp;
-				{a.Code}
+				{a.Code + '-' + a.Name}
 			</a>	
 		</li>	
 	); 
