@@ -13,7 +13,8 @@ import { FetchWallet } from '../actions/wallet_action';
 import {
 	FetchAllMyOpenOrder, 
 	FetchAllMyDealingOrder ,
-	SignAndTransferTokenForOrder
+	SignAndTransferTokenForOrder,
+	CancelOpenedOrder
 } from '../actions/trading_action';
 
 class TradeSummary extends Component {
@@ -22,7 +23,15 @@ class TradeSummary extends Component {
 
 		this.formatOrders = this.formatOrders.bind(this);
 
-		this.state = { showModal: false, showModalSpinner: false, pwd: '', selectedOrderId: '' };
+		this.state = { 
+			showModal: false, 
+			showModalSpinner: false, 
+			pwd: '', 
+			selectedOrderId: '', 
+			selectedOrderType: '',
+			btnAction: '',
+			updatingOrderId: ''
+		};
 	}
 
 	componentWillMount() {
@@ -31,7 +40,6 @@ class TradeSummary extends Component {
 		if(!this.props.Wallet.ID) {
       this.props.FetchWallet();
     }
-
 	}
 
 	formatOrders(orders) {
@@ -56,8 +64,19 @@ class TradeSummary extends Component {
 			if (order.OrderStatus === 'OPENED') {
 				o.Cancel = (
 					<button
-						className="btn btn-primary btn-red btn-red-primary btn-cancel">
-         		CANCEL  
+						className="btn btn-primary btn-red btn-red-primary btn-cancel"
+						onClick={() => {
+							self.setState({
+								btnAction: 'cancel', 
+								showModal: true, 
+								selectedOrderId: order.OrderId,
+								selectedOrderType: (order.OrderType === 'SELLASSET' ? 'sell' : 'buy') 
+							});
+						}}>
+						{
+							order.OrderId === self.state.updatingOrderId ?
+          		<Spinner /> :	<span>CANCEL</span>
+						}  
 					</button>
 				);
 				o.CreatedOn = dateformat(order.CreatedOn, 'mmm d, yyyy HH:MM:ss');
@@ -66,12 +85,15 @@ class TradeSummary extends Component {
 				if(order.IsCreator) {
 					o.Btn = (
 						<button
-								className="btn btn-primary btn-yellow btn-yellow-primary"
-								onClick={() => {
-									self.setState({showModal: true, selectedOrderId: order.OrderId});
-								}}>
-      		   			SIGN & SEND  
-							</button>
+							className="btn btn-primary btn-yellow btn-yellow-primary"
+							onClick={() => {
+								self.setState({btnAction: 'signsend', showModal: true, selectedOrderId: order.OrderId});
+							}}>
+     		   		{
+								order.OrderId === self.state.updatingOrderId ?
+          			<Spinner /> :	<span>SIGN & SEND</span>
+							}   
+						</button>
 					)
 				}
 				else {
@@ -109,23 +131,45 @@ class TradeSummary extends Component {
 				<div className="container-fluid">
 					<Alert />
 					<InputModal
-						title="Asset Transfer Signing"
-						msg="You are about to sign and transfer your asset. 
-						Please make sure the details is correct."
-						inputLabel="Please enter your decryption password to proceed."
+						title={
+							this.state.btnAction === 'cancel' ?
+								"Order Cancellation" : "Asset Transfer Signing"
+						}
+						msg={
+							this.state.btnAction === 'cancel' ?
+								"Please confirm your cancelling order: " + this.state.selectedOrderId
+								:"You are about to sign and transfer your asset. Please make sure the details is correct."
+						}
+						inputLabel={
+							this.state.btnAction === 'signsend' ?
+								"Please enter your decryption password to proceed." : ""
+						}
 						value={this.state.pwd}
-						inputCapture={pwd => this.setState({pwd: pwd})}
+						inputCapture={
+							this.state.btnAction === 'cancel' ?
+							"" : pwd => this.setState({pwd: pwd})
+						}
 						show={this.state.showModal} 
 						showSpinner={this.state.showModalSpinner}
 						close={() => this.setState({showModal: false})}
 						styleName={'tx-summary-input-modal'}
 						btnFun={() => {
-							this.setState({showModalSpinner: true});
-							this.props.SignAndTransferToken({
-								orderid: this.state.selectedOrderId, 
-								wallet: Wallet, 
-								pwd: this.state.pwd
-							});
+
+							this.setState({showModal: false, updatingOrderId: this.state.selectedOrderId});
+
+							if (this.state.btnAction === 'cancel') {
+								this.props.CancelOpenedOrder({
+									orderid: this.state.selectedOrderId, 
+									orderType: this.state.selectedOrderType
+								});	
+							}
+							else if (this.state.btnAction === 'signsend') {
+								this.props.SignAndTransferToken({
+									orderid: this.state.selectedOrderId, 
+									wallet: Wallet, 
+									pwd: this.state.pwd
+								});
+							}
 						}}
 					/>
 
@@ -218,7 +262,8 @@ function mapDispatchToProps(dispatch) {
 		FetchAllMyOpenOrder: FetchAllMyOpenOrder,
 		FetchAllMyDealingOrder: FetchAllMyDealingOrder,
 		SignAndTransferToken: SignAndTransferTokenForOrder,
-		FetchWallet: FetchWallet
+		FetchWallet: FetchWallet,
+		CancelOpenedOrder: CancelOpenedOrder
 	}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TradeSummary);

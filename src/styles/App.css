@@ -274,6 +274,9 @@ input {
 .spinner {
   max-width: 128px;
 }
+.btn .spinner {
+	max-height: 20px;
+}
 
 /* Page structure */
 .wrap { min-height: 100%; }

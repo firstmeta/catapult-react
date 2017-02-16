@@ -56,7 +56,7 @@ class AssetOrder extends Component {
 		if (ext === 'new' && !AllAssets) {
 			return (
 				<div>
-					<Spinner />
+					<center><Spinner /></center>
 				</div>
 			)
 		}

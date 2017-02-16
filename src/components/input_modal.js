@@ -3,7 +3,16 @@ import { Button, Modal } from 'react-bootstrap';
 import Spinner from './spinner';
 
 const InputModal = ({
-	title, msg, inputLabel, value, inputCapture, show, showSpinner, close, btnFun, styleName
+	title, 
+	msg, 
+	inputLabel, 
+	value, 
+	inputCapture, 
+	show, 
+	showSpinner, 
+	close, 
+	btnFun, 
+	styleName
 }) => {
 	return (
 		<div>
@@ -20,7 +29,10 @@ const InputModal = ({
 								{msg}							
 							</div>
 							<br />
-							<div className="form-group">
+							{
+
+								inputCapture &&	
+								<div className="form-group">
 									<label>{inputLabel}</label>
 									<input
 										type="password"
@@ -29,12 +41,11 @@ const InputModal = ({
 										placeholder="Password*"
 										onChange={event => inputCapture(event.target.value)}
 									/>
-							</div>
-
+								</div>
+							}
 							<Button 
 								className="btn btn-primary btn-light-green btn-light-green-primary full-width"
 								onClick={() => {
-									close();
 									btnFun();
 								}}>
 								PROCEED	

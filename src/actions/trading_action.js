@@ -53,7 +53,7 @@ export function OpenOrder({type, assetCode, amount, price, total, moneyCode, pwd
 			}
 			else {
 				dispatch(AlertGlobal({
-					content: data,
+					content: res.body.Msg,
 					type: ALERT_ERROR
 				}));
 			}
@@ -78,7 +78,7 @@ export function MakeBuyAssetOffer({orderid, pwd}) {
 			if(res.status === 200) {
 				dispatch(AlertGlobal({
 					type: ALERT_SUCCESS,
-					content: res.body.Message
+					content: res.body.Msg
 				}));
 				dispatch(push('/transaction-summary/trades'))
 
@@ -86,7 +86,7 @@ export function MakeBuyAssetOffer({orderid, pwd}) {
 			else {
 				dispatch(AlertGlobal({
 					type: ALERT_ERROR,
-					content: res.body.Message
+					content: res.body.Msg
 				}));
 			}
 		})
@@ -114,7 +114,7 @@ export function AcceptBuyAssetOffer({orderid}){
 			else {
 				dispatch(AlertGlobal({
 					type: ALERT_ERROR,
-					content: res.body
+					content: res.body.Msg
 				}))
 			}
 		})
@@ -166,13 +166,13 @@ export function TransferTokenForAssetOrder({
 			if(res.status === 200) {
 				dispatch({
 					type: ALERT_SUCCESS,
-					content: res.body.Message
+					content: res.body.Msg
 				});	
 			}
 			else {
 				dispatch({
 					type: ALERT_ERROR,
-					content: res.text
+					content: res.body.Msg
 				});	
 
 			}
@@ -194,7 +194,7 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 		return req.end((err, res) => {
 			if (res.status !== 200) {
 					dispatch(AlertGlobal({
-						content: data,
+						content: res.body.Msg,
 						type: ALERT_ERROR
 					}));
 				return
@@ -241,16 +241,16 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 					if(res.status === 200) {
 						dispatch(AlertGlobal({
 							type: ALERT_SUCCESS,
-							content: res.body.Message
+							content: res.body.Msg
 						}));	
-						dispatch(push('/transaction-summary/trades'))
+						dispatch(push('/transaction-summary/trades'));
+						dispatch(FetchAllMyDealingOrder());
 					}
 					else {
 						dispatch(AlertGlobal({
 							type: ALERT_ERROR,
-							content: res.text
+							content: res.body.Msg
 						}));	
-		
 					}
 				})
 			
@@ -258,8 +258,41 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 	}
 }
 
+export function CancelOpenedOrder({orderid, orderType}) {
+	var url = orderType === 'sell' ? 
+		`${ROOT_URL}/api/secure/trading/cancelopenedsellorder`
+		:`${ROOT_URL}/api/secure/trading/cancelopenedbuyorder`;
+
+	var req = request
+		.post(url)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send({orderid: orderid});
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if (res.status === 200) {
+				dispatch(AlertGlobal({
+					content: res.body.Msg,
+					type: ALERT_SUCCESS
+				}));
+				
+				dispatch(FetchAllMyOpenOrder());
+			}
+			else {
+				dispatch(AlertGlobal({
+					content: res.body.Msg,
+					type: ALERT_ERROR
+				}))	
+			}
+		})
+	}
+
+}
+
 export function FetchAllMyOpenOrder() {
-	var	url = `${ROOT_URL}/api/secure/trading/fetchallmyopenorders` 
+	var	url = `${ROOT_URL}/api/secure/trading/fetchallmyopenorders`; 
 
 	var req = request
 		.get(url)
@@ -276,7 +309,7 @@ export function FetchAllMyOpenOrder() {
 			}
 			else {
 				dispatch(AlertGlobal({
-					content: data,
+					content: res.body.Msg,
 					type: ALERT_ERROR
 				}))	
 			}
@@ -302,7 +335,7 @@ export function FetchAllMyDealingOrder() {
 			}
 			else {
 				dispatch(AlertGlobal({
-					content: data,
+					content: res.body.Msg,
 					type: ALERT_ERROR
 				}))	
 			}
@@ -327,7 +360,7 @@ export function FetchAllOpenOrders(assetCode, orderType) {
 			}
 			else {
 				dispatch(AlertGlobal({
-					content: res.body.Message,
+					content: res.body.Msg,
 					type: ALERT_ERROR
 				}))
 			}
