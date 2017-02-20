@@ -12,6 +12,7 @@ var CryptoJS = require("crypto-js");
 
 export const OPEN_ORDER_SUCCESS = 'OPEN_ORDER_SUCCESS';
 export const OPEN_ORDER_FAILURE = 'OPEN_ORDER_FAILURE';
+export const ORDER_UPDATED = 'ORDER_UPDATED';
 export const MY_OPEN_ORDER = 'MY_OPEN_ORDER';
 export const MY_DEALING_ORDER = 'MY_DEALING_ORDER';
 export const ORDER_ASSET_TRANSFER_PREP = 'ORDER_ASSET_TRANSFER_PREP';
@@ -193,10 +194,15 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 	return dispatch => {	
 		return req.end((err, res) => {
 			if (res.status !== 200) {
-					dispatch(AlertGlobal({
-						content: res.body.Msg,
-						type: ALERT_ERROR
-					}));
+				dispatch({
+					type: ORDER_UPDATED,
+					data: orderid 
+				});
+
+				dispatch(AlertGlobal({
+					content: res.body.Msg,
+					type: ALERT_ERROR
+				}));
 				return
 			}	
 			
@@ -237,22 +243,27 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 					"to_addr_rand_id": t.to_addr_rand_id 
 				});
 			
-				return req2.end((err, res) => {
-					if(res.status === 200) {
-						dispatch(AlertGlobal({
-							type: ALERT_SUCCESS,
-							content: res.body.Msg
-						}));	
-						dispatch(push('/transaction-summary/trades'));
-						dispatch(FetchAllMyDealingOrder());
-					}
-					else {
-						dispatch(AlertGlobal({
-							type: ALERT_ERROR,
-							content: res.body.Msg
-						}));	
-					}
-				})
+			return req2.end((err, res) => {
+				dispatch({
+					type: ORDER_UPDATED,
+					data: orderid 
+				});
+				if(res.status === 200) {
+					dispatch(AlertGlobal({
+						type: ALERT_SUCCESS,
+						content: res.body.Msg
+					}));	
+					dispatch(push('/transaction-summary/trades'));
+					dispatch(FetchAllMyDealingOrder());
+				}
+				else {
+					dispatch(AlertGlobal({
+						type: ALERT_ERROR,
+						content: res.body.Msg
+					}));	
+				}
+
+			});
 			
 		});
 	}

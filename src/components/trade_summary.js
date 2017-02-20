@@ -30,8 +30,17 @@ class TradeSummary extends Component {
 			selectedOrderId: '', 
 			selectedOrderType: '',
 			btnAction: '',
-			updatingOrderId: ''
+			updatingOrderId: '',
+			updatingOrders: {}
 		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.OrderUpdated) {
+			var updatingOrders = Object.assign({}, this.state.updatingOrders);
+			delete updatingOrders[nextProps.OrderUpdated];
+			this.setState({updatingOrders: updatingOrders});
+		}	
 	}
 
 	componentWillMount() {
@@ -45,6 +54,7 @@ class TradeSummary extends Component {
 	formatOrders(orders) {
 		var self = this;
 		return orders.map(function(order){
+
 			var o = {};
 			o.OrderId = order.OrderId;
 			o.OrderType = (order.OrderType === 'SELLASSET' ? 'SELL' : 'BUY');
@@ -74,7 +84,7 @@ class TradeSummary extends Component {
 							});
 						}}>
 						{
-							order.OrderId === self.state.updatingOrderId ?
+							self.state.updatingOrders[order.OrderId] ?
           		<Spinner /> :	<span>CANCEL</span>
 						}  
 					</button>
@@ -90,7 +100,7 @@ class TradeSummary extends Component {
 								self.setState({btnAction: 'signsend', showModal: true, selectedOrderId: order.OrderId});
 							}}>
      		   		{
-								order.OrderId === self.state.updatingOrderId ?
+								self.state.updatingOrders[order.OrderId] ?
           			<Spinner /> :	<span>SIGN & SEND</span>
 							}   
 						</button>
@@ -117,7 +127,7 @@ class TradeSummary extends Component {
 	}
 
 	render() {
-		const { OpenOrders, DealingOrders, Wallet  } = this.props;
+		const { OpenOrders, DealingOrders, OrderUpdated, Wallet  } = this.props;
 
 		if (!OpenOrders && !DealingOrders){ 
       return (
@@ -164,6 +174,10 @@ class TradeSummary extends Component {
 								});	
 							}
 							else if (this.state.btnAction === 'signsend') {
+								var updatingOrders = Object.assign({}, this.state.updatingOrders);
+								updatingOrders[this.state.selectedOrderId] = true;
+								this.setState({updatingOrders: updatingOrders});
+
 								this.props.SignAndTransferToken({
 									orderid: this.state.selectedOrderId, 
 									wallet: Wallet, 
@@ -254,7 +268,8 @@ function mapStateToProps(state) {
 		OpenOrders: state.TradingState.AllMyOpenOrders,
 		DealingOrders: state.TradingState.AllMyDealingOrders,
 		AssetTransferPrep: state.TradingState.OrderAssetTransferPrep,
-    Wallet: state.WalletState.wallet
+		Wallet: state.WalletState.wallet,
+		OrderUpdated: state.TradingState.OrderUpdated
 	}
 } 
 function mapDispatchToProps(dispatch) {
