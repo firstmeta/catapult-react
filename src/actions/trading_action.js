@@ -53,6 +53,14 @@ export function OpenOrder({type, assetCode, amount, price, total, moneyCode, pwd
 				dispatch(push('/asset/order/success'))
 			}
 			else {
+				dispatch({
+					type: ORDER_UPDATED,
+					data: {
+						orderid: '0000000',
+						timestamp: Date.now()
+					}
+				});
+
 				dispatch(AlertGlobal({
 					content: res.body.Msg,
 					type: ALERT_ERROR
@@ -76,6 +84,14 @@ export function MakeBuyAssetOffer({orderid, pwd}) {
 
 	return dispatch => {
 		return req.end((err, res) => {
+			dispatch({
+				type: ORDER_UPDATED,
+				data: {
+					orderid: orderid,
+					timestamp: Date.now()
+				}
+			});
+
 			if(res.status === 200) {
 				dispatch(AlertGlobal({
 					type: ALERT_SUCCESS,
@@ -196,7 +212,10 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 			if (res.status !== 200) {
 				dispatch({
 					type: ORDER_UPDATED,
-					data: orderid 
+					data: {
+						orderid: orderid,
+						timestamp: Date.now()
+					} 
 				});
 
 				dispatch(AlertGlobal({
@@ -246,8 +265,12 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 			return req2.end((err, res) => {
 				dispatch({
 					type: ORDER_UPDATED,
-					data: orderid 
+					data: {
+						orderid: orderid,
+						timestamp: Date.now()
+					}
 				});
+
 				if(res.status === 200) {
 					dispatch(AlertGlobal({
 						type: ALERT_SUCCESS,

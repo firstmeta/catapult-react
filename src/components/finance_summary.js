@@ -120,6 +120,22 @@ class FinanceSummary extends Component {
 				t.Action = 'WITHDRAW';
 				t.Debit = numeral(-(+tx.AmountGross)).format('0,0.00');
 			}
+			else if(tx.TxType === 'CANCELORDER') {
+				t.Action = (
+					<div>
+						<p>CANCEL ORDER</p>
+						<center><span className="fa fa-check status-success" ></span></center>
+					</div>
+				);
+				t.Details = (
+					<div>
+						<p><span>Order cancelled: <br /> <strong>{tx.OrderId} </strong></span></p>
+						<span>Fund creditted to your balance.</span>
+					</div>
+				);	
+				t.Credit = numeral(tx.AmountGross).format('0,0.00');
+			}
+
 			t.Timestamp = (
 				<div>
 					<span>Started on:</span> <br />

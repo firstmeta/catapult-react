@@ -38,9 +38,17 @@ class AssetOrder extends Component {
 			total: '',
 			moneyCode: 'SGD',
 			showModal: false,
+			showModalSpinner: false,
 			pwd: ''
 		};
 
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.OrderUpdated && 
+			nextProps.OrderUpdated.timestamp !== this.props.OrderUpdated.timestamp) {
+				this.setState({showModal: false, showModalSpinner: false});
+		}
 	}
 
 	componentWillMount() {
@@ -71,6 +79,7 @@ class AssetOrder extends Component {
 				</div>
 				
 				<Alert />
+
 				<InputModal
 					title="Password required"
 					msg="You are about to make payment for this transaction. 
@@ -78,11 +87,13 @@ class AssetOrder extends Component {
 					inputLabel="Please enter your login password to proceed."
 					value={this.state.pwd}
 					inputCapture={pwd => this.setState({pwd: pwd})}
-					show={this.state.showModal} 
+					show={ext === 'confirm' && this.state.showModal} 
+					showSpinner={ext === 'confirm' && this.state.showModalSpinner}
 					close={() => this.setState({showModal: false})} 
 					btnFun={() => {
 						const {type, assetCode, amount, price, total, moneyCode, pwd} = this.state;
 						this.props.OpenOrder({type, assetCode, amount, price, total, moneyCode, pwd});
+						this.setState({showModalSpinner: true});
 					}}/>
 
 				{
@@ -205,7 +216,8 @@ function mapStateToProps(state) {
 		ext : state.router.params.orderExt,
 		AllAssets: state.AssetState.AllAssets,
 		AssetBalances: state.AssetState.AssetBalances,
-		OpenOrderResult: state.TradingState.OpenOrderResult
+		OpenOrderResult: state.TradingState.OpenOrderResult,
+		OrderUpdated: state.TradingState.OrderUpdated
 	}
 }
 function mapDispatchToProps(dispatch) {

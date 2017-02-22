@@ -25,10 +25,17 @@ class MarketOpenOrders extends Component {
 		
 		this.state = { 
 			showModal: false, 
+			showModalSpinner: false,
 			pwd: '', 
 			selectedOrderId: '', 
 			selectedOrderType: '' 
 		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.OrderUpdated.orderid === this.state.selectedOrderId) {
+			this.setState({showModalSpinner: false, showModal: false, selectedOrderId: ''});
+		}
 	}
 
 	componentWillMount() {
@@ -38,8 +45,8 @@ class MarketOpenOrders extends Component {
 		if(!this.props.Wallet.ID) {
       this.props.FetchWallet();
     }
-
 	}
+
 
 	formatOrders(orders) {
 		var self = this;
@@ -115,10 +122,12 @@ class MarketOpenOrders extends Component {
 					value={this.state.pwd}
 					inputCapture={pwd => this.setState({pwd: pwd})}
 					show={this.state.showModal} 
-					showSpinner={false}
+					showSpinner={this.state.showModalSpinner}
 					close={() => this.setState({showModal: false})}
 					styleName={'tx-summary-input-modal'}
 					btnFun={() => {
+						this.setState({showModalSpinner: true});
+
 						if (this.state.selectedOrderType === 'sell'){
 							this.props.MakeBuyAssetOffer({
 								orderid: this.state.selectedOrderId, 
@@ -136,7 +145,7 @@ class MarketOpenOrders extends Component {
 				/>
 				<br /><br />
 				<div className="container-fluid">
-					<Alert />
+
 					<div className="row">
 						<div className="col-md-6">
 							<div className="market-company">
@@ -165,6 +174,8 @@ class MarketOpenOrders extends Component {
 					</div>
 					<br /><br />
 					
+					<Alert />
+
 					<div className="row">
 						<div className="col-md-6">
 							<div className="row row-centered">
@@ -273,6 +284,7 @@ function mapStateToProps(state) {
 		AssetCode: state.router.params.assetCode,
 		SellOrders: state.TradingState.AllOpenSellOrders,
 		BuyOrders: state.TradingState.AllOpenBuyOrders,
+		OrderUpdated: state.TradingState.OrderUpdated,
     Company: state.CompanyState.companyDetails,
     Wallet: state.WalletState.wallet
 	}

@@ -38,7 +38,7 @@ class TradeSummary extends Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.OrderUpdated) {
 			var updatingOrders = Object.assign({}, this.state.updatingOrders);
-			delete updatingOrders[nextProps.OrderUpdated];
+			delete updatingOrders[nextProps.OrderUpdated.orderid];
 			this.setState({updatingOrders: updatingOrders});
 		}	
 	}
