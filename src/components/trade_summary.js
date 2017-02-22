@@ -69,7 +69,7 @@ class TradeSummary extends Component {
 			o.OrderStatus = (order.OrderStatus === 'BLKCONFIRMING' ? 'CONFIRMING' : order.OrderStatus);
 
 			if (order.LastUpdatedOn) {
-				o.LastUpdatedOn = dateformat(order.DealingOn, 'mmm d, yyyy HH:MM:ss');
+				o.LastUpdatedOn = dateformat(order.LastUpdatedOn, 'mmm d, yyyy HH:MM:ss');
 			}
 			if (order.OrderStatus === 'OPENED') {
 				o.Cancel = (
