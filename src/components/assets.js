@@ -32,11 +32,6 @@ class Assets extends Component {
               <ul className="nav nav-pills">
                 <li
                   role="presentation"
-                  className={(urlRef === 'transfer') ? "active" : ""}>
-                  <Link to="/assets/transfer">Transfer</Link>
-                </li>
-                <li
-                  role="presentation"
                   className={(urlRef === 'issuance') ? "active" : ""}>
                   <Link to="/assets/issuance">Issuance</Link>
                 </li>
@@ -69,3 +64,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Assets);
+
+//<li
+//                  role="presentation"
+//                  className={(urlRef === 'transfer') ? "active" : ""}>
+//                  <Link to="/assets/transfer">Transfer</Link>
+//                </li>
+
