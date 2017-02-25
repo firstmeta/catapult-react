@@ -32,11 +32,6 @@ class Assets extends Component {
               <ul className="nav nav-pills">
                 <li
                   role="presentation"
-                  className={(!urlRef || urlRef === 'summary') ? "active" : ""}>
-                  <Link to="/assets/summary">Summary</Link>
-                </li>
-                <li
-                  role="presentation"
                   className={(urlRef === 'transfer') ? "active" : ""}>
                   <Link to="/assets/transfer">Transfer</Link>
                 </li>
