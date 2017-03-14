@@ -278,6 +278,11 @@ input {
 	max-height: 20px;
 }
 
+.search .row > [class*="col-md-"]{
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
 /* Page structure */
 .wrap { min-height: 100%; }
 .main {

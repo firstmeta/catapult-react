@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import AssetIssuance from './asset_issuance';
 import AssetTransfer from './asset_transfer';
+import AssetBatchTransfer from './asset_batch_transfer';
 import AssetSummary from './asset_summary';
 import { FetchWallet } from '../actions/wallet_action';
 import { FetchAssetBalances } from '../actions/asset_action';
@@ -34,7 +35,13 @@ class Assets extends Component {
                   role="presentation"
                   className={(urlRef === 'issuance') ? "active" : ""}>
                   <Link to="/assets/issuance">Issuance</Link>
+								</li>
+								<li
+                  role="presentation"
+                  className={(urlRef === 'batchtransfer') ? "active" : ""}>
+                  <Link to="/assets/batchtransfer">Batch Transfer</Link>
                 </li>
+
               </ul>
             </div>
           </div>
@@ -45,6 +52,7 @@ class Assets extends Component {
         {urlRef === 'summary' && <AssetSummary />}
         {urlRef === 'issuance' && <AssetIssuance />}
         {urlRef === 'transfer' && <AssetTransfer />}
+        {urlRef === 'batchtransfer' && <AssetBatchTransfer />}
       </div>
     )
   }
