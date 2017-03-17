@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Search from './search';
 import AssetBatchTransferForm from './asset_batch_transfer_form';
+import AssetBatchTransferConfirm from './asset_batch_transfer_confirm';
 
 class AssetBatchTransfer extends Component {
 
@@ -17,6 +18,7 @@ class AssetBatchTransfer extends Component {
 		return (
 			<div className="asset-batch-transfer">
 				{!step && <AssetBatchTransferForm />}
+				{step === 'confirmation' && <AssetBatchTransferConfirm />}
 			</div>	
 		)
 	}

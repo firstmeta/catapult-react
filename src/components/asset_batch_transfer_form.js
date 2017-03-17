@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import numeral from 'numeral';
 
 import { SearchUserByEmail } from '../actions/search_action';
+import { RedirectAssetBatchTransferConfirmation } from '../actions/asset_action';
 import Search from './search';
 import InputRowList from './input_row_list';
 
@@ -40,7 +41,11 @@ class AssetBatchTransferForm extends Component{
               assetDesc: a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + numeral(a.Amount).format('0,0')
             });
           }}>
-          <a>{a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + numeral(a.Amount).format('0,0')}</a>
+					<a>
+						{
+							a.AssetCode + ' - ' + a.AssetName + ' - ' + 'Bal: ' + numeral(a.Amount).format('0,0')
+						}
+					</a>
         </li>
       )
     });
@@ -67,7 +72,10 @@ class AssetBatchTransferForm extends Component{
 						receivers.push({
 							description: u.Email, 
 							address: u.WalletAddress, 
-							ext: u.WalletAddress.substring(0, 10)
+							addressId: u.WalletAddressId,
+							addressRandId: u.WalletAddressRandId,
+							ext: u.WalletAddress.substring(0, 10),
+							value: ''
 						});
 						this.setState({receivers: receivers});
 					}}>
@@ -108,18 +116,34 @@ class AssetBatchTransferForm extends Component{
 							<label>Receivers</label>
 							<InputRowList
 								list={this.state.receivers}
-								updateList={(l) => this.setState({receivers: l})} />
+								updateInput={(l) => this.state.receivers = l} 
+								updateComponent={(l) => this.setState({receivers: l})}/>
 							<br />	
 							<Search 
 								btnName="Add"
-								searchFunc={_.debounce((term) => this.props.SearchUser(term))}
+								searchFunc={_.debounce(term => this.props.SearchUser(term), 600)}
 								results={searchDisplay}
 								clearResults={() => {
 									console.log('clear');
 									searchDisplay=''
 								}}/>
 
-
+							<div>
+								<button 
+									className="btn btn-primary btn-green btn-green-primary full-width"
+									onClick={() => {
+										this.props.RedirectConfirmation({
+											blockchainAssetID: this.state.blockchainAssetID,
+                      assetID: this.state.assetID,
+                      assetCode: this.state.assetCode,
+                      assetName: this.state.assetName,
+                      wallet: wallet,
+											receivers: this.state.receivers	
+										})
+									}}>
+									Review to confirm	
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -138,7 +162,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		SearchUser: SearchUserByEmail
+		SearchUser: SearchUserByEmail,
+		RedirectConfirmation: RedirectAssetBatchTransferConfirmation
 	}, dispatch);	
 }
 

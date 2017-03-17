@@ -3,7 +3,8 @@ import {
   REDIRECT_ASSET_ISSUANCE_CONFIRMATION, REDIRECT_ASSET_ISSUANCE_RESULT,
   PREPARE_ASSET_ISSUE_SUCCESS,
   ASSET_ISSUE_SUCCESS, ASSET_ISSUE_FAILURE,
-  REDIRECT_ASSET_TRANSFER_CONFIRMATION, PREPARE_ASSET_TRANSFER_SUCCESS,
+	REDIRECT_ASSET_TRANSFER_CONFIRMATION, ASSET_BATCH_TRANSFER_CONFIRMATION,
+	PREPARE_ASSET_TRANSFER_SUCCESS,
   REDIRECT_ASSET_TRANSFER_RESULT, ASSET_TRANSFER_SUCCESS
 
 } from '../actions/asset_action';
@@ -14,7 +15,8 @@ export default function(
     IssuedAsset: {},
 		AssetBalances: '',
 		AllAssets: '',
-    TransferringAsset: {},
+		TransferringAsset: {},
+		BatchTransferringAsset: '',
     AssetTXs: []
   },
   action) {
@@ -34,7 +36,7 @@ export default function(
     case REDIRECT_ASSET_ISSUANCE_CONFIRMATION:
       return Object.assign({}, state, {
         IssuingAsset: action.data
-      });
+			});
     case PREPARE_ASSET_ISSUE_SUCCESS:
       return Object.assign({}, state, {
         IssuingAsset: action.data
@@ -63,7 +65,11 @@ export default function(
     case ASSET_TRANSFER_SUCCESS:
       return Object.assign({}, state, {
         TransferringAsset: action.data
-      });
+			});
+		case ASSET_BATCH_TRANSFER_CONFIRMATION: 
+				return Object.assign({}, state, {
+					BatchTransferringAsset: action.data
+				});
     default:
       return state;
   }

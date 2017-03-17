@@ -1,8 +1,14 @@
 import request from 'superagent';
 import { push } from 'redux-router';
 import { AUTH_TOKEN } from './auth_action';
-import { ROOT_URL, BTC_NETWORK, BTC_API_URL, ASSET_ISSUANCE_FEE, ASSET_TRANSFER_FEE } from '../config';
 import { AlertGlobal, AlertLocal, ALERT_SUCCESS, ALERT_ERROR } from './alert_action';
+import { 
+	ROOT_URL, 
+	BTC_NETWORK, 
+	BTC_API_URL, 
+	ASSET_ISSUANCE_FEE, 
+	ASSET_TRANSFER_FEE 
+} from '../config';
 
 var bitcoin = require('bitcoinjs-lib');
 var script = bitcoin.script;
@@ -25,6 +31,8 @@ export const PREPARE_ASSET_TRANSFER_SUCCESS = 'PREPARE_ASSET_TRANSFER_SUCCESS';
 export const REDIRECT_ASSET_TRANSFER_RESULT = 'REDIRECT_ASSET_TRANSFER_RESULT';
 export const ASSET_TRANSFER_SUCCESS = 'ASSET_TRANSFER_SUCCESS';
 export const ASSET_TRANSFER_FAILURE = 'ASSET_TRANSFER_FAILURE';
+
+export const ASSET_BATCH_TRANSFER_CONFIRMATION = 'ASSET_BATCH_TRANSFER_CONFIRMATION'; 
 
 export function FetchAllAssets() {
   var req = request
@@ -125,6 +133,17 @@ export function RedirectAssetTransferResult(transferringAsset) {
     dispatch(push('/assets/transfer?step=result'));
   }
 }
+
+export function RedirectAssetBatchTransferConfirmation(transferringAsset) {
+  return dispatch => {
+    dispatch({
+      type: ASSET_BATCH_TRANSFER_CONFIRMATION,
+      data: transferringAsset
+    });
+    dispatch(push('/assets/batchtransfer?step=confirmation'));
+  }
+}
+
 export function PrepareIssueAsset({
 	issuer, name, code, amount, logoUrl, desc, address, city, country, wallet}) {
 
@@ -317,6 +336,62 @@ export function ProceedAssetIssuance({
       }
     });
   }
+}
+
+export function ProceedBatchAssetTransfer({transferringAsset, wallet, pwd}) {
+	var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
+
+	if (!prikey) {
+		return dispatch => {
+			dispatch(AlertGlobal({
+				content: 'Wrong decryption password. Please try again.',
+				type: ALERT_ERROR
+			}));
+		}	
+	}
+
+	console.log(transferringAsset);
+
+	var receivers =  transferringAsset.receivers.map(r => {
+		return {
+			address: r.address,
+			addressId: r.addressId,
+			addressRandId: r.addressRandId,
+			amount: r.value,
+			assetId: transferringAsset.blockchainAssetID
+		}
+	})
+
+	var params = {
+		receivers: receivers 
+	}
+
+	var req = request
+		.post(`${ROOT_URL}/api/secure/asset/prepare_asset_batch_transfer_tx`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send(params);		
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if (res.status !== 200) {
+				dispatch(AlertGlobal({
+					content: res.body.Msg,
+					type: ALERT_ERROR
+				}));
+				return;
+			}
+			else {
+				dispatch({
+      		type: ASSET_BATCH_TRANSFER_CONFIRMATION,
+      		data: transferringAsset
+    		});
+    		dispatch(push('/assets/batchtransfer?step=confirmation'));
+			}
+		});
+	}
+
 }
 
 export function PrepareTransferAsset({
