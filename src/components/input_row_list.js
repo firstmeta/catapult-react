@@ -5,7 +5,8 @@ import InputRow from './input_row';
 
 const InputRowList = ({
 	list,
-	updateList
+	updateInput,
+	updateComponent
 }) => {
 	
 	var renderedList = [];
@@ -14,14 +15,14 @@ const InputRowList = ({
 		var l = list.slice();
 		l[index].value = value;
 
-		updateList(l);
+		updateInput(l);
 	}
 
 	var removeInputRow = function(index) {
 		var l = list.slice();
 		l.splice(index, 1)
 
-		updateList(l);
+		updateComponent(l);
 	}
 	
 	for ( var i = 0; i < list.length; i++) {
