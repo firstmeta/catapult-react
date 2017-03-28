@@ -350,8 +350,6 @@ export function ProceedBatchAssetTransfer({transferringAsset, wallet, pwd}) {
 		}	
 	}
 
-	console.log(transferringAsset);
-
 	var receivers =  transferringAsset.receivers.map(r => {
 		return {
 			address: r.address,
@@ -363,6 +361,9 @@ export function ProceedBatchAssetTransfer({transferringAsset, wallet, pwd}) {
 	})
 
 	var params = {
+		assetID: transferringAsset.assetID,
+		blockchainAssetID: transferringAsset.blockchainAssetID,
+		assetCode: transferringAsset.assetCode,
 		receivers: receivers 
 	}
 
@@ -382,13 +383,51 @@ export function ProceedBatchAssetTransfer({transferringAsset, wallet, pwd}) {
 				}));
 				return;
 			}
-			else {
-				dispatch({
-      		type: ASSET_BATCH_TRANSFER_CONFIRMATION,
-      		data: transferringAsset
-    		});
-    		dispatch(push('/assets/batchtransfer?step=confirmation'));
-			}
+			
+			var t = res.body;
+			var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
+	  	var tx =  bitcoin.Transaction.fromHex(t.txHex);
+	  	var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
+	  	    txb.tx.ins.forEach(function(input, i) {
+	  	      txb.sign(i, keyPair);
+	  	    });
+	  	var signedtx = txb.build();
+	  	var signedtxhash = signedtx.getId();
+			var signedtxhex = signedtx.toHex();
+			
+			var ta = transferringAsset;
+			var req2 = request
+				.post(`${ROOT_URL}/api/secure/asset/proceed_asset_batch_transfer_tx`)
+				.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+				.set('Content-Type', 'application/json')
+				.accept('application/json')
+				.send({
+					assetID: ta.assetID,
+					assetCode: ta.assetCode,
+					blockchainAssetID: ta.blockchainAssetID,
+					blockchainTxHash: signedtxhash,
+					blockchainTxHex: signedtxhex,
+					fundingAddressRandID: t.fundingAddressRandID,
+					coloredOutputIndexes: t.coloredOutputIndexes,
+					receivers: receivers
+				});
+
+			return req2.end((err, res) => {
+				if(res.status === 200) {
+					dispatch(AlertGlobal({
+						type: ALERT_SUCCESS,
+						content: res.body.Msg
+					}));	
+					//dispatch(push('/transaction-summary/assets'));
+				}
+				else {
+					dispatch(AlertGlobal({
+						type: ALERT_ERROR,
+						content: res.body.Msg
+					}));	
+				}
+			})
+
 		});
 	}
 
