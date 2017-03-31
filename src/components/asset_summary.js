@@ -66,7 +66,8 @@ class AssetSummary extends Component {
     }
 
     var formattedTXs = TXs.map(function(tx) {
-      var ftx = {};
+			var ftx = {};
+			ftx.AssetCode = tx.AssetCode;
       ftx.TxID = tx.TxID;
       ftx.TxType = (tx.TxType === 'TRANSFER' ? 'TFR' : 'ISU');
       ftx.Ref = (
@@ -75,16 +76,18 @@ class AssetSummary extends Component {
             <label>Received from: </label>
             <p><a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/address/' + tx.FromAddress}>{tx.FromAddress}</a></p>
 
-            <label>Blockchain TxID: </label>
-            <p><a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/tx/' + tx.BlockchainTxHash}>{tx.BlockchainTxHash}</a></p>
+						<p style={{'font-style': 'italic', 'text-decoration': 'underline'}}>
+							<a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/tx/' + tx.BlockchainTxHash}>View on blockchain</a>
+						</p>
           </div>
           :
           <div>
             <label>Sent to:</label>
             <p><a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/address/' + tx.ToAddress}>{tx.ToAddress}</a></p>
 
-            <label>Blockchain TxID:</label>
-            <p><a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/tx/' + tx.BlockchainTxHash}>{tx.BlockchainTxHash}</a></p>
+						<p style={{'font-style': 'italic', 'text-decoration': 'underline'}}>
+							<a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/tx/' + tx.BlockchainTxHash}>View on blockchain</a>
+						</p>
           </div>
 
       );
@@ -95,7 +98,7 @@ class AssetSummary extends Component {
         ftx.Debit =numeral(tx.Amount).format('0,0');
       }
 
-      ftx.TxStatus = tx.TxStatus;
+      ftx.TxStatus = (tx.TxStatus === 'SUCCESSFUL' ? 'confirmed' : 'processing');
 
       var initiatedDate = new Date(tx.InitiatedOn);
       var endedDate = (tx.EndedOn ? new Date(tx.EndedOn) : '')
@@ -130,9 +133,10 @@ class AssetSummary extends Component {
                   <TableHeaderColumn dataField="TxID" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
                   <TableHeaderColumn dataField="TxType" width="55px">Type</TableHeaderColumn>
                   <TableHeaderColumn dataField="Ref" dataFormat={this.format}>Reference</TableHeaderColumn>
+                  <TableHeaderColumn dataField="AssetCode" width="60px">Code</TableHeaderColumn>
                   <TableHeaderColumn dataField="Credit" width="75px">Credit</TableHeaderColumn>
                   <TableHeaderColumn dataField="Debit" width="75px">Debit</TableHeaderColumn>
-                  <TableHeaderColumn dataField="TxStatus" width="80px">Status</TableHeaderColumn>
+                  <TableHeaderColumn dataField="TxStatus" width="90px">Status</TableHeaderColumn>
                   <TableHeaderColumn dataField="Date" width="150px">Date</TableHeaderColumn>
                 </BootstrapTable>
               </div>
