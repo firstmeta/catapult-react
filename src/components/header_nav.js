@@ -52,6 +52,7 @@ class HeaderNav extends Component {
 										isLogined &&
 										<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
 											<li><Link to="/companies-campaigns-mine">My companies</Link></li>
+											<li><Link to="/assets/batchtransfer">Transfer equity</Link></li>
 											<li><Link to="/assets/issuance">Issue equity</Link></li>
 											<li role="separator" className="divider"></li>
 											<li><Link to="/company/start">Set up company</Link></li>
