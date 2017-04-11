@@ -51,11 +51,11 @@ class HeaderNav extends Component {
 									{
 										isLogined &&
 										<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
-											<li><Link to="/companies-campaigns-mine">My companies</Link></li>
-											<li><Link to="/assets/batchtransfer">Transfer equity</Link></li>
-											<li><Link to="/assets/issuance">Issue equity</Link></li>
+											<li><Link to="/companies-campaigns-mine">My Companies</Link></li>
+											<li><Link to="/assets/batchtransfer">Transfer Equity</Link></li>
+											<li><Link to="/assets/issuance">Issue Equity</Link></li>
 											<li role="separator" className="divider"></li>
-											<li><Link to="/company/start">Set up company</Link></li>
+											<li><Link to="/company/start">Set up Company</Link></li>
 										</ul>
 									}
 
@@ -69,12 +69,27 @@ class HeaderNav extends Component {
 										{isLogined && <Link to="/transaction-summary/trades">My Transactions</Link>}	
 									</a>	
 								</li>
-                <li>
-                  <a>
-                    {!isLogined && <Login />}
-                    {isLogined && <Logout />}
-                  </a>
-                </li>
+								{
+									!isLogined && 
+									<li>
+										<a><Login /></a>	
+									</li>
+								}	
+								{
+									isLogined &&
+										<li className="dropdown">
+											<a
+												className="dropdown-toggle"
+												data-toggle="dropdown">
+												<span className="glyphicon glyphicon-cog"></span>
+											</a>
+											<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
+												<li><Link to="/settings/wallet">My Asset Wallet</Link></li>
+												<li role="separator" className="divider"></li>
+												<li><a><Logout /></a></li>
+											</ul>
+										</li>
+								}
                 <li>
                   <a>
                     {!isLogined && <Signup />}
