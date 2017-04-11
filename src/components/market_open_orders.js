@@ -13,6 +13,7 @@ import { CountryMap } from './countries';
 import { FetchAllOpenOrders, MakeBuyAssetOffer } from '../actions/trading_action';
 import { FetchCompanyByAssetCode } from '../actions/company_action';
 import { FetchWallet } from '../actions/wallet_action';
+import { AlertGlobal, ALERT_ERROR } from '../actions/alert_action';
 import {
 	SignAndTransferTokenForOrder
 } from '../actions/trading_action';
@@ -50,6 +51,21 @@ class MarketOpenOrders extends Component {
 
 	formatOrders(orders) {
 		var self = this;
+		var walletCreationAlert = (
+			<div>
+				Please create an&nbsp;
+				<Link 
+					to="/settings/wallet" 
+					style={{
+						"text-decoration": "underline",
+						"color": "#a94442",
+						"font-style": "italic"}}>
+					Asset Wallet
+				</Link> 
+					&nbsp;before making trade.	
+			</div>
+		);
+
 		return orders.map(function(order) {
 			var o = {};
 			o.OrderId = order.OrderId;
@@ -61,11 +77,19 @@ class MarketOpenOrders extends Component {
 					<button
 						className="btn btn-primary btn-light-green btn-light-green-primary"
 						onClick={() => {
-							self.setState({
-								selectedOrderId: order.OrderId,
-								selectedOrderType: 'sell',
-								showModal: true
-							})
+							if (!self.props.Wallet.ID) {
+								self.props.AlertGlobal({
+									content: walletCreationAlert,
+									type: ALERT_ERROR
+								})
+							}
+							else {
+								self.setState({
+									selectedOrderId: order.OrderId,
+									selectedOrderType: 'sell',
+									showModal: true
+								})
+							}
 						}}>
          		BUY  
 					</button>
@@ -76,11 +100,19 @@ class MarketOpenOrders extends Component {
 					<button
 						className="btn btn-primary btn-blue btn-blue-primary"
 						onClick={() => {
-							self.setState({
-								selectedOrderId: order.OrderId, 
-								selectedOrderType: 'buy',
-								showModal: true
-							})
+							if (!self.props.Wallet.ID) {
+								self.props.AlertGlobal({
+									content: walletCreationAlert,
+									type: ALERT_ERROR
+								})
+							}
+							else {
+								self.setState({
+									selectedOrderId: order.OrderId, 
+									selectedOrderType: 'buy',
+									showModal: true
+								})
+							}
 						}}>
          		SELL  
 					</button>
@@ -175,6 +207,7 @@ class MarketOpenOrders extends Component {
 					<br /><br />
 					
 					<Alert />
+					<br />
 
 					<div className="row">
 						<div className="col-md-6">
@@ -296,7 +329,8 @@ function mapDispatchToProps(dispatch) {
 		MakeBuyAssetOffer: MakeBuyAssetOffer,
 		FetchCompany: FetchCompanyByAssetCode,
 		SignAndTransferToken: SignAndTransferTokenForOrder,
-		FetchWallet: FetchWallet
+		FetchWallet: FetchWallet,
+		AlertGlobal: AlertGlobal
 	}, dispatch);
 }
 
