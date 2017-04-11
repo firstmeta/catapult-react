@@ -23,7 +23,7 @@ class FinanceSummary extends Component {
 			var t = {};
 			t.TxId = tx.TxId;
 			t.MoneyCode = tx.AssetMoneyCode;
-			if (tx.TxType === 'MAKEORDEROFFERIPG'){
+			if (tx.TxType === 'MAKEORDEROFFERIPG' || tx.TxType === 'MAKEORDEROFFER'){
 				t.Action = (
 					<div>
 						<p>BUY OFFER</p>
@@ -43,7 +43,7 @@ class FinanceSummary extends Component {
 							<span><strong>{tx.OrderId}</strong></span> 
 						</p>
 						{
-							tx.TxStatus === 'SUCCESSFUL' &&
+							tx.TxStatus === 'SUCCESSFUL' && tx.IpgName && 
 								<div>
 									<span>{tx.IpgName}:</span> <br />
 									<span className="font-small"><strong>{tx.IpgTxid}</strong></span> <br />
@@ -113,8 +113,31 @@ class FinanceSummary extends Component {
 				);
 			}
 			else if(tx.TxType === 'DEPOSIT'){
-				t.Action = 'DEPOSIT';
+				t.Action = ( 
+					<div>
+						<p>DEPOSIT</p>
+						{
+							tx.TxStatus === 'SUCCESSFUL'? 
+								<center><span className="fa fa-check status-success" ></span></center>
+								:
+								<center><span className="fa fa-close status-fail" ></span></center>
+						}
+					</div>
+				);
+
 				t.Credit = numeral(+tx.AmountNet).format('0,0.00');
+				t.Details = (
+					<div>
+						{
+							tx.TxStatus === 'SUCCESSFUL' && tx.IpgName && 
+								<div>
+									<span>{tx.IpgName}:</span> <br />
+									<span className="font-small"><strong>{tx.IpgTxid}</strong></span> <br />
+								</div>	
+						}
+						{tx.TxNote && <div>{tx.TxNote}</div>}	
+					</div>	
+				)
 			}
 			else if(tx.TxType === 'WITHDRAW') {
 				t.Action = 'WITHDRAW';
