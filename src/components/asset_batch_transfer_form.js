@@ -8,6 +8,7 @@ import { SearchUserByEmail } from '../actions/search_action';
 import { RedirectAssetBatchTransferConfirmation } from '../actions/asset_action';
 import Search from './search';
 import InputRowList from './input_row_list';
+import Spinner from './spinner';
 
 class AssetBatchTransferForm extends Component{
 	constructor(props) {
@@ -55,8 +56,15 @@ class AssetBatchTransferForm extends Component{
 	render() {
 		const { Balances, wallet, SearchingUser } = this.props;
 
-		if (Object.keys(Balances).length <= 0) {
-      return <div>Fetching your asset balances...</div>
+		if (!Balances || Object.keys(Balances).length <= 0) {
+			return (
+				<div className="main-panel">
+					<center>
+						<Spinner />
+						<i>Fetching your asset balances...</i>
+					</center>
+				</div>
+			)
     }
 
 		var searchDisplay = '';
@@ -124,7 +132,6 @@ class AssetBatchTransferForm extends Component{
 								searchFunc={_.debounce(term => this.props.SearchUser(term), 600)}
 								results={searchDisplay}
 								clearResults={() => {
-									console.log('clear');
 									searchDisplay=''
 								}}/>
 
