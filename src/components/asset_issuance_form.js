@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { RedirectAssetConfirmation } from '../actions/asset_action';
 import { FetchAllMyCompanies } from '../actions/company_action';
 import { ROOT_IMAGE_URL } from '../config';
+import Spinner from './spinner';
 
 class AssetIssuanceForm extends Component {
   constructor(props) {
@@ -45,8 +46,15 @@ class AssetIssuanceForm extends Component {
   render() {
     const { companies, wallet } = this.props;
 
-    if (companies.length <= 0) {
-      return <div></div>
+		if (!companies || companies.length <= 0) {
+			return (
+				<div className="main-panel">
+					<center>
+						<Spinner />
+						<i>Fetching your companies...</i>
+					</center>
+				</div>
+			)
     }
 
     return (
