@@ -19,8 +19,11 @@ class Logout extends Component {
 
 	render() {
 		return (
-			<div className="logout">
-				<span onClick={this.handleLogout} className="logout-name">
+			<div 
+				onClick={this.handleLogout} 
+				className="logout" 
+				style={{"padding": "3px 20px", "cursor" : "pointer"}}>
+				<span className="logout-name">
 					Logout
 				</span>
 			</div>

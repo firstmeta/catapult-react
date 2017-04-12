@@ -85,8 +85,8 @@ class HeaderNav extends Component {
 											</a>
 											<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
 												<li><Link to="/settings/wallet">My Asset Wallet</Link></li>
-												<li role="separator" className="divider"></li>
-												<li><a><Logout /></a></li>
+												<li role="separator" className="divider" style={{"margin": "4px 0"}}></li>
+												<li><Logout /></li>
 											</ul>
 										</li>
 								}
