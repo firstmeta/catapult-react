@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FetchAllMyCompanies } from '../actions/company_action';
 import { StartCampaign } from '../actions/campaign_action';
+import Spinner from './spinner';
 
 class CompaniesAndCampaignsMine extends Component {
 
@@ -52,7 +53,16 @@ class CompaniesAndCampaignsMine extends Component {
     const { companies } = this.props;
 
     if (!companies) {
-      return <div>Loading...</div>;
+			return (
+				<div className="companies-campaigns">
+					<center>
+            <h1>Your companies and campaigns at a glance</h1>
+						<Spinner />
+						<i>Fetching your companies and compaigns...</i> <br /><br /><br />
+					</center>
+				</div>
+
+			);
     }
 
     return (
