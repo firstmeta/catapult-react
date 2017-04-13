@@ -165,6 +165,7 @@ const AssetOrderNew = ({
                 	</button>
 
 									<ul className="dropdown-menu">
+										<li onClick={() => onInputChange({moneyCode: 'MYR'})}><a>MYR</a></li>	
 										<li onClick={() => onInputChange({moneyCode: 'SGD'})}><a>SGD</a></li>	
 									</ul>
 								</div>
