@@ -43,6 +43,7 @@ export function signupAccount(creds) {
 				localStorage.setItem(AUTH_TOKEN, res.body.AuthToken);
 				dispatch(signupSuccess());
 				dispatch(loginSuccess());
+				dispatch(push('/settings/wallet'));
 			}
 			else {
 				dispatch(signupFailure());
