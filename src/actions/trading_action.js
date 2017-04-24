@@ -15,6 +15,7 @@ export const OPEN_ORDER_FAILURE = 'OPEN_ORDER_FAILURE';
 export const ORDER_UPDATED = 'ORDER_UPDATED';
 export const MY_OPEN_ORDER = 'MY_OPEN_ORDER';
 export const MY_DEALING_ORDER = 'MY_DEALING_ORDER';
+export const MY_PREPARED_SIGNING_ORDERS = 'MY_PREPARED_SIGNING_ORDERS';
 export const ORDER_ASSET_TRANSFER_PREP = 'ORDER_ASSET_TRANSFER_PREP';
 export const ALL_OPEN_SELL_ORDERS = 'ALL_OPEN_SELL_ORDERS';
 export const ALL_OPEN_BUY_ORDERS = 'ALL_OPEN_BUY_ORDERS';
@@ -197,7 +198,62 @@ export function TransferTokenForAssetOrder({
 	};
 }
 
-export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
+export function SignAndTransferTokenForOrder({order, orderid, wallet, pwd}){
+	var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
+ 	var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
+ 	var tx =  bitcoin.Transaction.fromHex(order.UnsignedTxHex);
+ 	var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
+  txb.tx.ins.forEach(function(input, i) {
+	  txb.sign(i, keyPair);
+  });
+	
+	
+	var signedtx = txb.build();
+	var signedtxhash = signedtx.getId();
+	var signedtxhex = signedtx.toHex();
+	
+	var req = request
+		.post(`${ROOT_URL}/api/secure/trading/transfertokenforassetorder`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+	  .set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send({
+			"orderid": orderid,
+			"blockchaintx_hex": signedtxhex,
+			"blockchaintx_hash": signedtxhash
+		});
+
+	return dispatch => {
+		return req.end((err, res) => {
+			dispatch({
+				type: ORDER_UPDATED,
+					data: {
+						orderid: orderid,
+						timestamp: Date.now()
+					}
+			});
+			
+			if(res.status === 200) {
+				dispatch(AlertGlobal({
+					type: ALERT_SUCCESS,
+					content: res.body.Msg
+				}));	
+				dispatch(push('/transaction-summary/trades'));
+				dispatch(FetchAllMyPreparedSigningOrders());
+				dispatch(FetchAllMyDealingOrder());
+			}
+			else {
+				dispatch(AlertGlobal({
+					type: ALERT_ERROR,
+					content: res.body.Msg
+				}));	
+			}
+		});
+	}
+	
+}
+
+export function SignAndTransferTokenForOrder2({orderid, wallet, pwd}){
 	var params = {
 		order_id: orderid
 	}
@@ -375,6 +431,33 @@ export function FetchAllMyDealingOrder() {
 			}
 		})
 	}
+}
+
+export function FetchAllMyPreparedSigningOrders() {
+	var url = `${ROOT_URL}/api/secure/trading/fetch_all_prepareed_signing_orders`
+
+	var req = request
+		.get(url)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.accept('application/json')
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200) {
+				dispatch({
+					type: MY_PREPARED_SIGNING_ORDERS,
+					data: res.body
+				})
+			}
+			else {
+				dispatch(AlertGlobal({
+					content: res.body.msg,
+					type: ALERT_ERROR
+				}))
+			}
+		})
+	}
+
 }
 
 export function FetchAllOpenOrders(assetCode, orderType) {
