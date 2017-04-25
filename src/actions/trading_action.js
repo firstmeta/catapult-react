@@ -198,7 +198,7 @@ export function TransferTokenForAssetOrder({
 	};
 }
 
-export function SignAndTransferTokenForOrder({order, orderid, wallet, pwd}){
+export function SignAndTransferTokenForOrder2({order, orderid, wallet, pwd}){
 	var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
  	var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
  	var tx =  bitcoin.Transaction.fromHex(order.UnsignedTxHex);
@@ -253,12 +253,13 @@ export function SignAndTransferTokenForOrder({order, orderid, wallet, pwd}){
 	
 }
 
-export function SignAndTransferTokenForOrder2({orderid, wallet, pwd}){
+export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 	var params = {
-		order_id: orderid
+		orderid: orderid
 	}
 	var req = request
-							.post(`${ROOT_URL}/api/secure/trading/acceptbuyassetoffer`)
+	//.post(`${ROOT_URL}/api/secure/trading/acceptbuyassetoffer`)
+		.post(`${ROOT_URL}/api/secure/trading/prepare_asset_transfer`)
 							.set('Authorization', localStorage.getItem(AUTH_TOKEN))
 							.set('Content-Type', 'application/json')
 							.accept('application/json')
@@ -284,7 +285,8 @@ export function SignAndTransferTokenForOrder2({orderid, wallet, pwd}){
 			var t = res.body;
 			var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
 	  	var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
-	  	var tx =  bitcoin.Transaction.fromHex(t.prepared_tx);
+			//var tx =  bitcoin.Transaction.fromHex(t.prepared_tx);
+	  	var tx =  bitcoin.Transaction.fromHex(t.unsigned_tx_hex);
 	  	var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
 	  	    txb.tx.ins.forEach(function(input, i) {
 	  	      txb.sign(i, keyPair);
@@ -301,21 +303,25 @@ export function SignAndTransferTokenForOrder2({orderid, wallet, pwd}){
 	  	  .set('Content-Type', 'application/json')
 				.accept('application/json')
 				.send({
-					"amount": t.amount,
-					"asset_code": t.asset_code,
-					"asset_id": t.asset_id,
-					"blockchain_asset_id": t.blockchain_asset_id, 
-					"from_addr": t.from_addr,
-					"from_addr_id": t.from_addr_id,
-					"from_addr_rand_id": t.from_addr_rand_id,
-					"funding_addr_rand_id": t.funding_addr_rand_id,
-					"order_id": orderid,
+					"orderid": orderid,
 					"blockchaintx_hex": signedtxhex,
-					"blockchaintx_hash": signedtxhash,
-					"colored_output_indexes": t.colored_output_indexes,
-					"to_addr": t.to_addr,
-					"to_addr_id": t.to_addr_id,
-					"to_addr_rand_id": t.to_addr_rand_id 
+					"blockchaintx_hash": signedtxhash
+
+					//		"amount": t.amount,
+					//		"a"asset_code": t.asset_code,
+					//		"a"asset_id": t.asset_id,
+					//		"a"blockchain_asset_id": t.blockchain_asset_id, 
+					//		"a"from_addr": t.from_addr,
+					//		"a"from_addr_id": t.from_addr_id,
+					//		"a"from_addr_rand_id": t.from_addr_rand_id,
+					//		"a"funding_addr_rand_id": t.funding_addr_rand_id,
+					//		"a"order_id": orderid,
+					//		"a"blockchaintx_hex": signedtxhex,
+					//		"a"blockchaintx_hash": signedtxhash,
+					//		"a"colored_output_indexes": t.colored_output_indexes,
+					//		"a"to_addr": t.to_addr,
+					//		"a"to_addr_id": t.to_addr_id,
+					//		"a"to_addr_rand_id": t.to_addr_rand_id 
 				});
 			
 			return req2.end((err, res) => {
