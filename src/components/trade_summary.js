@@ -71,8 +71,8 @@ class TradeSummary extends Component {
 			o.MoneyNet = numeral(order.MoneyNet).format('0,0.00');
 			
 			switch(order.OrderStatus) {
-				case 'TFRPREPARED':
-					o.OrderStatus = 'SIGNING';
+				case 'BC_FEE_FUNDED':
+					o.OrderStatus = 'SIGNING READY';
 					break;
 				case 'BLKCONFIRMING':
 					o.OrderStatus = 'CONFIRMING';
@@ -104,7 +104,7 @@ class TradeSummary extends Component {
 				);
 				o.CreatedOn = dateformat(order.CreatedOn, 'mmm d, yyyy HH:MM:ss');
 			}
-			if(order.OrderType === 'SELLASSET' && order.OrderStatus === 'TFRPREPARED') {
+			if(order.OrderType === 'SELLASSET' && order.OrderStatus === 'BC_FEE_FUNDED') {
 				if(order.IsCreator) {
 					o.Btn = (
 						<button
