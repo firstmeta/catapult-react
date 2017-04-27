@@ -111,23 +111,25 @@ export function MakeBuyAssetOffer({orderid, pwd}) {
 	}
 
 }
-export function AcceptBuyAssetOffer({orderid}){
+export function AcceptBuyAssetOrder({orderid}){
 	var params = {
 		order_id: orderid
 	}
 	var req = request
-							.post(`${ROOT_URL}/api/secure/trading/acceptbuyassetoffer`)
-							.set('Authorization', localStorage.getItem(AUTH_TOKEN))
-							.set('Content-Type', 'application/json')
-							.accept('application/json')
-							.send(params);
+		.post(`${ROOT_URL}/api/secure/trading/acceptbuyassetorder`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send(params);
+
 	return dispatch => {
 		return req.end((err, res) => {
 			if(res.status === 200) {
 				dispatch({
 					type: ORDER_ASSET_TRANSFER_PREP,
 					data: res.body
-				})
+				});
+				dispatch(push('/transaction-summary/trades'));
 			}
 			else {
 				dispatch(AlertGlobal({
@@ -138,6 +140,8 @@ export function AcceptBuyAssetOffer({orderid}){
 		})
 	}	
 }
+
+
 export function TransferTokenForAssetOrder({
 	wallet, orderid, amount, assetCode, assetId, blockchainAssetId,
 	fromAddr, fromAddrId, fromAddrRandId, unsignedTxHex, coloredOutputIndexes,
@@ -306,22 +310,6 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 					"orderid": orderid,
 					"blockchaintx_hex": signedtxhex,
 					"blockchaintx_hash": signedtxhash
-
-					//		"amount": t.amount,
-					//		"a"asset_code": t.asset_code,
-					//		"a"asset_id": t.asset_id,
-					//		"a"blockchain_asset_id": t.blockchain_asset_id, 
-					//		"a"from_addr": t.from_addr,
-					//		"a"from_addr_id": t.from_addr_id,
-					//		"a"from_addr_rand_id": t.from_addr_rand_id,
-					//		"a"funding_addr_rand_id": t.funding_addr_rand_id,
-					//		"a"order_id": orderid,
-					//		"a"blockchaintx_hex": signedtxhex,
-					//		"a"blockchaintx_hash": signedtxhash,
-					//		"a"colored_output_indexes": t.colored_output_indexes,
-					//		"a"to_addr": t.to_addr,
-					//		"a"to_addr_id": t.to_addr_id,
-					//		"a"to_addr_rand_id": t.to_addr_rand_id 
 				});
 			
 			return req2.end((err, res) => {
@@ -338,7 +326,7 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 						type: ALERT_SUCCESS,
 						content: res.body.Msg
 					}));	
-					dispatch(push('/transaction-summary/trades'));
+					dispatch(FetchAllMyPreparedSigningOrders());
 					dispatch(FetchAllMyDealingOrder());
 				}
 				else {

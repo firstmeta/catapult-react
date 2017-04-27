@@ -104,8 +104,9 @@ class TradeSummary extends Component {
 				);
 				o.CreatedOn = dateformat(order.CreatedOn, 'mmm d, yyyy HH:MM:ss');
 			}
-			if(order.OrderType === 'SELLASSET' && order.OrderStatus === 'BC_FEE_FUNDED') {
-				if(order.IsCreator) {
+			if(order.OrderStatus === 'BC_FEE_FUNDED') {
+				if((order.OrderType === 'SELLASSET' && order.IsCreator) 
+					|| (order.OrderType === 'BUYASSET' && !order.IsCreator)) {
 					o.Btn = (
 						<button
 							className="btn btn-primary btn-yellow btn-yellow-primary"

@@ -15,7 +15,7 @@ import { FetchCompanyByAssetCode } from '../actions/company_action';
 import { FetchWallet } from '../actions/wallet_action';
 import { AlertGlobal, ALERT_ERROR } from '../actions/alert_action';
 import {
-	SignAndTransferTokenForOrder
+	AcceptBuyAssetOrder
 } from '../actions/trading_action';
 
 class MarketOpenOrders extends Component {
@@ -167,10 +167,8 @@ class MarketOpenOrders extends Component {
 							});
 						}
 						else {
-							this.props.SignAndTransferToken({
+							this.props.AcceptBuyAssetOrder({
 								orderid: this.state.selectedOrderId, 
-								wallet: Wallet, 
-								pwd: this.state.pwd
 							});
 						}
 					}}
@@ -328,7 +326,7 @@ function mapDispatchToProps(dispatch) {
 		FetchAllOpenOrders: FetchAllOpenOrders,
 		MakeBuyAssetOffer: MakeBuyAssetOffer,
 		FetchCompany: FetchCompanyByAssetCode,
-		SignAndTransferToken: SignAndTransferTokenForOrder,
+		AcceptBuyAssetOrder: AcceptBuyAssetOrder,
 		FetchWallet: FetchWallet,
 		AlertGlobal: AlertGlobal
 	}, dispatch);
