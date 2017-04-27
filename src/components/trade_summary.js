@@ -13,6 +13,7 @@ import { FetchWallet } from '../actions/wallet_action';
 import {
 	FetchAllMyOpenOrder, 
 	FetchAllMyDealingOrder,
+	FetchAllMyFilledOrCancelledOrders,
 	FetchAllMyPreparedSigningOrders,
 	SignAndTransferTokenForOrder,
 	CancelOpenedOrder
@@ -49,6 +50,7 @@ class TradeSummary extends Component {
 		this.props.FetchAllMyPreparedSigningOrders();
 		this.props.FetchAllMyDealingOrder();
 		this.props.FetchAllMyOpenOrder();
+		this.props.FetchAllMyFilledOrCancelledOrders();
 		if(!this.props.Wallet.ID) {
       this.props.FetchWallet();
     }
@@ -146,7 +148,9 @@ class TradeSummary extends Component {
 	}
 
 	render() {
-		const { SigningOrders, OpenOrders, DealingOrders, OrderUpdated, Wallet  } = this.props;
+		const { 
+			SigningOrders, OpenOrders, DealingOrders, FilledCancelledOrders, OrderUpdated, Wallet  
+		} = this.props;
 
 		if (!OpenOrders && !DealingOrders && !SigningOrders){ 
       return (
@@ -314,6 +318,41 @@ class TradeSummary extends Component {
         		   </div>
 						</div>
 					</div>)}
+					
+					<br />
+
+					{FilledCancelledOrders && FilledCancelledOrders.length > 0 &&
+						(<div>
+							<div className="row">
+								<div className="col-md-10 col-md-offset-1">
+									<h4>COMPLETED / CANCELLED ORDERS</h4>	
+								</div>
+							</div>
+        		  <div className="row">
+        		    <div className="col-md-10 col-md-offset-1">
+        		      <div>
+										<BootstrapTable 
+											data={this.formatOrders(FilledCancelledOrders)} 
+											striped={true} hover={true} 
+											className="table" 
+											pagination={true} 
+											options={{sizePerPage: 5}}
+											tableStyle={{border: 'none'}}>
+        		          <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
+											<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
+											<TableHeaderColumn dataField="Cancel" width="100"></TableHeaderColumn>
+									</BootstrapTable>
+        		     </div>
+        		   </div>
+						</div>
+					</div>)}
+
         </div>
       </div>
     )
@@ -326,6 +365,7 @@ function mapStateToProps(state) {
 		OpenOrders: state.TradingState.AllMyOpenOrders,
 		DealingOrders: state.TradingState.AllMyDealingOrders,
 		SigningOrders: state.TradingState.AllMyPreparedSigningOrders,
+		FilledCancelledOrders: state.TradingState.AllMyFilledCancelledOrders,
 		AssetTransferPrep: state.TradingState.OrderAssetTransferPrep,
 		Wallet: state.WalletState.wallet,
 		OrderUpdated: state.TradingState.OrderUpdated
@@ -336,6 +376,7 @@ function mapDispatchToProps(dispatch) {
 		FetchAllMyOpenOrder: FetchAllMyOpenOrder,
 		FetchAllMyDealingOrder: FetchAllMyDealingOrder,
 		FetchAllMyPreparedSigningOrders: FetchAllMyPreparedSigningOrders,
+		FetchAllMyFilledOrCancelledOrders: FetchAllMyFilledOrCancelledOrders,
 		SignAndTransferToken: SignAndTransferTokenForOrder,
 		FetchWallet: FetchWallet,
 		CancelOpenedOrder: CancelOpenedOrder

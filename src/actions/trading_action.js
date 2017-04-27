@@ -15,6 +15,7 @@ export const OPEN_ORDER_FAILURE = 'OPEN_ORDER_FAILURE';
 export const ORDER_UPDATED = 'ORDER_UPDATED';
 export const MY_OPEN_ORDER = 'MY_OPEN_ORDER';
 export const MY_DEALING_ORDER = 'MY_DEALING_ORDER';
+export const MY_FILLED_CANCELLED_ORDERS = 'MY_FILLED_CANCELLED_ORDERS';
 export const MY_PREPARED_SIGNING_ORDERS = 'MY_PREPARED_SIGNING_ORDERS';
 export const ORDER_ASSET_TRANSFER_PREP = 'ORDER_ASSET_TRANSFER_PREP';
 export const ALL_OPEN_SELL_ORDERS = 'ALL_OPEN_SELL_ORDERS';
@@ -453,6 +454,34 @@ export function FetchAllMyPreparedSigningOrders() {
 	}
 
 }
+
+export function FetchAllMyFilledOrCancelledOrders() {
+	var url = `${ROOT_URL}/api/secure/trading/fetch_all_my_filled_cancelled_orders`
+
+	var req = request
+		.get(url)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.accept('application/json')
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200) {
+				dispatch({
+					type: MY_FILLED_CANCELLED_ORDERS,
+					data: res.body
+				})
+			}
+			else {
+				dispatch(AlertGlobal({
+					content: res.body.msg,
+					type: ALERT_ERROR
+				}))
+			}
+		})
+	}
+
+}
+
 
 export function FetchAllOpenOrders(assetCode, orderType) {
 	var req = request

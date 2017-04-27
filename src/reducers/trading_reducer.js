@@ -1,6 +1,7 @@
 import {
 	OPEN_ORDER_SUCCESS, OPEN_ORDER_FAILURE,
-	MY_OPEN_ORDER, MY_DEALING_ORDER, MY_PREPARED_SIGNING_ORDERS,
+	MY_OPEN_ORDER, MY_DEALING_ORDER, 
+	MY_PREPARED_SIGNING_ORDERS, MY_FILLED_CANCELLED_ORDERS,
 	ORDER_ASSET_TRANSFER_PREP, ORDER_UPDATED,
 	ALL_OPEN_SELL_ORDERS, ALL_OPEN_BUY_ORDERS
 } from '../actions/trading_action';
@@ -12,6 +13,7 @@ export default function(
 		OrderAssetTransferPrep: '',
 		OrderUpdated: '',
 		AllMyPreparedSigningOrders: '',
+		AllMyFilledCancelledOrders: '',
 	}, action){
 		switch(action.type){
 			case OPEN_ORDER_SUCCESS: 
@@ -29,6 +31,10 @@ export default function(
 			case MY_PREPARED_SIGNING_ORDERS:
 				return Object.assign({}, state, {
 					AllMyPreparedSigningOrders: action.data	
+				});
+			case MY_FILLED_CANCELLED_ORDERS:
+				return Object.assign({}, state, {
+					AllMyFilledCancelledOrders: action.data	
 				});
 			case ORDER_ASSET_TRANSFER_PREP:
 				return Object.assign({}, state, {
