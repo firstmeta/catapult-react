@@ -338,6 +338,33 @@ export function ProceedAssetIssuance({
   }
 }
 
+export function InitializeAssetBatchTransfer({transferringAsset}) {
+	var receivers =  transferringAsset.receivers.map(r => {
+		return {
+			address: r.address,
+			addressId: r.addressId,
+			addressRandId: r.addressRandId,
+			amount: r.value,
+			assetId: transferringAsset.blockchainAssetID
+		}
+	});
+	
+	var params = {
+		assetID: transferringAsset.assetID,
+		blockchainAssetID: transferringAsset.blockchainAssetID,
+		assetCode: transferringAsset.assetCode,
+		receivers: receivers 
+	}
+
+	var req = request
+		.post(`${ROOT_URL}/api/secure/asset/initialize_asset_batch_transfer_tx`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send(params);		
+
+}
+
 export function ProceedBatchAssetTransfer({transferringAsset, wallet, pwd}) {
 	var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
 
