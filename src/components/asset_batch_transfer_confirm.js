@@ -6,7 +6,10 @@ import numeral from 'numeral';
 import Spinner from './spinner';
 import Alert from './global_alert';
 
-import { ProceedBatchAssetTransfer } from '../actions/asset_action';
+import {
+	InitializeAssetBatchTransfer,
+	ProceedBatchAssetTransfer 
+} from '../actions/asset_action';
 
 class AssetBatchTransferConfirm extends Component {
 
@@ -56,7 +59,7 @@ class AssetBatchTransferConfirm extends Component {
 								<input type="password" ref="pwd" />
 								<button 
 									className="btn btn-primary btn-green btn-green-primary full-width"
-									onClick={() => this.props.ProceedBatchTransfer({
+									onClick={() => this.props.InitializeBatchTransfer({
 										transferringAsset: this.props.TransferringAsset,
 										wallet: this.props.wallet,
 										pwd: this.refs.pwd.value
@@ -80,6 +83,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
+		InitializeBatchTransfer: InitializeAssetBatchTransfer,
 		ProceedBatchTransfer: ProceedBatchAssetTransfer
 	}, dispatch);
 }
