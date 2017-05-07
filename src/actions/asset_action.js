@@ -20,6 +20,7 @@ export const FETCH_ASSET_BALANCES = 'FETCH_ASSET_BALANCES';
 export const FETCH_ALL_ASSETS = 'FETCH_ALL_ASSETS';
 export const FETCH_ASSET_TXS = 'FETCH_ASSET_TXS';
 export const FETCH_BATCH_ASSET_TXS = 'FETCH_BATCH_ASSET_TXS';
+export const FETCH_ASSET_ISSUING_TXS = 'FETCH_ASSET_ISSUING_TXS';
 
 export const REDIRECT_ASSET_ISSUANCE_CONFIRMATION = 'REDIRECT_ASSET_ISSUANCE_CONFIRMATION';
 export const PREPARE_ASSET_ISSUE_SUCCESS = 'PREPARE_ASSET_ISSUE_SUCCESS';
@@ -86,6 +87,112 @@ export function RedirectAssetBatchTransferConfirmation(transferringAsset) {
   }
 }
 
+export function InitializeAssetIssuance({
+	issuer, name, code, amount, logoUrl, desc, address, city, country, wallet
+}) {
+	var assetPrepareReq = request
+			.post(`${ROOT_URL}/api/secure/asset/initialize_asset_issuance_tx`)
+				.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+        .set('Content-Type', 'application/json')
+   		 	.accept('application/json')
+				.send({
+					asset_code: code,
+					asset_name: name,
+					issuer_name: issuer,
+					desc: desc,
+					logo_url: logoUrl,
+					asset_amount: amount
+				});
+
+	return dispatch => {
+		return assetPrepareReq.end((err, res) => {
+			var data = res.body;
+    	if(res.status === 200) {
+      	dispatch(AlertGlobal({content: res.text, type: ALERT_SUCCESS}));
+			}
+			else {
+      	dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+			}
+		});	
+	}
+}
+
+export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
+	var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
+
+	if (!prikey) {
+		return dispatch => {
+			dispatch(AlertGlobal({
+				content: 'Wrong decryption password. Please try again.',
+				type: ALERT_ERROR
+			}));
+		}	
+	}
+
+	var req = request
+		.post(`${ROOT_URL}/api/secure/asset/prepare_asset_issuance_tx`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send({
+			txid: txID
+		});		
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if (res.status !== 200) {
+				dispatch(AlertGlobal({
+					content: res.body.Msg,
+					type: ALERT_ERROR
+				}));
+				return;
+			}
+			
+			var t = res.body;
+			var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
+	  	var tx =  bitcoin.Transaction.fromHex(t.unsignedTxHex);
+	  	var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
+	  	    txb.tx.ins.forEach(function(input, i) {
+	  	      txb.sign(i, keyPair);
+	  	    });
+	  	var signedtx = txb.build();
+	  	var signedtxhash = signedtx.getId();
+			var signedtxhex = signedtx.toHex();
+
+			var req2 = request
+				.post(`${ROOT_URL}/api/secure/asset/proceed_asset_issuance_tx`)
+				.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+				.set('Content-Type', 'application/json')
+				.accept('application/json')
+				.send({
+					txid: txID,
+					signedTxHash: signedtxhash,
+					unsignedTxHex: t.unsignedTxHex,
+					signedTxHex: signedtxhex,
+					coloredOutputIndexes: t.coloredOutputIndexes,
+				});
+
+			return req2.end((err, res) => {
+				if(res.status === 200) {
+					dispatch(AlertGlobal({
+						type: ALERT_SUCCESS,
+						content: res.body.Msg
+					}));	
+					//dispatch(push('/transaction-summary/assets'));
+				}
+				else {
+					dispatch(AlertGlobal({
+						type: ALERT_ERROR,
+						content: res.body.Msg
+					}));	
+				}
+			})
+
+	
+		});
+	}
+}
+
 export function PrepareIssueAsset({
 	issuer, name, code, amount, logoUrl, desc, address, city, country, wallet}) {
 
@@ -117,7 +224,7 @@ export function PrepareIssueAsset({
 					data.desc = desc;
 					//data.metadata = issueTx.metadata;
 
-           dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
+          dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
         }
         else {
           dispatch(AlertGlobal({
@@ -335,9 +442,6 @@ export function SignAndSendBatchAssetTransfer({txID, wallet, pwd}) {
 			}));
 		}	
 	}
-
-	console.log(txID);
-	console.log(pwd);
 
 	var req = request
 		.post(`${ROOT_URL}/api/secure/asset/prepare_asset_batch_transfer_tx`)
@@ -768,10 +872,27 @@ export function FetchBatchAssetTransferTXs() {
 	return dispatch => {
 		return req.end((err, res) => {
 			if (res.status === 200 && res.body) {
-
-			console.log(res.body);
 				dispatch({
 					type: FETCH_BATCH_ASSET_TXS,
+					data: res.body
+				});
+			}
+		});
+	}
+}
+
+export function FetchAssetIssuingTXs() {
+	var req = request
+		.get(`${ROOT_URL}/api/secure/asset/fetch_asset_issuing_txs`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.accept('application/json');
+
+	return dispatch => {
+		return req.end((err, res) => {
+			console.log(res.body);
+			if (res.status === 200 && res.body) {
+				dispatch({
+					type: FETCH_ASSET_ISSUING_TXS,
 					data: res.body
 				});
 			}

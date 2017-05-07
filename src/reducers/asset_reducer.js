@@ -1,6 +1,6 @@
 import {
 	FETCH_ASSET_BALANCES, FETCH_ALL_ASSETS, 
-	FETCH_ASSET_TXS, FETCH_BATCH_ASSET_TXS,
+	FETCH_ASSET_TXS, FETCH_BATCH_ASSET_TXS, FETCH_ASSET_ISSUING_TXS,
   REDIRECT_ASSET_ISSUANCE_CONFIRMATION, REDIRECT_ASSET_ISSUANCE_RESULT,
   PREPARE_ASSET_ISSUE_SUCCESS,
   ASSET_ISSUE_SUCCESS, ASSET_ISSUE_FAILURE,
@@ -20,6 +20,7 @@ export default function(
 		BatchTransferringAsset: '',
 		AssetTXs: [],
 		BatchAssetTXs: [],
+		AssetIssuingTXs: []
   },
   action) {
 		switch(action.type) {
@@ -35,6 +36,10 @@ export default function(
       return Object.assign({}, state, {
         AssetTXs: action.data
 			});
+		case FETCH_ASSET_ISSUING_TXS:
+      return Object.assign({}, state, {
+        AssetIssuingTXs: action.data
+		});
 		case FETCH_BATCH_ASSET_TXS:
 			return Object.assign({}, state, {
 				BatchAssetTXs: action.data

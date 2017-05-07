@@ -4,25 +4,28 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import numeral from 'numeral';
 import Spinner from './spinner';
-import { PrepareIssueAsset, RedirectAssetIssuanceResult } from '../actions/asset_action';
+import { 
+	PrepareIssueAsset, 
+	RedirectAssetIssuanceResult,
+	InitializeAssetIssuance
+} from '../actions/asset_action';
 
 class AssetIssuanceConfirm extends Component {
 
   componentDidMount() {
-    this.props.PrepareIssueAsset(this.props.IssuingAsset);
   }
 
   render() {
 
     const { IssuingAsset, wallet } = this.props;
 
-    if(!IssuingAsset.txHex) {
-      return (
-        <div className="main-panel-spinner">
-          <Spinner />
-        </div>
-      )
-    }
+		//    if(!IssuingAsset.txHex) {
+		//      return (
+		//        <div className="main-panel-spinner">
+		//          <Spinner />
+		//        </div>
+		//      )
+		//    }
 
     return (
       <div className="main-panel">
@@ -71,13 +74,14 @@ class AssetIssuanceConfirm extends Component {
                   ref="pwd" />
                   <button
                     className="btn btn-primary btn-green btn-green-primary full-width"
-                    onClick={() => this.props.RedirectAssetIssuanceResult({
+                    onClick={() => this.props.InitializeAssetIssuance({
                       issuedAddressID: wallet.ID,
                       issuedAddressRandID: IssuingAsset.assetAddressRandID,
-                      issuedAddress: IssuingAsset.assetAddress,
+											issuedAddress: IssuingAsset.assetAddress,
+											issuer: IssuingAsset.issuer,
                       code: IssuingAsset.code,
                       name: IssuingAsset.name,
-                      issuedAmount: IssuingAsset.amount,
+                      amount: IssuingAsset.amount,
                       logoUrl: IssuingAsset.logoUrl,
                       desc: IssuingAsset.desc,
                       blockchainAssetId: IssuingAsset.assetId,
@@ -107,7 +111,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     PrepareIssueAsset: PrepareIssueAsset,
-    RedirectAssetIssuanceResult: RedirectAssetIssuanceResult
+		RedirectAssetIssuanceResult: RedirectAssetIssuanceResult,
+		InitializeAssetIssuance: InitializeAssetIssuance
   }, dispatch);
 }
 
