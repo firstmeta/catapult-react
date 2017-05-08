@@ -52,19 +52,12 @@ class AssetBatchTransferConfirm extends Component {
 
 								<br />
 
-								<label>
-									Enter your decryption password to proceed, 
-									or <Link to="/assets/batchtransfer"><i><u>go back</u></i></Link> to amend.
-                </label>
-								<input type="password" ref="pwd" />
 								<button 
 									className="btn btn-primary btn-green btn-green-primary full-width"
 									onClick={() => this.props.InitializeBatchTransfer({
 										transferringAsset: this.props.TransferringAsset,
-										wallet: this.props.wallet,
-										pwd: this.refs.pwd.value
 									})}>
-									Proceed to transfer	
+									Initialize Asset Transfer	
 								</button>
 							</div>
 						</div>

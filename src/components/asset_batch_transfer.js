@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import dateformat from 'dateformat';
 
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 import Spinner from './spinner';
 import InputModal from './input_modal';
-import Alert from './global_alert';
 
 import Search from './search';
 import AssetBatchTransferForm from './asset_batch_transfer_form';
@@ -47,12 +47,15 @@ class AssetBatchTransfer extends Component {
 			var t = {};
 			t.TxID = tx.ID;
 			t.Description = 'Batch Transfer';
-			t.Time = tx.CreatedOn;
+			t.Time = dateformat(tx.CreatedOn, 'mmm d, yyyy HH:MM:ss');
 			t.Status = (tx.TxStatus === 'BC_FEE_FUNDING' ? 'Signing preparing' : "Ready for signing");
 			if (tx.TxStatus === 'TX_PREPARING') {
 				t.Btn = (
 					<button
 						className="btn btn-primary btn-yellow btn-yellow-primary"
+						style={{
+							"width": "90px", "max-height": "26px", "font-size": "12px", "padding": "2px 6px"
+						}}
 						onClick={() => {
 							self.setState({
 								btnAction: 'signsend', 
@@ -66,7 +69,9 @@ class AssetBatchTransfer extends Component {
 						}   
 					</button>
 				)
-
+			}
+			else {
+				t.Btn = <i>Preparing...</i>;
 			}
 			return t;
 		});
@@ -78,7 +83,6 @@ class AssetBatchTransfer extends Component {
 		return (
 			<div className="asset-batch-transfer">
 				<div className="container-fluid">
-					<Alert />
 					<InputModal
 						title={
 							this.state.btnAction === 'cancel' ?
@@ -113,21 +117,21 @@ class AssetBatchTransfer extends Component {
 					
 				{BatchAssetTXs && BatchAssetTXs.length > 0 &&
 					<div className="row">
-  			    <div className="col-md-10 col-md-offset-1">
+  			    <div className="col-md-6 col-md-offset-3">
   			      <div>
 								<BootstrapTable 
 									data={this.formatTransferTXs(BatchAssetTXs)} 
 									striped={true} hover={true} 
 									className="table" 
-									pagination={true} 
+									pagination={false} 
 									options={{sizePerPage: 5}}
 									tableStyle={{border: 'none'}}>
-									<TableHeaderColumn isKey={true} dataField="TxID" width="125px"></TableHeaderColumn>
+									<TableHeaderColumn isKey={true} dataField="TxID" width="115px"></TableHeaderColumn>
 									<TableHeaderColumn dataField="Description" width="125px"></TableHeaderColumn>
 									<TableHeaderColumn dataField="Time" width="125px"></TableHeaderColumn>
 									<TableHeaderColumn 
 										dataField="Btn"
-										width="100">
+										width="110">
 									</TableHeaderColumn>
   			        </BootstrapTable>
   			      </div>

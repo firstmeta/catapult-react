@@ -202,6 +202,15 @@ input {
     box-shadow: none;
 }
 
+/* table */
+.react-bs-table tbody tr td {
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 1px solid #ddd;
+	padding: 8px 4px !important;
+	text-align: center !important;
+}
 /* paging */
 .react-bs-table-pagination {
 	margin: 0px 10px !important;
