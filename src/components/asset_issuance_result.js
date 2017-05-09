@@ -9,14 +9,10 @@ import { COLOREDCOINS_EXPLORER_URL } from '../config';
 
 class AssetIssuanceResult extends Component {
 
-  componentDidMount() {
-    this.props.ProceedAssetIssuance(this.props.IssuingAsset);
-  }
-
   render() {
     const { IssuedAsset, wallet } = this.props;
 
-    if(!IssuedAsset.assetId) {
+    if(!IssuedAsset.blockchainAssetId) {
       return (
         <div className="main-panel-spinner">
           <Spinner />
@@ -41,10 +37,10 @@ class AssetIssuanceResult extends Component {
                 <p>{numeral(IssuedAsset.amount).format('0,0')}</p>
 
                 <label>Logo</label>
-                <p><img src={IssuedAsset.imageUrl} /></p>
+                <p><img src={IssuedAsset.logoUrl} /></p>
 
                 <label>Description</label>
-                <p>{IssuedAsset.desc}</p>
+                <p>{IssuedAsset.description}</p>
 
                 <label>Issuing status</label>
                 <p>{IssuedAsset.status}</p>
@@ -54,7 +50,7 @@ class AssetIssuanceResult extends Component {
                 <label>Blockchain Asset ID</label>
                 <p>
                   <a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/asset/' + IssuedAsset.assetId}>
-                    {IssuedAsset.assetId}
+                    {IssuedAsset.blockchainAssetId}
                   </a>
                 </p>
 
@@ -76,7 +72,6 @@ class AssetIssuanceResult extends Component {
 function mapStateToProps(state) {
   return {
     wallet: state.WalletState.wallet,
-    IssuingAsset: state.AssetState.IssuingAsset,
     IssuedAsset: state.AssetState.IssuedAsset
   }
 }

@@ -19,14 +19,6 @@ class AssetIssuanceConfirm extends Component {
 
     const { IssuingAsset, wallet } = this.props;
 
-		//    if(!IssuingAsset.txHex) {
-		//      return (
-		//        <div className="main-panel-spinner">
-		//          <Spinner />
-		//        </div>
-		//      )
-		//    }
-
     return (
       <div className="main-panel">
         <div className="container-fluid">
@@ -54,45 +46,18 @@ class AssetIssuanceConfirm extends Component {
 
                 <hr />
 
-                <label>Blockchain Asset ID</label>
-                <p>{IssuingAsset.assetId}</p>
-
-                <label>Blockchain raw transaction</label>
-
-                <p>
-                  <textarea readonly
-                    rows="4"
-                    value={IssuingAsset.txHex}
-                    />
-                </p>
-
-                <label>
-                  Enter your decryption password to proceed, or <Link to="/assets/issuance"><i><u>go back</u></i></Link> to amend.
-                </label>
-                <input
-                  type="password"
-                  ref="pwd" />
-                  <button
+                <button
                     className="btn btn-primary btn-green btn-green-primary full-width"
                     onClick={() => this.props.InitializeAssetIssuance({
-                      issuedAddressID: wallet.ID,
-                      issuedAddressRandID: IssuingAsset.assetAddressRandID,
-											issuedAddress: IssuingAsset.assetAddress,
 											issuer: IssuingAsset.issuer,
                       code: IssuingAsset.code,
                       name: IssuingAsset.name,
                       amount: IssuingAsset.amount,
                       logoUrl: IssuingAsset.logoUrl,
                       desc: IssuingAsset.desc,
-                      blockchainAssetId: IssuingAsset.assetId,
-                      unsignedtxhex: IssuingAsset.txHex,
-											coloredOutputIndexes: IssuingAsset.coloredOutputIndexes,
-											fundingAddrRandId: IssuingAsset.fundingAddrRandId,
-                      encryptedPrikey: wallet.EncryptedPrikey,
-                      pwd: this.refs.pwd.value
                     })}>
                     Proceed to issue {IssuingAsset.name}!
-                  </button>
+                </button>
               </div>
             </div>
           </div>

@@ -203,6 +203,9 @@ input {
 }
 
 /* table */
+.react-bs-table {
+	border: none !important;
+}
 .react-bs-table tbody tr td {
 	border-top: none !important;
 	border-left: none !important;

@@ -54,7 +54,7 @@ export default function(
       });
     case REDIRECT_ASSET_ISSUANCE_RESULT:
       return Object.assign({}, state, {
-        IssuingAsset: action.data
+        IssuedAsset: action.data
       });
     case ASSET_ISSUE_SUCCESS:
       return Object.assign({}, state, {

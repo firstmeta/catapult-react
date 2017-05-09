@@ -47,11 +47,11 @@ export function RedirectAssetConfirmation(assetData) {
   }
 }
 
-export function RedirectAssetIssuanceResult(issuingAsset) {
+export function RedirectAssetIssuanceResult(issuedAsset) {
   return dispatch => {
     dispatch({
       type: REDIRECT_ASSET_ISSUANCE_RESULT,
-      data: issuingAsset
+      data: issuedAsset
     });
     dispatch(push('/assets/issuance?step=result'));
   }
@@ -88,7 +88,7 @@ export function RedirectAssetBatchTransferConfirmation(transferringAsset) {
 }
 
 export function InitializeAssetIssuance({
-	issuer, name, code, amount, logoUrl, desc, address, city, country, wallet
+	issuer, name, code, amount, logoUrl, desc
 }) {
 	var assetPrepareReq = request
 			.post(`${ROOT_URL}/api/secure/asset/initialize_asset_issuance_tx`)
@@ -108,7 +108,8 @@ export function InitializeAssetIssuance({
 		return assetPrepareReq.end((err, res) => {
 			var data = res.body;
     	if(res.status === 200) {
-      	dispatch(AlertGlobal({content: res.text, type: ALERT_SUCCESS}));
+				dispatch(AlertGlobal({content: res.text, type: ALERT_SUCCESS}));
+				dispatch(push('/transaction-summary/assets'))
 			}
 			else {
       	dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
@@ -166,6 +167,7 @@ export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
 				.accept('application/json')
 				.send({
 					txid: txID,
+					blockchainAssetId: t.blockchainAssetId,
 					signedTxHash: signedtxhash,
 					unsignedTxHex: t.unsignedTxHex,
 					signedTxHex: signedtxhex,
@@ -174,11 +176,24 @@ export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
 
 			return req2.end((err, res) => {
 				if(res.status === 200) {
+    			dispatch(push('/assets/issuance?step=result'));
+					
 					dispatch(AlertGlobal({
 						type: ALERT_SUCCESS,
 						content: res.body.Msg
-					}));	
-					//dispatch(push('/transaction-summary/assets'));
+					}));
+					
+					dispatch({
+      			type: REDIRECT_ASSET_ISSUANCE_RESULT,
+						data: {
+							name: t.assetName,
+							amount: t.assetAmount,
+							logoUrl: t.logoUrl,
+							description: t.description,
+							status: 'SUCCESS - Pending confirmation on blockchain.',
+							blockchainAssetId: t.blockchainAssetId
+						} 
+    			});
 				}
 				else {
 					dispatch(AlertGlobal({
