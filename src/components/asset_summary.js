@@ -29,6 +29,7 @@ class AssetSummary extends Component {
 			pwd: '',
 			selectedTxID: '',
 			updatingTxID: '',
+			updatingTxIDs: {},
 			selectedTx:''
 		}
 
@@ -55,12 +56,17 @@ class AssetSummary extends Component {
           setTimeout(f, 1000 * attempt);
         }
       }
-
       f();
 		}
-
   }
 
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.AssetTXUpdated) {
+			var updatingTxIDs = Object.assign({}, this.state.updatingTxIDs);
+			delete updatingTxIDs[nextProps.updatingTxIDs.TxID];
+			this.setState({updatingTxIDs: updatingTxIDs});
+		}	
+	}
 
   renderBalances() {
     return this.props.Balances.map(b => {
@@ -157,7 +163,7 @@ class AssetSummary extends Component {
 						});
 					}}>
   	   			{
-							self.state.updatingTxID === tx.TxID ?
+							self.state.updatingTxIDs[tx.TxID] ?
   	       		<Spinner /> :	<span>SIGN & ISSUE</span>
 						}   
 					</button>
@@ -195,7 +201,7 @@ class AssetSummary extends Component {
 							});
 						}}>
      		   	{
-							self.state.updatingTxID === tx.ID ?
+							self.state.updatingTxIDs[tx.ID] ?
           		<Spinner /> :	<span>SIGN & SEND</span>
 						}   
 					</button>
@@ -238,6 +244,11 @@ class AssetSummary extends Component {
 						btnFun={() => {
 							this.setState({showModal: false, updatingTxID: this.state.selectedTxID});
 							if (this.state.btnAction === 'signsend') {
+
+								var updatingTxIDs = Object.assign({}, this.state.updatingTxIDs);
+								updatingTxIDs[this.state.selectedTxID] = true;
+								this.setState({updatingTxIDs: updatingTxIDs});
+
 								if (this.state.selectedTx.TxType === 'ISSUANCE'){
 									this.props.SignAndSendAssetIssuance({
 										txID: this.state.selectedTxID, 
@@ -361,7 +372,8 @@ function mapStateToProps(state) {
     wallet: state.WalletState.wallet,
 		TXs: state.AssetState.AssetTXs,
 		AssetIssuingTXs: state.AssetState.AssetIssuingTXs,
-		BatchAssetTXs: state.AssetState.BatchAssetTXs
+		BatchAssetTXs: state.AssetState.BatchAssetTXs,
+		AssetTXUpdated: state.AssetState.AssetTXUpdated
   }
 }
 function mapDispatchToProps(dispatch) {

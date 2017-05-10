@@ -263,7 +263,6 @@ export function SignAndTransferTokenForOrder({orderid, wallet, pwd}){
 		orderid: orderid
 	}
 	var req = request
-	//.post(`${ROOT_URL}/api/secure/trading/acceptbuyassetoffer`)
 		.post(`${ROOT_URL}/api/secure/trading/prepare_asset_transfer`)
 							.set('Authorization', localStorage.getItem(AUTH_TOKEN))
 							.set('Content-Type', 'application/json')
@@ -429,7 +428,7 @@ export function FetchAllMyDealingOrder() {
 }
 
 export function FetchAllMyPreparedSigningOrders() {
-	var url = `${ROOT_URL}/api/secure/trading/fetch_all_prepareed_signing_orders`
+	var url = `${ROOT_URL}/api/secure/trading/fetch_all_prepared_signing_orders`
 
 	var req = request
 		.get(url)

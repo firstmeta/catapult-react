@@ -384,23 +384,3 @@ function mapDispatchToProps(dispatch) {
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TradeSummary);
 
-//self.props.AcceptBuyAssetOffer({orderid: order.OrderId});	
-//var t = AssetTransferPrep;
-//							this.props.TransferToken({
-//								wallet: Wallet,
-//								orderid: t.order_id,
-//								amount: t.amount,
-//								assetCode: t.asset_code,
-//								assetId: t.asset_id,
-//								blockchainAssetId: t.blockchain_asset_id,
-//								fromAddr: t.from_addr,
-//								fromAddrId: t.from_addr_id,
-//								fromAddrRandId: t.from_addr_rand_id,
-//								unsignedTxHex: t.prepared_tx,
-//								coloredOutputIndexes: t.colored_output_indexes,
-//								toAddr: t.to_addr,
-//								toAddrId: t.to_addr_id,
-//								toAddrRandId: t.to_addr_rand_id,
-//								fundingAddrRandId: t.funding_addr_rand_id,
-//								pwd: this.state.pwd
-

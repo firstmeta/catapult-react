@@ -49,7 +49,7 @@ class AssetIssuanceResult extends Component {
 
                 <label>Blockchain Asset ID</label>
                 <p>
-                  <a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/asset/' + IssuedAsset.assetId}>
+                  <a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/asset/' + IssuedAsset.blockchainAssetId}>
                     {IssuedAsset.blockchainAssetId}
                   </a>
                 </p>

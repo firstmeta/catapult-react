@@ -3,7 +3,7 @@ import {
 	FETCH_ASSET_TXS, FETCH_BATCH_ASSET_TXS, FETCH_ASSET_ISSUING_TXS,
   REDIRECT_ASSET_ISSUANCE_CONFIRMATION, REDIRECT_ASSET_ISSUANCE_RESULT,
   PREPARE_ASSET_ISSUE_SUCCESS,
-  ASSET_ISSUE_SUCCESS, ASSET_ISSUE_FAILURE,
+  ASSET_ISSUE_SUCCESS, ASSET_ISSUE_FAILURE, ASSET_TX_UPDATED,
 	REDIRECT_ASSET_TRANSFER_CONFIRMATION, ASSET_BATCH_TRANSFER_CONFIRMATION,
 	PREPARE_ASSET_TRANSFER_SUCCESS,
   REDIRECT_ASSET_TRANSFER_RESULT, ASSET_TRANSFER_SUCCESS
@@ -20,7 +20,8 @@ export default function(
 		BatchTransferringAsset: '',
 		AssetTXs: [],
 		BatchAssetTXs: [],
-		AssetIssuingTXs: []
+		AssetIssuingTXs: [],
+		AssetTXUpdated: ''
   },
   action) {
 		switch(action.type) {
@@ -80,6 +81,10 @@ export default function(
 		case ASSET_BATCH_TRANSFER_CONFIRMATION: 
 				return Object.assign({}, state, {
 					BatchTransferringAsset: action.data
+				});
+		case ASSET_TX_UPDATED:
+				return Object.assign({}, state, {
+					AssetTXUpdated: action.data
 				});
     default:
       return state;

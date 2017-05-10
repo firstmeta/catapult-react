@@ -36,6 +36,7 @@ export const ASSET_TRANSFER_FAILURE = 'ASSET_TRANSFER_FAILURE';
 
 export const ASSET_BATCH_TRANSFER_CONFIRMATION = 'ASSET_BATCH_TRANSFER_CONFIRMATION'; 
 
+export const ASSET_TX_UPDATED = 'ASSET_TX_UPDATED';
 
 export function RedirectAssetConfirmation(assetData) {
   return dispatch => {
@@ -193,7 +194,16 @@ export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
 							status: 'SUCCESS - Pending confirmation on blockchain.',
 							blockchainAssetId: t.blockchainAssetId
 						} 
-    			});
+					});
+
+					dispatch({
+						type: ASSET_TX_UPDATED,
+						data: {
+							TxID: txID,
+							timestamp: Date.Now()
+						}
+					});
+
 				}
 				else {
 					dispatch(AlertGlobal({
@@ -206,200 +216,6 @@ export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
 	
 		});
 	}
-}
-
-export function PrepareIssueAsset({
-	issuer, name, code, amount, logoUrl, desc, address, city, country, wallet}) {
-
-	var assetPrepareReq = request
-			.post(`${ROOT_URL}/api/secure/asset/prepare_asset_issuance_tx`)
-				.set('Authorization', localStorage.getItem(AUTH_TOKEN))
-        .set('Content-Type', 'application/json')
-   		 	.accept('application/json')
-				.send({
-					asset_code: code,
-					asset_name: name,
-					issuer: issuer,
-					desc: desc,
-					logo_url: logoUrl,
-					amount: amount
-				});
-
-	return dispatch => {
-		return assetPrepareReq.end((err, res) => {
-			var data = res.body;
-    	if(res.status === 200) {
-				if(data.txHex) {
-       		data.assetAddressRandID = wallet.RandID;
-          data.assetAddress = wallet.Address;
-          data.code = code;
-          data.name = name;
-          data.amount = amount;
-          data.logoUrl = logoUrl;
-					data.desc = desc;
-					//data.metadata = issueTx.metadata;
-
-          dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
-        }
-        else {
-          dispatch(AlertGlobal({
-            content: data.message + ', ' + data.explanation,
-            type: ALERT_ERROR
-          }));
-        }
-			}
-			else {
-      	dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
-			}
-		});	
-	}
-}
-export function PrepareIssueAsset2({issuer, name, amount, imageUrl, desc, address, city, country, wallet}) {
-
-  var addr = wallet.Address;
-  var req = request
-              .get(`${BTC_API_URL}/addr/${addr}/utxo`)
-              .accept('application/json');
-  return dispatch => {
-    return req.end((err, res) => {
-      if(res.status === 200) {
-        var utxos = res.body;
-        var financeUtxo;
-        for(var i = 0; i < utxos.length; i++) {
-          var utxo = utxos[i];
-          if(utxo.satoshis >= 5000) {
-            financeUtxo = utxo;
-            break;
-          }
-        }
-
-        if(!financeUtxo) {
-          dispatch(AlertGlobal({
-            content: 'Unsufficent bitcoin to issue asset!!!',
-            type: ALERT_ERROR
-          }));
-          return;
-        }
-
-        //TO DO: Adding random character to prevent collision
-        var code = name.toUpperCase().replace(/\s/g, '').slice(0, 4);
-
-        var issueTx = prepareAssetIssuanceTransaction({
-            issuer: issuer,
-            code: code,
-            name: name,
-            amount: amount,
-            imageUrl: imageUrl,
-            desc: desc,
-            address: address,
-            country: country,
-            city: city,
-            wallet: wallet,
-            financeOutputTxid: financeUtxo.txid,
-            financeOutputAmount: financeUtxo.satoshis,
-            vout: financeUtxo.vout
-        });
-
-        var assetPrepareReq = request
-                                .post(`${ROOT_URL}/api/asset/preparetx`)
-                                .accept('application/json')
-                                .field('json_tx', JSON.stringify(issueTx))
-                                .field('end_point', 'issue');
-        assetPrepareReq.end((err, res) => {
-          var data = JSON.parse(res.text);
-          if(res.status === 200) {
-            if(data.txHex) {
-              data.assetAddressRandID = wallet.RandID;
-              data.assetAddress = wallet.Address;
-              data.code = code;
-              data.name = name;
-              data.amount = amount;
-              data.imageUrl = imageUrl;
-              data.desc = desc;
-              data.metadata = issueTx.metadata;
-
-              dispatch({type: PREPARE_ASSET_ISSUE_SUCCESS, data: data});
-            }
-            else {
-              dispatch(AlertGlobal({
-                content: data.message + ', ' + data.explanation,
-                type: ALERT_ERROR
-              }));
-            }
-          }
-          else {
-            dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
-          }
-
-        });
-      }
-      else {
-        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
-      }
-    });
-  }
-
-}
-
-export function ProceedAssetIssuance({
-  code, name, issuedAmount, iconUrl,
-  desc, blockchainAssetId,
-  issuedAddress, issuedAddressID, issuedAddressRandID,
-  unsignedtxhex, coloredOutputIndexes, fundingAddrRandId,
-  encryptedPrikey, pwd
-}) {
-
-  var prikey = CryptoJS.AES.decrypt(encryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
-  var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
-  var tx =  bitcoin.Transaction.fromHex(unsignedtxhex);
-  var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
-      //txb.sign(0, keyPair);
-      txb.tx.ins.forEach(function(input, i) {
-        txb.sign(i, keyPair);
-      });
-
-  var signedtx = txb.build();
-  var signedtxhash = signedtx.getId();
-  var signedtxhex = signedtx.toHex();
-
-  var req = request
-              .post(`${ROOT_URL}/api/secure/asset/issue_asset`)
-              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
-              .set('Content-Type', 'application/json')
-              .accept('application/json')
-              .send({
-                code: code,
-                name: name,
-                issued_amount: parseInt(issuedAmount),
-                blockchain_asset_id: blockchainAssetId,
-                blockchaintx_hash: signedtxhash,
-                blockchaintx_hex: signedtxhex,
-                issued_address: issuedAddress,
-                issued_address_id: issuedAddressID,
-                issued_address_rand_id: issuedAddressRandID,
-								colored_output_indexes: coloredOutputIndexes,
-								funding_addr_rand_id: fundingAddrRandId
-              });
-  return dispatch => {
-    return req.end((err, res) => {
-      if (res.status === 200) {
-        dispatch({
-          type: ASSET_ISSUE_SUCCESS,
-          data: {
-            name: name,
-            amount: issuedAmount,
-            iconUrl: iconUrl,
-            desc: desc,
-            assetId: blockchainAssetId,
-            status: 'SUCCESS - Pending confirmation on blockchain.'
-          }
-        });
-      }
-      else {
-        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
-      }
-    });
-  }
 }
 
 export function InitializeAssetBatchTransfer({transferringAsset}) {
@@ -507,7 +323,13 @@ export function SignAndSendBatchAssetTransfer({txID, wallet, pwd}) {
 						type: ALERT_SUCCESS,
 						content: res.body.Msg
 					}));	
-					//dispatch(push('/transaction-summary/assets'));
+					dispatch({
+						type: ASSET_TX_UPDATED,
+						data: {
+							TxID: txID,
+							timestamp: Date.Now()
+						}
+					});
 				}
 				else {
 					dispatch(AlertGlobal({
@@ -516,241 +338,8 @@ export function SignAndSendBatchAssetTransfer({txID, wallet, pwd}) {
 					}));	
 				}
 			})
-
-	
 		});
 	}
-}
-
-export function ProceedBatchAssetTransfer({transferringAsset, wallet, pwd}) {
-	var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
-
-	if (!prikey) {
-		return dispatch => {
-			dispatch(AlertGlobal({
-				content: 'Wrong decryption password. Please try again.',
-				type: ALERT_ERROR
-			}));
-		}	
-	}
-
-	var receivers =  transferringAsset.receivers.map(r => {
-		return {
-			address: r.address,
-			addressId: r.addressId,
-			addressRandId: r.addressRandId,
-			amount: r.value,
-			assetId: transferringAsset.blockchainAssetID
-		}
-	})
-
-	var params = {
-		assetID: transferringAsset.assetID,
-		blockchainAssetID: transferringAsset.blockchainAssetID,
-		assetCode: transferringAsset.assetCode,
-		receivers: receivers 
-	}
-
-	var req = request
-		.post(`${ROOT_URL}/api/secure/asset/prepare_asset_batch_transfer_tx`)
-		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
-		.set('Content-Type', 'application/json')
-		.accept('application/json')
-		.send(params);		
-
-	return dispatch => {
-		return req.end((err, res) => {
-			if (res.status !== 200) {
-				dispatch(AlertGlobal({
-					content: res.body.Msg,
-					type: ALERT_ERROR
-				}));
-				return;
-			}
-			
-			var t = res.body;
-			var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
-	  	var tx =  bitcoin.Transaction.fromHex(t.txHex);
-	  	var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
-	  	    txb.tx.ins.forEach(function(input, i) {
-	  	      txb.sign(i, keyPair);
-	  	    });
-	  	var signedtx = txb.build();
-	  	var signedtxhash = signedtx.getId();
-			var signedtxhex = signedtx.toHex();
-			
-			var ta = transferringAsset;
-			var req2 = request
-				.post(`${ROOT_URL}/api/secure/asset/proceed_asset_batch_transfer_tx`)
-				.set('Authorization', localStorage.getItem(AUTH_TOKEN))
-				.set('Content-Type', 'application/json')
-				.accept('application/json')
-				.send({
-					assetID: ta.assetID,
-					assetCode: ta.assetCode,
-					blockchainAssetID: ta.blockchainAssetID,
-					blockchainTxHash: signedtxhash,
-					blockchainTxHex: signedtxhex,
-					fundingAddressRandID: t.fundingAddressRandID,
-					coloredOutputIndexes: t.coloredOutputIndexes,
-					receivers: receivers
-				});
-
-			return req2.end((err, res) => {
-				if(res.status === 200) {
-					dispatch(AlertGlobal({
-						type: ALERT_SUCCESS,
-						content: res.body.Msg
-					}));	
-					//dispatch(push('/transaction-summary/assets'));
-				}
-				else {
-					dispatch(AlertGlobal({
-						type: ALERT_ERROR,
-						content: res.body.Msg
-					}));	
-				}
-			})
-
-		});
-	}
-
-}
-
-export function PrepareTransferAsset({
-  wallet, assetID, assetCode, assetName, blockchainAssetID, amount, toAddr
-}) {
-  var addr = wallet.Address;
-  var req = request
-              .get(`${BTC_API_URL}/addr/${addr}/utxo`)
-              .accept('application/json');
-  return dispatch => {
-    return req.end((err, res) => {
-      if(res.status === 200) {
-        var utxos = res.body;
-        var financeUtxo;
-        for(var i = 0; i < utxos.length; i++) {
-          var utxo = utxos[i];
-          if(utxo.satoshis >= 5000) {
-            financeUtxo = utxo;
-            break;
-          }
-        }
-
-        if(!financeUtxo) {
-          dispatch(AlertGlobal({
-            content: 'Unsufficent bitcoin to issue asset!!!',
-            type: ALERT_ERROR
-          }));
-          return;
-        }
-
-        var transferTx = prepareAssetTransferTx({
-          wallet: wallet,
-          toAddr: toAddr,
-          blockchainAssetID: blockchainAssetID,
-          amount: parseInt(amount),
-          financeOutputTxid: financeUtxo.txid,
-          financeOutputAmount: financeUtxo.satoshis,
-          vout: financeUtxo.vout
-        });
-
-        var transferPrepareReq = request
-                                .post(`${ROOT_URL}/api/asset/preparetx`)
-                                .accept('application/json')
-                                .field('json_tx', JSON.stringify(transferTx))
-                                .field('end_point', 'sendasset');
-        transferPrepareReq.end((err, res) => {
-          var data = JSON.parse(res.text);
-          if(res.status === 200) {
-            if(data.txHex) {
-              data.assetID = assetID;
-              data.blockchainAssetID = blockchainAssetID;
-              data.assetCode = assetCode;
-              data.assetName = assetName;
-              data.amount = amount;
-              data.toAddr = toAddr;
-
-              dispatch({type: PREPARE_ASSET_TRANSFER_SUCCESS, data: data});
-            }
-            else {
-              dispatch(AlertGlobal({
-                content: data.message + ', asset: ' + data.asset,
-                type: ALERT_ERROR
-              }));
-            }
-          }
-          else {
-            dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
-          }
-        });
-      }
-      else {
-        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
-      }
-    });
-  }
-}
-
-export function ProceedAssetTransfer({
-  blockchainAssetID, assetID, assetCode,
-  assetName, fromAdrr, toAddr, amount, unsignedtxhex,
-  wallet, pwd, coloredOutputIndexes
-}) {
-
-  var prikey = CryptoJS.AES.decrypt(wallet.EncryptedPrikey, pwd).toString(CryptoJS.enc.Utf8);
-  var keyPair = bitcoin.ECPair.fromWIF(prikey, BTC_NETWORK);
-  var tx =  bitcoin.Transaction.fromHex(unsignedtxhex);
-  var txb = bitcoin.TransactionBuilder.fromTransaction(tx, BTC_NETWORK);
-      txb.tx.ins.forEach(function(input, i) {
-        txb.sign(i, keyPair);
-      });
-
-
-  var signedtx = txb.build();
-  var signedtxhash = signedtx.getId();
-  var signedtxhex = signedtx.toHex();
-
-  var req = request
-              .post(`${ROOT_URL}/api/secure/asset/transfer_asset`)
-              .set('Authorization', localStorage.getItem(AUTH_TOKEN))
-              .set('Content-Type', 'application/json')
-              .accept('application/json')
-              .send({
-                asset_id: assetID,
-                asset_code: assetCode,
-                amount: parseInt(amount),
-                blockchain_asset_id: blockchainAssetID,
-                from_addr_id: wallet.ID,
-                from_addr_rand_id: wallet.RandID,
-                from_addr: wallet.Address,
-                to_addr: toAddr,
-                blockchaintx_hash: signedtxhash,
-                blockchaintx_hex: signedtxhex,
-                colored_output_indexes: coloredOutputIndexes
-              });
-  return dispatch => {
-    return req.end((err, res) => {
-      if (res.status === 200) {
-        dispatch({
-          type: ASSET_TRANSFER_SUCCESS,
-          data: {
-            assetName: assetName,
-            assetCode: assetCode,
-            amount: parseInt(amount),
-            fromAddress: wallet.Address,
-            toAddress: toAddr,
-            signedtxhash: signedtxhash,
-            completed: true,
-            status: 'SUCCESS - Pending confirmation on blockchain.'
-          }
-        });
-      }
-      else {
-        dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
-      }
-    });
-  }
 }
 
 function prepareAssetIssuanceTransaction({
