@@ -298,10 +298,11 @@ class AssetSummary extends Component {
   					      </div>
   					    </div>
 							</div>
+
+							<br /><br />
 						</div>
 					}			
 
-					<br /><br />
 				
 					{BatchAssetTXs && BatchAssetTXs.length > 0 &&
 						<div>
@@ -332,10 +333,11 @@ class AssetSummary extends Component {
   					      </div>
   					    </div>
 							</div>
+
+							<br /><br />
 						</div>
 					}		
 
-					<br /><br />
 
 					{TXs && TXs.length > 0 &&
 						<div>
