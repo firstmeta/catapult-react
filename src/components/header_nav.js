@@ -52,9 +52,7 @@ class HeaderNav extends Component {
 										isLogined &&
 										<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
 											<li><Link to="/companies-campaigns-mine">My Companies</Link></li>
-											<li><Link to="/assets/batchtransfer">Transfer Equity</Link></li>
-											<li><Link to="/assets/issuance">Issue Equity</Link></li>
-											<li role="separator" className="divider"></li>
+																						<li role="separator" className="divider"></li>
 											<li><Link to="/company/start">Set up Company</Link></li>
 										</ul>
 									}
@@ -84,6 +82,8 @@ class HeaderNav extends Component {
 												<span className="glyphicon glyphicon-cog"></span>
 											</a>
 											<ul className="dropdown-menu" aria-labelledby="dropdownMenu3">
+												<li><Link to="/assets/batchtransfer">Transfer Equity</Link></li>
+												<li><Link to="/assets/issuance">Issue Equity</Link></li>
 												<li><Link to="/settings/wallet">My Asset Wallet</Link></li>
 												<li role="separator" className="divider" style={{"margin": "4px 0"}}></li>
 												<li><Logout /></li>
