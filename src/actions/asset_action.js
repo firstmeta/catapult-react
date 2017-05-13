@@ -176,6 +176,13 @@ export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
 				});
 
 			return req2.end((err, res) => {
+				dispatch({
+					type: ASSET_TX_UPDATED,
+					data: {
+						TxID: txID,
+						timestamp: Date.now()
+					}
+				});
 				if(res.status === 200) {
     			dispatch(push('/assets/issuance?step=result'));
 					
@@ -195,15 +202,6 @@ export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
 							blockchainAssetId: t.blockchainAssetId
 						} 
 					});
-
-					dispatch({
-						type: ASSET_TX_UPDATED,
-						data: {
-							TxID: txID,
-							timestamp: Date.Now()
-						}
-					});
-
 				}
 				else {
 					dispatch(AlertGlobal({
@@ -318,18 +316,20 @@ export function SignAndSendBatchAssetTransfer({txID, wallet, pwd}) {
 				});
 
 			return req2.end((err, res) => {
+				dispatch({
+					type: ASSET_TX_UPDATED,
+					data: {
+						TxID: txID,
+						timestamp: Date.now()
+					}
+				});
 				if(res.status === 200) {
 					dispatch(AlertGlobal({
 						type: ALERT_SUCCESS,
 						content: res.body.Msg
 					}));	
-					dispatch({
-						type: ASSET_TX_UPDATED,
-						data: {
-							TxID: txID,
-							timestamp: Date.Now()
-						}
-					});
+					dispatch(FetchBatchAssetTransferTXs());
+					dispatch(FetchAssetTxs(wallet.ID));
 				}
 				else {
 					dispatch(AlertGlobal({

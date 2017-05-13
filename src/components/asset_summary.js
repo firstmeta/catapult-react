@@ -63,7 +63,7 @@ class AssetSummary extends Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.AssetTXUpdated) {
 			var updatingTxIDs = Object.assign({}, this.state.updatingTxIDs);
-			delete updatingTxIDs[nextProps.updatingTxIDs.TxID];
+			delete updatingTxIDs[nextProps.AssetTXUpdated.TxID];
 			this.setState({updatingTxIDs: updatingTxIDs});
 		}	
 	}
@@ -86,7 +86,7 @@ class AssetSummary extends Component {
 			var ftx = {};
 			ftx.AssetCode = tx.AssetCode;
       ftx.TxID = tx.TxID;
-      ftx.TxType = (tx.TxType === 'TRANSFER' ? 'TFR' : 'ISU');
+      ftx.TxType = (tx.TxType === 'TRANSFER' || tx.TxType === 'BATCH_TRANSFER' ? 'TFR' : 'ISU');
       ftx.Ref = (
         wallet.Address === tx.ToAddress ?
           <div>

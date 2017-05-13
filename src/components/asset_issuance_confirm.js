@@ -11,10 +11,16 @@ import {
 } from '../actions/asset_action';
 
 class AssetIssuanceConfirm extends Component {
+	
+	constructor(props) {
+		super(props);
+	
+		this.state = {
+			processing: false
+		}
+	}
 
-  componentDidMount() {
-  }
-
+  
   render() {
 
     const { IssuingAsset, wallet } = this.props;
@@ -47,16 +53,29 @@ class AssetIssuanceConfirm extends Component {
                 <hr />
 
                 <button
-                    className="btn btn-primary btn-green btn-green-primary full-width"
-                    onClick={() => this.props.InitializeAssetIssuance({
+               		className="btn btn-primary btn-green btn-green-primary full-width"
+									disabled={this.state.processing}
+									onClick={() => {
+										if (this.state.processing) {
+											return;
+										}
+										var self = this;
+										this.setState({processing: true});
+										setTimeout(() => self.setState({processing: false}), 10000);
+
+										this.props.InitializeAssetIssuance({
 											issuer: IssuingAsset.issuer,
                       code: IssuingAsset.code,
                       name: IssuingAsset.name,
                       amount: IssuingAsset.amount,
                       logoUrl: IssuingAsset.logoUrl,
                       desc: IssuingAsset.desc,
-                    })}>
-                    Proceed to issue {IssuingAsset.name}!
+										});
+									}}>
+									{
+										this.state.processing ?
+										<Spinner /> : <span>Proceed to issue {IssuingAsset.name}!</span>
+									}
                 </button>
               </div>
             </div>
