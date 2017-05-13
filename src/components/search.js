@@ -18,7 +18,7 @@ const Search = ({
 			<div className="container-fluid">
 				<div className="row">
 					<div 
-						className="col-md-10"
+						className={btnName ? "col-md-10" : "col-md-12"}
 						onBlur={clearResults}>
 						<input
 							type="text" 
@@ -28,14 +28,17 @@ const Search = ({
 							}}/>
 						{results}
 					</div>
-					<div className="col-md-2">
-						<button 
-							className="
-								btn btn-primary btn-light-green 
-								btn-light-green-primary full-width">
-								{btnName}	
-						</button>
-					</div>
+					{
+						btnName &&
+							<div className="col-md-2">
+								<button 
+									className="
+										btn btn-primary btn-light-green 
+										btn-light-green-primary full-width">
+									{btnName}	
+								</button>
+							</div>
+					}
 				</div>
 				
 			</div>	

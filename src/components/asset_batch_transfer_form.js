@@ -75,6 +75,7 @@ class AssetBatchTransferForm extends Component{
 			searchDisplay = (
 				<div 
 					className="panel panel-default"
+					style={{cursor: 'pointer'}}
 					onClick={() => {
 						var receivers = this.state.receivers.slice();
 						receivers.push({
@@ -128,7 +129,6 @@ class AssetBatchTransferForm extends Component{
 								updateComponent={(l) => this.setState({receivers: l})}/>
 							<br />	
 							<Search 
-								btnName="Add"
 								searchFunc={_.debounce(term => this.props.SearchUser(term), 600)}
 								results={searchDisplay}
 								clearResults={() => {

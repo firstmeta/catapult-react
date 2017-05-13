@@ -7,11 +7,18 @@ import Spinner from './spinner';
 import Alert from './global_alert';
 
 import {
-	InitializeAssetBatchTransfer,
-	ProceedBatchAssetTransfer 
+	InitializeAssetBatchTransfer
 } from '../actions/asset_action';
 
 class AssetBatchTransferConfirm extends Component {
+
+	constructor(props) {
+		super(props);
+	
+		this.state = {
+			processing: false
+		}
+	}
 
 	renderReceiverList() {
 		return this.props.TransferringAsset.receivers.map(r => {
@@ -54,10 +61,23 @@ class AssetBatchTransferConfirm extends Component {
 
 								<button 
 									className="btn btn-primary btn-green btn-green-primary full-width"
-									onClick={() => this.props.InitializeBatchTransfer({
-										transferringAsset: this.props.TransferringAsset,
-									})}>
-									Initialize Asset Transfer	
+									disabled={this.state.processing}
+									onClick={() => {
+										if (this.state.processing) {
+											return;
+										}
+										var self = this;
+										this.setState({processing: true});
+										setTimeout(() => self.setState({processing: false}), 10000);
+
+										this.props.InitializeBatchTransfer({
+											transferringAsset: this.props.TransferringAsset,
+										});
+									}}>
+									{
+										this.state.processing ?
+										<Spinner /> : <span>Initialize Asset Transfer</span>
+									}
 								</button>
 							</div>
 						</div>
@@ -76,8 +96,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		InitializeBatchTransfer: InitializeAssetBatchTransfer,
-		ProceedBatchTransfer: ProceedBatchAssetTransfer
+		InitializeBatchTransfer: InitializeAssetBatchTransfer
 	}, dispatch);
 }
 

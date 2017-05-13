@@ -24,16 +24,16 @@ const InputRow = ({
 						<input
 							type="text"
 							style={{
-								'border-top': '0px',
-								'border-bottom': '1px solid #ccc',
-								'border-left': '0px',
-								'border-right': '0px',
-								'border-radius': '0px',
+								'borderTop': '0px',
+								'borderBottom': '1px solid #ccc',
+								'borderLeft': '0px',
+								'borderRight': '0px',
+								'borderRadius': '0px',
 								'height': '23px',
-								'margin-bottom': '5px',
+								'marginBottom': '5px',
 								'padding': '1px',
-								'-webkit-box-shadow': 'none',
-								'text-align': 'center'
+								'WebkitBoxShadow': 'none',
+								'textAlign': 'center'
 							}}
              	className="form-control"
 							onChange={event => {
@@ -44,7 +44,7 @@ const InputRow = ({
 					</div>
 					<div className="col-md-1">
 						<span
-        	    style={{cursor: 'pointer', 'font-size': '12px'}}
+        	    style={{cursor: 'pointer', 'fontSize': '12px'}}
          			onClick={() => remove(index)}>
               x
         	  </span>

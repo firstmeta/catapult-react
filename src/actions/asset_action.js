@@ -246,6 +246,7 @@ export function InitializeAssetBatchTransfer({transferringAsset}) {
 	return dispatch => {
 		return req.end((err, res) => {
 			if (res.status === 200) {
+				dispatch(push('/transaction-summary/assets'))
 				dispatch(AlertGlobal({
 					content: res.body.Msg,
 					type: ALERT_SUCCESS
@@ -257,7 +258,6 @@ export function InitializeAssetBatchTransfer({transferringAsset}) {
 					content: res.body.Msg
 				}))
 			}
-
 		});
 	}
 }
