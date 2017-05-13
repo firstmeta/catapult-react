@@ -128,6 +128,13 @@ export function SignAndSendAssetIssuance({txID, wallet, pwd}) {
 				content: 'Wrong decryption password. Please try again.',
 				type: ALERT_ERROR
 			}));
+			dispatch({
+				type: ASSET_TX_UPDATED,
+				data: {
+					TxID: txID,
+					timestamp: Date.now()
+				}
+			});
 		}	
 	}
 
@@ -269,6 +276,13 @@ export function SignAndSendBatchAssetTransfer({txID, wallet, pwd}) {
 				content: 'Wrong decryption password. Please try again.',
 				type: ALERT_ERROR
 			}));
+			dispatch({
+				type: ASSET_TX_UPDATED,
+				data: {
+					TxID: txID,
+					timestamp: Date.now()
+				}
+			});
 		}	
 	}
 

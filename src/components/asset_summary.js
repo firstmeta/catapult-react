@@ -6,6 +6,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import dateformat from 'dateformat';
 import numeral from 'numeral';
 
+import Alert from './global_alert';
 import Spinner from './spinner';
 import InputModal from './input_modal';
 
@@ -221,6 +222,7 @@ class AssetSummary extends Component {
 		return (
       <div className="asset-summary">
 				<div className="container-fluid">
+					<Alert />
 					<InputModal
 						title={
 							this.state.btnAction === 'cancel' ?
