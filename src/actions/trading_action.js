@@ -126,17 +126,18 @@ export function AcceptBuyAssetOrder({orderid}){
 	return dispatch => {
 		return req.end((err, res) => {
 			if(res.status === 200) {
-				dispatch({
-					type: ORDER_ASSET_TRANSFER_PREP,
-					data: res.body
-				});
+				dispatch(AlertGlobal({
+					type: ALERT_SUCCESS,
+					content: res.body.Msg
+				}));
+
 				dispatch(push('/transaction-summary/trades'));
 			}
 			else {
 				dispatch(AlertGlobal({
 					type: ALERT_ERROR,
 					content: res.body.Msg
-				}))
+				}));
 			}
 		})
 	}	

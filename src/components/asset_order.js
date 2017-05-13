@@ -166,13 +166,12 @@ class AssetOrder extends Component {
 													onClick={() => {
 														const {
 															type, assetCode, amount, 
-															price, total, moneyCode, pwd
+															price, total, moneyCode
 														} = this.state;
-														if(type === 'buy') {
-															this.setState({showModal: true})
-														}
-														else {this.props.OpenOrder({
-															type, assetCode, amount, price, total, moneyCode, pwd})}
+
+														this.props.OpenOrder({
+															type, assetCode, amount, price, total, moneyCode
+														});
 													}}>
               	 					CONFIRM  
 												</button>

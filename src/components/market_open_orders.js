@@ -139,12 +139,12 @@ class MarketOpenOrders extends Component {
 				<InputModal
 					title={
 						this.state.selectedOrderType === 'sell' ? 
-							'Payment' :  'Asset Transfer Signing'
+							'Payment' :  'Asset Transfer'
 					}
 					msg={
 						this.state.selectedOrderType === 'sell' ? 
-							"You are about to make payment for this order. Please make sure the details are correct."
-							: "You are about to sign and transfer your asset. Please make sure the details are correct." 
+							"You are about to make payment for this order. Please make sure the OrderID is correct. OrderID: " + this.state.selectedOrderId
+							: "You are about to start transfer your asset. Please make sure the OrderID is correct. OrderID: " + this.state.selectedOrderId
 					}
 					inputLabel={
 						this.state.selectedOrderType === 'sell' ? 
@@ -152,7 +152,6 @@ class MarketOpenOrders extends Component {
 							: <span>Please enter your <strong><i>decryption</i></strong> password to proceed.</span>
 					}
 					value={this.state.pwd}
-					inputCapture={pwd => this.setState({pwd: pwd})}
 					show={this.state.showModal} 
 					showSpinner={this.state.showModalSpinner}
 					close={() => this.setState({showModal: false})}
@@ -162,13 +161,12 @@ class MarketOpenOrders extends Component {
 
 						if (this.state.selectedOrderType === 'sell'){
 							this.props.MakeBuyAssetOffer({
-								orderid: this.state.selectedOrderId, 
-								pwd:this.state.pwd
+								orderid: this.state.selectedOrderId 
 							});
 						}
 						else {
 							this.props.AcceptBuyAssetOrder({
-								orderid: this.state.selectedOrderId, 
+								orderid: this.state.selectedOrderId 
 							});
 						}
 					}}
