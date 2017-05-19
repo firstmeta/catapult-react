@@ -25,6 +25,7 @@ import Investors from './components/investors';
 import AboutUs from './components/aboutus';
 import Assets from './components/assets';
 import AssetOrder from './components/asset_order';
+import Funding from './components/funding';
 import TransactionSummary from './components/tx_summary';
 import MarketOpenOrders from './components/market_open_orders';
 import MarketCompanyListing from './components/market_company_listing';
@@ -54,6 +55,7 @@ render(
 				<Route path="/account/reset_pwd" component={PasswordReset} />
 				<Route path="/assets/:urlRef" component={Assets} />
 				<Route path="/asset/order/:orderExt" component={AssetOrder} />
+				<Route path="/funding/:urlRef" component={Funding} />
 				<Route path="/market/openorders/:assetCode" component={MarketOpenOrders} />
 				<Route path="/market/companylisting" component={MarketCompanyListing} />
 				<Route path="/company/browse" component={CompanyBrowse} />

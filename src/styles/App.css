@@ -801,6 +801,50 @@ body:before {
 	font-size: 16px;
 }
 
+.fund-deposit {
+	margin-top: 25px;
+	margin-bottom: 20px;
+}
+.fund-deposit .segment {
+	padding: 15px 11px;	
+}
+
+.fund-deposit .row {
+	padding: 5px 10px;
+	font-size: 13px;
+	font-weight: 400;
+
+}
+.fund-deposit .row > [class*="col-sm-"]{
+	padding: 0px 7px;
+	text-align: center;
+}
+.fund-deposit input {
+	width: 100%;
+	height: 28px;
+	text-align: center;
+}
+.fund-deposit .dropdown .row {
+	padding: 0px;
+} 
+.fund-deposit .dropdown .btn {
+	padding: 3px 3px;
+	width: 100%;
+	min-width: 46px;
+	min-height: 28px;
+	font-size: 13px;
+}
+.fund-deposit .dropdown .asset-desc {
+	margin: 0px 2px;
+}
+.fund-deposit .dropdown .btn .caret {
+	border-top: 3px dashed;
+	border-right: 3px solid transparent;
+	border-left: 3px solid transparent;
+	margin-left: 2px;
+}
+
+
 .tx-summary {
 	margin-top: 80px;
   margin-bottom: 40px;
