@@ -62,7 +62,7 @@ class FundDeposit extends Component {
 										this.state.moneyCode === 'MYR' &&
 										<form 
 											method="POST" 
-											action={"http://labs.catapult.asia:8002/api/secure/funding/prepare_molpay_tx"} 
+											action={ROOT_URL + "/api/secure/funding/prepare_molpay_tx"} 
 											role="molpayseamless">
 											
 											<input 
