@@ -1,7 +1,8 @@
 import {
   ACCOUNT_SIGNUP_SUCCESS, ACCOUNT_SIGNUP_FAILURE,
   SIGNUP_OPEN, SIGNUP_CLOSE, LOGIN_OPEN, LOGIN_CLOSE,
-  PWD_RESET_OPEN, PWD_RESET_CLOSE
+	PWD_RESET_OPEN, PWD_RESET_CLOSE,
+	ACCOUNT_PROFILE
 } from '../actions/account_action';
 
 export default function(state = {
@@ -10,7 +11,8 @@ export default function(state = {
   loginShowed: false,
   pwdResetShowed: false,
   walletAddress:'',
-  walletPrikeys:[],
+	walletPrikeys:[],
+	accountProfile: '',
   error: ''
 }, action) {
   switch (action.type) {
@@ -47,7 +49,11 @@ export default function(state = {
     case PWD_RESET_CLOSE:
       return Object.assign({}, state, {
         pwdResetShowed: false
-      })
+			});
+		case ACCOUNT_PROFILE: 
+			return Object.assign({}, state, {
+				accountProfile: action.data
+			})
     default:
       return state;
   }

@@ -1057,6 +1057,10 @@ body:before {
   border-bottom: 1px solid #dcdedd;
 }
 
+.settings-profile {
+  margin-top: 40px;
+}
+
 .settings-wallet .wallet-address {
   margin-top: 40px;
   text-align: center;

@@ -10,6 +10,7 @@ import { loginSuccess, loginFailure, AUTH_TOKEN } from './auth_action';
 export const ACCOUNT_SIGNUP_SUCCESS = 'ACCOUNT_SIGNUP_SUCCESS';
 export const ACCOUNT_SIGNUP_FAILURE = 'ACCOUNT_SIGNUP_FAILURE';
 
+export const ACCOUNT_PROFILE = 'ACCOUNT_PROFILE';
 export const ACCOUNT_DOCUMENTS_UPLOAD_SUCCESS = 'ACCOUNT_DOCUMENTS_UPLOAD_SUCCESS';
 export const ACCOUNT_DOCUMENTS_UPLOAD_FAILURE = 'ACCOUNT_DOCUMENTS_UPLOAD_FAILURE';
 
@@ -140,6 +141,64 @@ export function ResetPassword(email, code, pwd, repwd) {
 			}
 			else {
 				dispatch(AlertGlobal({content: res.text, type: ALERT_ERROR}));
+			}
+		})
+	}
+
+}
+
+export function FetchAccountProfile() {
+	var req = request
+		.get(`${ROOT_URL}/api/secure/account/fetch_account_profile`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.accept('application/json')
+
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200){
+				dispatch({
+					type: ACCOUNT_PROFILE,
+					data: res.body
+				})
+			}
+			else {
+				dispatch({
+					type: ACCOUNT_PROFILE,
+					data: {} 
+				})
+
+			}
+		})
+	}
+}
+
+export function SaveAccountProfile({firstname, lastname, handphone, address, city, country}) {
+	var req = request
+		.post(`${ROOT_URL}/api/secure/account/updateprofile`)
+		.set('Authorization', localStorage.getItem(AUTH_TOKEN))
+		.set('Content-Type', 'application/json')
+		.accept('application/json')
+		.send({
+			firstname: firstname,
+			lastname: lastname,
+			handphone: handphone,
+			address: address,
+			city: city,
+			country: country
+		});
+	return dispatch => {
+		return req.end((err, res) => {
+			if(res.status === 200) {
+				dispatch(AlertGlobal({
+					type: ALERT_SUCCESS,
+					content: res.body.Msg
+				}));
+			}
+			else {
+				dispatch(AlertGlobal({
+					type: ALERT_ERROR,
+					content: res.body.Msg
+				}));
 			}
 		})
 	}

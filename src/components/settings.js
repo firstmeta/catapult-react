@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import WalletSettings from './settings_wallet';
+import ProfileSettings from './settings_profile';
 
 class Settings extends Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class Settings extends Component {
               <ul className="nav nav-pills">
                 <li
                   role="presentation"
-                  className={(!urlRef || urlRef === 'account') ? "active" : ""}>
-                  <Link to="/settings/account">Account</Link>
+                  className={(!urlRef || urlRef === 'profile') ? "active" : ""}>
+                  <Link to="/settings/profile">Profile</Link>
                 </li>
                 <li
                   role="presentation"
@@ -33,7 +34,8 @@ class Settings extends Component {
             </div>
           </div>
 
-          {urlRef === 'wallet' && <WalletSettings />}
+					{urlRef === 'wallet' && <WalletSettings />}
+					{urlRef === 'profile' && <ProfileSettings />}
         </div>
       </div>
     )

@@ -85,6 +85,7 @@ class HeaderNav extends Component {
 												<li><Link to="/assets/batchtransfer">Transfer Equity</Link></li>
 												<li><Link to="/assets/issuance">Issue Equity</Link></li>
 												<li><Link to="/settings/wallet">My Asset Wallet</Link></li>
+												<li><Link to="/settings/profile">My Profile</Link></li>
 												<li role="separator" className="divider" style={{"margin": "4px 0"}}></li>
 												<li><Logout /></li>
 											</ul>
