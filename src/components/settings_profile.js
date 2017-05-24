@@ -45,8 +45,6 @@ class ProfileSettings extends Component {
 	render() {
 		const { profile } = this.props;
 
-		console.log(profile);
-
 		if (!profile) {
 			return(
 				<div className="settings-profile">
@@ -96,6 +94,7 @@ class ProfileSettings extends Component {
 										<input
 											type="text"
 											className="form-control" 
+											placeholder="+(country code)(phone number). E.g.: +6512345678"
 											defaultValue={profile.handphone}
 											ref="handphone"/>
 									</div>

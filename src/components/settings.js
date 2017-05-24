@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+
+import Alert from './global_alert';
 import WalletSettings from './settings_wallet';
 import ProfileSettings from './settings_profile';
 
@@ -33,6 +35,8 @@ class Settings extends Component {
               </ul>
             </div>
           </div>
+					
+					<Alert />
 
 					{urlRef === 'wallet' && <WalletSettings />}
 					{urlRef === 'profile' && <ProfileSettings />}
