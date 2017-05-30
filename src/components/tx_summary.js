@@ -36,7 +36,7 @@ class TransactionSummary extends Component {
           <div className="col-md-5">{b.AssetName}</div>
           <div className="col-md-3 number">{numeral(b.Amount).format('0,0')}</div>
 					<div className="col-md-4 number">
-						{numeral(b.Amount / this.props.AllAssets.map[b.AssetCode].IssuedAmount*100).format('0,0')}%
+						{numeral(b.Amount / this.props.AllAssets.map[b.AssetCode].IssuedAmount*100).format('0,0.00')}%
 					</div>
         </div>
       )
