@@ -25,7 +25,7 @@ export default function(
   },
   action) {
 		switch(action.type) {
-		case FETCH_ALL_ASSETS:
+			case FETCH_ALL_ASSETS:
 			return Object.assign({}, state, {
 				AllAssets: action.data
 			});

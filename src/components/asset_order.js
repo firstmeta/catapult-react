@@ -108,7 +108,7 @@ class AssetOrder extends Component {
 							price={this.state.price}
 							total={this.state.total}
 							moneyCode={this.state.moneyCode}
-							buyingAssets={this.props.AllAssets} 
+							buyingAssets={this.props.AllAssets.list} 
 							sellingAssets={this.props.AssetBalances}	
 							onInputChange={content => this.setState(content)}
 						/>

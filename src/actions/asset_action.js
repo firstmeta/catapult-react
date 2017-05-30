@@ -427,10 +427,20 @@ export function FetchAllAssets() {
               .accept('application/json');
   return dispatch => {
     return req.end((err, res) => {
-      if (res.status === 200) {
+			if (res.status === 200) {
+				var assetList = res.body;
+				var assetMap = {};
+
+				for(var i = 0; i < assetList.length; i++) {
+					assetMap[assetList[i].Code] = assetList[i];
+				}
+
         dispatch({
           type: FETCH_ALL_ASSETS,
-          data: res.body
+					data: {
+						list: assetList,
+						map: assetMap
+					} 
         });
       }
       else {
