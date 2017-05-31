@@ -78,7 +78,7 @@ class TradeSummary extends Component {
 			);
 			o.AssetAmount = order.AssetAmount;
 			o.MoneyCode = order.MoneyCode;
-			o.MoneyGross = o.MoneyCode + ' ' + numeral(order.MoneyNet + order.MoneyFee).format('0,0.00');
+			o.MoneyGross = o.MoneyCode + ' ' + numeral(parseFloat(order.MoneyNet) + parseFloat(order.MoneyFee)).format('0,0.00');
 			o.Price = o.MoneyCode + ' ' + numeral(order.PriceGross).format('0,0.00');
 			
 			switch(order.OrderStatus) {
