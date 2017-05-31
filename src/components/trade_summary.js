@@ -61,7 +61,15 @@ class TradeSummary extends Component {
 		return orders.map(function(order){
 
 			var o = {};
-			o.OrderId = order.OrderId;
+			o.RowKey = order.OrderId;
+			o.OrderId = (
+				<div className="tooltip-custom">
+					{order.OrderId.substring(0,6)}
+					<span className="tooltiptext">
+						{order.OrderId}
+					</span>
+				</div>	
+			);
 			o.OrderType = (order.OrderType === 'SELLASSET' ? 'SELL' : 'BUY');
 			o.AssetCode = (
 				<div>
@@ -70,7 +78,8 @@ class TradeSummary extends Component {
 			);
 			o.AssetAmount = order.AssetAmount;
 			o.MoneyCode = order.MoneyCode;
-			o.MoneyNet = numeral(order.MoneyNet).format('0,0.00');
+			o.MoneyGross = o.MoneyCode + ' ' + numeral(order.MoneyNet + order.MoneyFee).format('0,0.00');
+			o.Price = o.MoneyCode + ' ' + numeral(order.PriceGross).format('0,0.00');
 			
 			switch(order.OrderStatus) {
 				case 'BC_FEE_FUNDED':
@@ -230,12 +239,16 @@ class TradeSummary extends Component {
 												pagination={true} 
 												options={{sizePerPage: 5}}
 												tableStyle={{border: 'none'}}>
-        			          <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">OrderId</TableHeaderColumn>
+
+												<TableHeaderColumn dataField="RowKey" isKey={true} dataAlign="center" hidden></TableHeaderColumn>
+												<TableHeaderColumn dataField="OrderId" dataAlign="center" dataSort={true} width="65px">
+													Order ID
+												</TableHeaderColumn>
         			          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Type</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="AssetAmount" width="75px">Volume</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="Price" width="75px">$Price</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="MoneyGross" width="85px">$Total</TableHeaderColumn>
         			          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
 												<TableHeaderColumn dataField="LastUpdatedOn" width="125px">Last Update</TableHeaderColumn>
 												<TableHeaderColumn 
@@ -268,12 +281,13 @@ class TradeSummary extends Component {
 												pagination={true} 
 												options={{sizePerPage: 5}}
 												tableStyle={{border: 'none'}}>
-        			          <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">OrderId</TableHeaderColumn>
+												<TableHeaderColumn dataField="RowKey" isKey={true} hidden></TableHeaderColumn>
+        			          <TableHeaderColumn dataField="OrderId" dataAlign="center" dataSort={true} width="65px">Order ID</TableHeaderColumn>
         			          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
-        			          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Type</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="AssetAmount" width="75px">Volume</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="Price" width="75px">$Price</TableHeaderColumn>
+        			          <TableHeaderColumn dataField="MoneyGross" width="85px">$Total</TableHeaderColumn>
         			          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
 												<TableHeaderColumn dataField="LastUpdatedOn" width="125px">Last Update</TableHeaderColumn>
 												<TableHeaderColumn 
@@ -303,13 +317,15 @@ class TradeSummary extends Component {
 											className="table" 
 											pagination={true} 
 											options={{sizePerPage: 5}}
-											tableStyle={{border: 'none'}}>
-        		          <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
+											tableStyle={{border: 'none'}}
+											headerStyle={{'min-width': '0px !important'}}>
+												<TableHeaderColumn dataField="RowKey" isKey={true} hidden></TableHeaderColumn>
+        		          <TableHeaderColumn dataField="OrderId" dataAlign="center" dataSort={true} width="65px">Order ID</TableHeaderColumn>
         		          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Type</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetAmount" width="75px">Volume</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="Price" width="75px">$Price</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="MoneyGross" width="85px">$Total</TableHeaderColumn>
         		          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
 											<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
 											<TableHeaderColumn dataField="Cancel" width="100"></TableHeaderColumn>
@@ -338,12 +354,13 @@ class TradeSummary extends Component {
 											pagination={true} 
 											options={{sizePerPage: 5}}
 											tableStyle={{border: 'none'}}>
-        		          <TableHeaderColumn dataField="OrderId" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
+												<TableHeaderColumn dataField="RowKey" isKey={true} hidden></TableHeaderColumn>
+        		          <TableHeaderColumn dataField="OrderId" dataAlign="center" dataSort={true} width="65px">Order ID</TableHeaderColumn>
         		          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Code</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="AssetAmount" width="75px">Amount</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="MoneyCode" width="55px">$</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="MoneyNet" width="65px">Total$</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Type</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="AssetAmount" width="75px">Volume</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="Price" width="55px">$Price</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="MoneyNet" width="65px">$Total</TableHeaderColumn>
         		          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
 											<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
 											<TableHeaderColumn dataField="Cancel" width="100"></TableHeaderColumn>
