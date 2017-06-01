@@ -317,8 +317,7 @@ class TradeSummary extends Component {
 											className="table" 
 											pagination={true} 
 											options={{sizePerPage: 5}}
-											tableStyle={{border: 'none'}}
-											headerStyle={{'min-width': '0px !important'}}>
+											tableStyle={{border: 'none'}}>
 												<TableHeaderColumn dataField="RowKey" isKey={true} hidden></TableHeaderColumn>
         		          <TableHeaderColumn dataField="OrderId" dataAlign="center" dataSort={true} width="65px">Order ID</TableHeaderColumn>
         		          <TableHeaderColumn dataField="OrderType" width="55px">Type</TableHeaderColumn>
@@ -360,9 +359,9 @@ class TradeSummary extends Component {
         		          <TableHeaderColumn dataField="AssetCode" width="100px">Asset Type</TableHeaderColumn>
         		          <TableHeaderColumn dataField="AssetAmount" width="75px">Volume</TableHeaderColumn>
         		          <TableHeaderColumn dataField="Price" width="55px">$Price</TableHeaderColumn>
-        		          <TableHeaderColumn dataField="MoneyNet" width="65px">$Total</TableHeaderColumn>
+        		          <TableHeaderColumn dataField="MoneyGross" width="65px">$Total</TableHeaderColumn>
         		          <TableHeaderColumn dataField="OrderStatus" width="90px">Status</TableHeaderColumn>
-											<TableHeaderColumn dataField="CreatedOn" width="125px">Created On</TableHeaderColumn>
+											<TableHeaderColumn dataField="LastUpdatedOn" width="125px">Last Update</TableHeaderColumn>
 											<TableHeaderColumn dataField="Cancel" width="100"></TableHeaderColumn>
 									</BootstrapTable>
         		     </div>
