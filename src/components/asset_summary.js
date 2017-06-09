@@ -86,24 +86,50 @@ class AssetSummary extends Component {
 		return txs.map(function(tx) {
 			var ftx = {};
 			ftx.AssetCode = tx.AssetCode;
-      ftx.TxID = tx.TxID;
+			ftx.TxID = (
+				<div className="tooltip-custom">
+					{tx.TxID.substring(0,6)}
+					<span className="tooltiptext">
+						{tx.TxID}
+					</span>
+				</div>	
+			);
       ftx.TxType = (tx.TxType === 'TRANSFER' || tx.TxType === 'BATCH_TRANSFER' ? 'TFR' : 'ISU');
       ftx.Ref = (
         wallet.Address === tx.ToAddress ?
           <div>
             <label>Received from: </label>
-            <p><a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/address/' + tx.FromAddress}>{tx.FromAddress}</a></p>
+						<p>
+							<a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/address/' + tx.FromAddress}>
+								<div className="tooltip-custom">
+									{tx.FromAddress.substring(0,10)}
+									<span className="tooltiptext">
+										{tx.FromAddress}
+									</span>
+								</div>	
 
-						<p style={{'font-style': 'italic', 'text-decoration': 'underline'}}>
+						</a>
+						</p>
+
+						<p style={{'fontStyle': 'italic', 'textDecoration': 'underline'}}>
 							<a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/tx/' + tx.BlockchainTxHash}>View on blockchain</a>
 						</p>
           </div>
           :
           <div>
             <label>Sent to:</label>
-            <p><a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/address/' + tx.ToAddress}>{tx.ToAddress}</a></p>
+						<p>
+							<a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/address/' + tx.ToAddress}>
+								<div className="tooltip-custom">
+									{tx.ToAddress.substring(0,10)}
+									<span className="tooltiptext">
+										{tx.ToAddress}
+									</span>
+								</div>	
+							</a>
+						</p>
 
-						<p style={{'font-style': 'italic', 'text-decoration': 'underline'}}>
+						<p style={{'fontStyle': 'italic', 'textDecoration': 'underline'}}>
 							<a target="_blank" href={COLOREDCOINS_EXPLORER_URL + '/tx/' + tx.BlockchainTxHash}>View on blockchain</a>
 						</p>
           </div>
@@ -143,7 +169,15 @@ class AssetSummary extends Component {
 
 		return txs.map(function(tx) {
 			var t = {};
-			t.TxID = tx.TxID;
+			t.RowKey = tx.TxID;
+			t.TxID = (
+				<div className="tooltip-custom">
+					{tx.TxID.substring(0,6)}
+					<span className="tooltiptext">
+						{tx.TxID}
+					</span>
+				</div>	
+			);
 			t.TxType = tx.TxType;
 			t.AssetCode = tx.AssetCode;
 			t.Amount = numeral(tx.Amount).format('0,0');
@@ -352,14 +386,15 @@ class AssetSummary extends Component {
 	        	  <div className="row">
 	        	    <div className="col-md-10 col-md-offset-1">
           	      <BootstrapTable data={this.formatTXs(TXs)} striped={true} hover={true} className="table" pagination={true}>
-          	        <TableHeaderColumn dataField="TxID" isKey={true} dataAlign="center" dataSort={true} width="145px">TxID</TableHeaderColumn>
+										<TableHeaderColumn dataField="RowKey" isKey={true} dataAlign="center" hidden></TableHeaderColumn>
+          	        <TableHeaderColumn dataField="TxID" dataAlign="center" dataSort={true} width="75px">TxID</TableHeaderColumn>
           	        <TableHeaderColumn dataField="TxType" width="55px">Type</TableHeaderColumn>
           	        <TableHeaderColumn dataField="Ref" dataFormat={this.format}>Reference</TableHeaderColumn>
-          	        <TableHeaderColumn dataField="AssetCode" width="60px">Code</TableHeaderColumn>
+          	        <TableHeaderColumn dataField="AssetCode" width="90px">Asset Type</TableHeaderColumn>
           	        <TableHeaderColumn dataField="Credit" width="75px">Credit</TableHeaderColumn>
           	        <TableHeaderColumn dataField="Debit" width="75px">Debit</TableHeaderColumn>
           	        <TableHeaderColumn dataField="TxStatus" width="90px">Status</TableHeaderColumn>
-          	        <TableHeaderColumn dataField="Date" width="150px">Date</TableHeaderColumn>
+          	        <TableHeaderColumn dataField="Date" width="160px">Date</TableHeaderColumn>
           	      </BootstrapTable>
           	    </div>
 							</div>

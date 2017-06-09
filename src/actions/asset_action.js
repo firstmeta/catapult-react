@@ -517,7 +517,6 @@ export function FetchAssetIssuingTXs() {
 
 	return dispatch => {
 		return req.end((err, res) => {
-			console.log(res.body);
 			if (res.status === 200 && res.body) {
 				dispatch({
 					type: FETCH_ASSET_ISSUING_TXS,
