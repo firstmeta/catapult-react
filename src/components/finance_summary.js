@@ -21,7 +21,15 @@ class FinanceSummary extends Component {
 	formatTXs(txs) {
 		return txs.map(function(tx) {
 			var t = {};
-			t.TxId = tx.TxId;
+			t.RowKey = tx.TxId;
+			t.TxId = (
+				<div className="tooltip-custom">
+					{tx.TxId.substring(0,6)}
+					<span className="tooltiptext">
+						{tx.TxId}
+					</span>
+				</div>	
+			);
 			t.MoneyCode = tx.AssetMoneyCode;
 			if (tx.TxType === 'MAKEORDEROFFERIPG' || tx.TxType === 'MAKEORDEROFFER'){
 				t.Action = (
@@ -200,14 +208,15 @@ class FinanceSummary extends Component {
 									pagination={true} 
 									options={{sizePerPage: 5}}
 									tableStyle={{border: 'none'}}>
-                  <TableHeaderColumn dataField="TxId" isKey={true} dataAlign="center" dataSort={true} width="130px">TxId</TableHeaderColumn>
+									<TableHeaderColumn dataField="RowKey" isKey={true} dataAlign="center" hidden></TableHeaderColumn>
+                  <TableHeaderColumn dataField="TxId" dataAlign="center" dataSort={true} width="75px">TxID</TableHeaderColumn>
                   <TableHeaderColumn dataField="Details" width="200px">Details</TableHeaderColumn>
 									<TableHeaderColumn dataField="Action" width="100px">Action/Status</TableHeaderColumn>
                   <TableHeaderColumn dataField="MoneyCode" width="42px">$</TableHeaderColumn>
                   <TableHeaderColumn dataField="Credit" width="70px">Credit</TableHeaderColumn>
                   <TableHeaderColumn dataField="Debit" width="70px">Debit</TableHeaderColumn>
                   <TableHeaderColumn dataField="AmountHold" width="70px">Hold</TableHeaderColumn>
-                  <TableHeaderColumn dataField="Timestamp" width="120px">Timestamp</TableHeaderColumn>
+                  <TableHeaderColumn dataField="Timestamp" width="160px">Timestamp</TableHeaderColumn>
                 </BootstrapTable>
               </div>
             </div>
