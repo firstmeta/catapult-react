@@ -30,14 +30,22 @@ class TransactionSummary extends Component {
   }
 	
 	renderAssetBals() {
-    return this.props.AssetBals.map(b => {
+		return this.props.AssetBals.map(b => {
+			var totalIssuedAmount = this.props.AllAssets.map[b.AssetCode].IssuedAmount;
+			var totalPercentCompany = this.props.AllAssets.map[b.AssetCode].PercentageCompany;
+			var percentToken = b.Amount / totalIssuedAmount * 100;
+			var percentCompany = totalPercentCompany / totalIssuedAmount * b.Amount; 
       return (
         <div className="row">
-          <div className="col-md-5">{b.AssetName}</div>
-          <div className="col-md-3 number">{numeral(b.Amount).format('0,0')}</div>
-					<div className="col-md-4 number">
-						{numeral(b.Amount / this.props.AllAssets.map[b.AssetCode].IssuedAmount*100).format('0,0.00')}%
+          <div className="col-md-4">{b.AssetName}</div>
+          <div className="col-md-2 number">{numeral(b.Amount).format('0,0')}</div>
+					<div className="col-md-3 number">
+						{numeral(percentToken).format('0,0.00')}%
 					</div>
+					<div className="col-md-3 number">
+						{numeral(percentCompany).format('0,0.00')}%
+					</div>
+
         </div>
       )
     });
@@ -67,15 +75,16 @@ class TransactionSummary extends Component {
 								{
 									this.props.AssetBals && this.props.AllAssets &&
                		 <div className="balances">
-               		   <div className="panel panel-default">
+               		   <div className="panel panel-default" style={{"width" : 420}}>
                		     <div className="panel-heading">
                		      Equity Owned 
                		     </div>
 											 <div className="panel-body">
 													<div className="row">
-														<div className="col-md-5"></div>
-    									    	<div className="col-md-3">Tokens</div>
-    									    	<div className="col-md-4">% of Company</div>
+														<div className="col-md-4"></div>
+    									    	<div className="col-md-2" style={{"text-align": "right"}}>Tokens</div>
+    									    	<div className="col-md-3" style={{"text-align": "right"}}>% Issuance </div>
+    									    	<div className="col-md-3" style={{"text-align": "right"}}>% Company</div>
     									  	</div>
 
                		       {this.renderAssetBals()}

@@ -915,13 +915,14 @@ body:before {
 	text-align: justify
 }
 .tx-summary .panel {
-  width: 380px;
+  width: 320px;
   margin-top: 30px;
   margin-right: 10px;
 }
 .tx-summary .panel .panel-body {
 	height: 125px;
 	overflow-y: scroll;
+	padding: 8px;
 }
 .tx-summary .panel .panel-heading {
   font-size: 16px;
@@ -929,6 +930,13 @@ body:before {
 }
 .tx-summary .panel .number {
 	text-align: right;
+}
+.tx-summary .panel .row {
+	margin: 0px 1px 5px 1px;
+}
+.tx-summary .panel .row > [class*="col-md-"]{
+	padding-left: 2px;
+	padding-right: 2px;
 }
 .tx-summary .balance-container {
 	display:flex;
@@ -939,9 +947,6 @@ body:before {
 .tx-summary .balances {
 	align-self: auto;
 	height: 100%;
-}
-.tx-summary .panel .row {
-  margin-bottom: 5px;
 }
 .tx-summary ::-webkit-scrollbar {
 	width: 2px;
