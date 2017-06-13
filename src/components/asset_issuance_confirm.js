@@ -43,6 +43,9 @@ class AssetIssuanceConfirm extends Component {
 
                 <label>Issuing Amount</label>
                 <p>{numeral(IssuingAsset.amount).format('0,0')}</p>
+								
+								<label>Percentage of Total Company Equity</label>
+                <p>{numeral(IssuingAsset.percentCompany).format('0,0.00')}</p>
 
                 <label>Logo</label>
                 <p><img src={IssuingAsset.logoUrl} /></p>
@@ -68,6 +71,7 @@ class AssetIssuanceConfirm extends Component {
                       code: IssuingAsset.code,
                       name: IssuingAsset.name,
                       amount: IssuingAsset.amount,
+											percentCompany: IssuingAsset.percentCompany,
                       logoUrl: IssuingAsset.logoUrl,
                       desc: IssuingAsset.desc,
 										});

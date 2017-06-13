@@ -10,7 +10,15 @@ class AssetIssuanceForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {company: '', name: '', code: '', amount: '', logoUrl: '', desc: ''};
+		this.state = {
+			company: '', 
+			name: '', 
+			code: '', 
+			amount: '', 
+			percentCompany: '',
+			logoUrl: '', 
+			desc: ''
+		};
 
     this.renderCompanyList = this.renderCompanyList.bind(this);
   }
@@ -102,8 +110,16 @@ class AssetIssuanceForm extends Component {
                   value={this.state.amount}
                   placeholder="$1 per share. If your raised $40,000, the Issue Amount is 40,000."
                   onChange={event => this.onInputChange({amount: parseInt(event.target.value)})}/>
+							<label>Percentage of Total Company Equity</label>
+              <input
+                type="text"
+								ref="amount"
+								style={{"width": "50%"}}
+                value={this.state.percentCompany}
+                placeholder="5, 7.5, 9.25, 15,..."
+                onChange={event => this.onInputChange({percentCompany: event.target.value})}/> %
 
-                <label>Logo</label>
+                <label>Logo URL</label>
                 <input
                   type="text"
                   ref="imageUrl"
@@ -126,7 +142,8 @@ class AssetIssuanceForm extends Component {
                         issuer: this.state.company.CompanyName,
 												name: this.state.name,
 												code: this.state.code,
-                        amount: this.state.amount,
+												amount: this.state.amount,
+												percentCompany: this.state.percentCompany,
                         logoUrl: this.state.logoUrl,
                         desc: this.state.desc,
                         address: this.state.company.Address,

@@ -89,7 +89,7 @@ export function RedirectAssetBatchTransferConfirmation(transferringAsset) {
 }
 
 export function InitializeAssetIssuance({
-	issuer, name, code, amount, logoUrl, desc
+	issuer, name, code, amount, percentCompany, logoUrl, desc
 }) {
 	var assetPrepareReq = request
 			.post(`${ROOT_URL}/api/secure/asset/initialize_asset_issuance_tx`)
@@ -102,7 +102,8 @@ export function InitializeAssetIssuance({
 					issuer_name: issuer,
 					desc: desc,
 					logo_url: logoUrl,
-					asset_amount: amount
+					asset_amount: amount,
+					percent_company: parseFloat(percentCompany)
 				});
 
 	return dispatch => {
